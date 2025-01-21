@@ -11,8 +11,12 @@ RUN apt update -q \
     software-properties-common \
     python3-pip \
     xauth \
+    ros-humble-rviz2 \
+    ros-humble-gazebo-ros-pkgs \
+    ros-humble-gazebo-ros\
     && apt clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+    
 
 # Create and switch to user
 RUN groupadd -g $GID $USERNAME \
