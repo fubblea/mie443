@@ -7,6 +7,11 @@ ARG GID=$UID
 # Use bash
 SHELL ["/bin/bash", "-c"]
 
+# Install locales
+RUN apt-get update && apt-get install -y locales \
+    && locale-gen en_US.UTF-8 \
+    && update-locale LANG=en_US.UTF-8
+
 # Install ROS
 RUN apt-get update && apt-get install -y lsb-release && apt-get clean all \
     && sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
