@@ -1,24 +1,4 @@
-#include <ros/console.h>
-#include "ros/ros.h"
-#include <geometry_msgs/Twist.h>
-#include <kobuki_msgs/BumperEvent.h>
-#include <sensor_msgs/LaserScan.h>
-
-#include <stdio.h>
-#include <cmath>
-
-#include <chrono>
-
-
-void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
-{
-	// std::cout<<*msg<<std::endl;
-}
-
-void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
-{
-	// std::cout<<*msg<<std::endl;
-}
+#include "contest1.h"
 
 int main(int argc, char **argv)
 {
@@ -27,6 +7,7 @@ int main(int argc, char **argv)
 
     ros::Subscriber bumper_sub = nh.subscribe("mobile_base/events/bumper", 10, &bumperCallback);
     ros::Subscriber laser_sub = nh.subscribe("scan", 10, &laserCallback);
+    ros::Subscriber odom_sub = nh.subscribe("odom", 1, &odomCallback);
 
     ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
 
@@ -45,12 +26,13 @@ int main(int argc, char **argv)
     while(ros::ok() && secondsElapsed <= 480) {
         ros::spinOnce();
 
-        linear = -1.0;
+        angular = 0.1;
 
         vel.angular.z = angular;
         vel.linear.x = linear;
         vel_pub.publish(vel);
-        std::cout<<vel<<std::endl;
+
+        ROS_INFO("Position: (%f, %f). Yaw: %f", posX, posY, yaw);
 
         // The last thing to do is to update the timer.
         secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()-start).count();
