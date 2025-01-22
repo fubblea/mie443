@@ -1,22 +1,31 @@
-FROM ros:humble-ros-base
+FROM ubuntu:16.04
 
 ARG USERNAME=rosdev
 ARG UID=1000
 ARG GID=$UID
 
-# Install some dependencies packages
-RUN apt update -q \
-    && apt upgrade -q -y \
-    && apt install -y --no-install-recommends \
-    software-properties-common \
-    python3-pip \
-    xauth \
-    ros-humble-rviz2 \
-    ros-humble-gazebo-ros-pkgs \
-    ros-humble-gazebo-ros\
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Use bash
+SHELL ["/bin/bash", "-c"]
 
+# Install ROS
+RUN apt-get update && apt-get install -y lsb-release && apt-get clean all \
+    && sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
+    && apt install curl -y \
+    && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
+    && apt-get update -y \
+    && apt-get install ros-kinetic-desktop-full -y
+
+# Install additional deps
+RUN apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential -y \
+    && source /opt/ros/kinetic/setup.bash \
+    && rosdep init \
+    && rosdep update
+
+# Install turtlebot packages
+RUN apt-get install ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-kobuki-ftdi ros-kinetic-ar-track-alvar-msgs -y \
+    && source /opt/ros/kinetic/setup.bash \
+    # && rosrun kobuki_ftdi create_udev_rules \
+    && apt-get install ros-kinetic-audio-common -y
 
 # Create and switch to user
 RUN groupadd -g $GID $USERNAME \
@@ -29,10 +38,9 @@ RUN mkdir -p /home/$USERNAME/ros2_ws/src
 WORKDIR /home/$USERNAME/ros2_ws
 
 # Copy configuration files
-RUN echo 'source /opt/ros/'$ROS_DISTRO'/setup.bash' >> /home/$USERNAME/.bashrc \
+RUN echo 'source /opt/ros/kinetic/setup.bash' >> /home/$USERNAME/.bashrc \
+    && echo "export TURTLEBOT_3D_SENSOR=kinect" >> /home/$USERNAME/.bashrc \
     && echo 'source /home/'$USERNAME'/ros2_ws/install/setup.bash' >> /home/$USERNAME/.bashrc
 
 # Setup entrypoint
-COPY ./ros_entrypoint.sh /
-ENTRYPOINT ["/ros_entrypoint.sh"]
-CMD ["bash"]
+ENTRYPOINT ["/bin/bash"]
