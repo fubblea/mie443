@@ -7,3 +7,9 @@
 3. Install VSCode and the [Dev Container Extension](vscode:extension/ms-vscode-remote.remote-containers)
 4. Open the command pallet with `Ctrl+Shift+P`
 5. Select the option: `Rebuild and Open in Container`
+
+## Running stuff
+
+1. First run `catkin_make` to make the executables
+2. Add them to the path with `source devel/setup.bash`
+3. Do whatever
