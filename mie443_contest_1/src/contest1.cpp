@@ -12,12 +12,12 @@
 
 void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
 {
-	//fill with your code
+	// std::cout<<*msg<<std::endl;
 }
 
 void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-	//fill with your code
+	// std::cout<<*msg<<std::endl;
 }
 
 int main(int argc, char **argv)
@@ -44,11 +44,13 @@ int main(int argc, char **argv)
 
     while(ros::ok() && secondsElapsed <= 480) {
         ros::spinOnce();
-        //fill with your code
+
+        linear = -1.0;
 
         vel.angular.z = angular;
         vel.linear.x = linear;
         vel_pub.publish(vel);
+        std::cout<<vel<<std::endl;
 
         // The last thing to do is to update the timer.
         secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()-start).count();

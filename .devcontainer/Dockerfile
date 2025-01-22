@@ -32,6 +32,13 @@ RUN apt-get install ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic
     # && rosrun kobuki_ftdi create_udev_rules \
     && apt-get install ros-kinetic-audio-common -y
 
+# Update Gazebo version to latest 7.x
+RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' \
+    && apt-get install wget \
+    && wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add - \
+    && apt-get update -y \
+    && apt-get install gazebo7 -y
+
 # Create and switch to user
 RUN groupadd -g $GID $USERNAME \
     && useradd -lm -u $UID -g $USERNAME -s /bin/bash $USERNAME \
