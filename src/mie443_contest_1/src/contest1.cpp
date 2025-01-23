@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     while(ros::ok() && secondsElapsed <= 480) {
         ros::spinOnce();
 
-        angular = 0.1;
+        angular = DEG2RAD(10);
 
         vel.angular.z = angular;
         vel.linear.x = linear;
