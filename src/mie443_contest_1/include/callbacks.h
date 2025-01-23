@@ -11,4 +11,5 @@ extern float posX;
 extern float posY;
 extern float yaw;
 extern float minimumDistance;
+extern uint8_t bumper[3];
 #endif // CALLBACKS_H

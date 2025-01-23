@@ -1,9 +1,19 @@
 #include "contest1.h"
+#include <iostream>
+
+uint8_t bumper[3] = {kobuki_msgs::BumperEvent::RELEASED, kobuki_msgs::BumperEvent::RELEASED,kobuki_msgs::BumperEvent::RELEASED};
 
 // CALLBACK FUNCTIONS
 void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
-{
-	// std::cout<<*msg<<std::endl;
+{ 
+	//Get the state of the bumper that is pressed
+
+	// access using bumper[kobuki_msgs::BumperEvent::{}] LEFT, CENTER, or RIGHT
+
+	bumper[msg->bumper] = msg->state;
+
+	
+	
 }
 
 float minimumDistance = std::numeric_limits<float>::max();
