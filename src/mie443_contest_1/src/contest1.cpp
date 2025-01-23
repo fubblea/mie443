@@ -20,24 +20,15 @@ int main(int argc, char **argv)
     start = std::chrono::system_clock::now();
     uint64_t secondsElapsed = 0;
 
-    float angular = 0.0;
-    float linear = 0.0;
+    robotState state;
 
     while(ros::ok() && secondsElapsed <= 480) {
         ros::spinOnce();
 
-        if (secondsElapsed <= 5) {
-            linear = 1.0;
-            angular = 0.0;
-        } else if (secondsElapsed > 5 && secondsElapsed <= 6)
-        {
-            linear = 0.0;
-            angular = DEG2RAD(20);
-        }
+        state.step();
 
-
-        vel.angular.z = angular;
-        vel.linear.x = linear;
+        vel.angular.z = state.getVelCmd().angular;
+        vel.linear.x = state.getVelCmd().linear;
         vel_pub.publish(vel);
 
         ROS_INFO("Position: (%f, %f). Yaw: %f", posX, posY, yaw);

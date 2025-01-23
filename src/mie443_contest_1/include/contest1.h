@@ -17,6 +17,7 @@
 
 // INTERAL HEADER FILES
 #include <callbacks.h>
+#include <state.h>
 
 // MACROS
 #define N_BUMPER (3)
