@@ -28,6 +28,12 @@ public:
     State getState() const { return currState; };
     Vel getVelCmd() const { return velCmd; };
 
+    // Setters
+    void setState(State newState) {
+        ROS_INFO("Changing state from %i to %i", currState, newState);
+        currState = newState;
+    }
+
     void step();
 };
 

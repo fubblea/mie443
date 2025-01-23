@@ -4,7 +4,7 @@
 void robotState::step()
 {
     if (currState == START) {
-        ROS_INFO("Let's get started");
+        setState(State::SPIN);
     }
 }
 

@@ -31,9 +31,6 @@ int main(int argc, char **argv)
         vel.linear.x = state.getVelCmd().linear;
         vel_pub.publish(vel);
 
-        //ROS_INFO("Position: (%f, %f). Yaw: %f", posX, posY, yaw);
-        ROS_INFO("Minimum Distance: (%f, %f)", minimumDistance);
-
         // The last thing to do is to update the timer.
         secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()-start).count();
         loop_rate.sleep();
