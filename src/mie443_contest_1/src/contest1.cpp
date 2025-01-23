@@ -4,10 +4,15 @@ int main(int argc, char **argv) {
   ros::init(argc, argv, "image_listener");
   ros::NodeHandle nh;
 
+  robotState state; // Initialize robot state machine
+
   ros::Subscriber bumper_sub =
-      nh.subscribe("mobile_base/events/bumper", 1, &bumperCallback);
-  ros::Subscriber laser_sub = nh.subscribe("scan", 1, &laserCallback);
-  ros::Subscriber odom_sub = nh.subscribe("odom", 1, &odomCallback);
+      nh.subscribe("mobile_base/events/bumper", 1, &StateVars::bumperCallback,
+                   &state.stateVars);
+  ros::Subscriber laser_sub =
+      nh.subscribe("scan", 1, &StateVars::laserCallback, &state.stateVars);
+  ros::Subscriber odom_sub =
+      nh.subscribe("odom", 1, &StateVars::odomCallback, &state.stateVars);
 
   ros::Publisher vel_pub =
       nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
@@ -20,8 +25,6 @@ int main(int argc, char **argv) {
   std::chrono::time_point<std::chrono::system_clock> start;
   start = std::chrono::system_clock::now();
   uint64_t secondsElapsed = 0;
-
-  robotState state; // Initialize robot state machine
 
   while (ros::ok() && secondsElapsed <= 480) {
     ros::spinOnce();

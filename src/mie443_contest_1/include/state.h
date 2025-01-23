@@ -1,6 +1,8 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "contest1.h"
+
 /*
 Possible robot states.
 */
@@ -27,6 +29,9 @@ private:
   Vel velCmd = Vel(0, 0);         // Velocity command
 
 public:
+  StateVars stateVars = StateVars(); // Current state variables
+  StateVars stateRef = StateVars();  // State reference point
+
   // Getters
 
   /*
@@ -46,6 +51,11 @@ public:
   */
   void setState(State newState) {
     ROS_INFO("Changing state from %i to %i", currState, newState);
+
+    // Take snapshot of current state to use as reference
+    stateRef = stateVars;
+
+    // Update the state
     currState = newState;
   }
 
@@ -65,6 +75,9 @@ public:
   Runs every loop iteration.
   */
   void update();
+
+private:
+  bool doTurn(float relativeTarget, float reference);
 };
 
 #endif // STATE_H
