@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 
     ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
 
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(100); // Processing frequency [Hz]
 
     geometry_msgs::Twist vel;
 

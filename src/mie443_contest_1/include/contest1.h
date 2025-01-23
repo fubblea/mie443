@@ -18,4 +18,9 @@
 // INTERAL HEADER FILES
 #include <callbacks.h>
 
+// MACROS
+#define N_BUMPER (3)
+#define RAD2DEG(rad) ((rad) *180./M_PI)
+#define DEG2RAD(deg) ((deg) *M_PI /180.)
+
 #endif // CONTEST1_H
