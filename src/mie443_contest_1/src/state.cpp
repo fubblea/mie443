@@ -1,10 +1,14 @@
 #include "contest1.h"
 #include "state.h"
 
-void robotState::step()
+void robotState::update()
 {
-    if (currState == START) {
+    if (currState == State::START) {
+        setVelCmd(0, 0);
         setState(State::SPIN);
+
+    } else if (currState == State::SPIN) {
+        setVelCmd(5, 0);
     }
 }
 

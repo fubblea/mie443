@@ -25,12 +25,12 @@ int main(int argc, char **argv)
     while(ros::ok() && secondsElapsed <= 480) {
         ros::spinOnce();
 
-        state.step();
+        state.update();
 
-        vel.angular.z = state.getVelCmd().angular;
+        vel.angular.z = DEG2RAD(state.getVelCmd().angular);
         vel.linear.x = state.getVelCmd().linear;
         vel_pub.publish(vel);
-
+        
         // The last thing to do is to update the timer.
         secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()-start).count();
         loop_rate.sleep();
