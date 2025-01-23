@@ -6,9 +6,17 @@ void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
 	// std::cout<<*msg<<std::endl;
 }
 
+float minimumDistance = std::numeric_limits<float>::max();
 void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
 	// std::cout<<*msg<<std::endl;
+    int startIndex = 0;
+    int endIndex = msg->ranges.size()-1;
+    for(int range =0; range < endIndex; range++){
+        if(std::isfinite(msg->ranges[range])&& msg->ranges[range] >= msg->range_min && msg->ranges[range] <= msg->range_max){
+            minimumDistance = std::min(minimumDistance, msg->ranges[range]);
+        };
+    };
 }
 
 // Odometer variables

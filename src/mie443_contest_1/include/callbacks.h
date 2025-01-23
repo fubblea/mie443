@@ -10,5 +10,5 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr& msg);
 extern float posX;
 extern float posY;
 extern float yaw;
-
+extern float minimumDistance;
 #endif // CALLBACKS_H
