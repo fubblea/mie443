@@ -9,5 +9,8 @@
 "files.associations": {
     "chrono": "cpp",
     "tuple": "cpp"
-}
+},
+"files.autoSave": "onFocusChange",
+"editor.formatOnSave": true,
+"C_Cpp.clang_format_fallbackStyle": "LLVM"
 }

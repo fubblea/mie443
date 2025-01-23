@@ -1,18 +1,24 @@
 #ifndef CONTEST1_H
 #define CONTEST1_H
 
+// CONSTANTS
+
+const float MAX_LIN_VEL = 0.25; // Maximum linear velocity in [m/s]
+const float MAX_ANG_VEL = 30;   // Maximum angular velocity in [deg/s]
+const int NUM_BUMPERS = 3;      // Number of bumpers
+
 // EXTERNAL HEADER FILES
 
-#include <ros/console.h>
 #include "ros/ros.h"
 #include <geometry_msgs/Twist.h>
 #include <kobuki_msgs/BumperEvent.h>
-#include <sensor_msgs/LaserScan.h>
 #include <nav_msgs/Odometry.h>
+#include <ros/console.h>
+#include <sensor_msgs/LaserScan.h>
 #include <tf/transform_datatypes.h>
 
-#include <stdio.h>
 #include <cmath>
+#include <stdio.h>
 
 #include <chrono>
 
@@ -23,8 +29,7 @@
 
 // MACROS
 
-#define N_BUMPER (3) // Number of bumpers
-#define RAD2DEG(rad) ((rad) *180./M_PI) // Convert from radians to degrees
-#define DEG2RAD(deg) ((deg) *M_PI /180.) // Convert from degrees to radians
+#define RAD2DEG(rad) ((rad)*180. / M_PI) // Convert from radians to degrees
+#define DEG2RAD(deg) ((deg)*M_PI / 180.) // Convert from degrees to radians
 
 #endif // CONTEST1_H

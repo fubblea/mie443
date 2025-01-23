@@ -1,40 +1,43 @@
 #include "contest1.h"
 
-int main(int argc, char **argv)
-{
-    ros::init(argc, argv, "image_listener");
-    ros::NodeHandle nh;
+int main(int argc, char **argv) {
+  ros::init(argc, argv, "image_listener");
+  ros::NodeHandle nh;
 
-    ros::Subscriber bumper_sub = nh.subscribe("mobile_base/events/bumper", 1, &bumperCallback);
-    ros::Subscriber laser_sub = nh.subscribe("scan", 1, &laserCallback);
-    ros::Subscriber odom_sub = nh.subscribe("odom", 1, &odomCallback);
+  ros::Subscriber bumper_sub =
+      nh.subscribe("mobile_base/events/bumper", 1, &bumperCallback);
+  ros::Subscriber laser_sub = nh.subscribe("scan", 1, &laserCallback);
+  ros::Subscriber odom_sub = nh.subscribe("odom", 1, &odomCallback);
 
-    ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
+  ros::Publisher vel_pub =
+      nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
 
-    ros::Rate loop_rate(100); // Processing frequency [Hz]
+  ros::Rate loop_rate(100); // Processing frequency [Hz]
 
-    geometry_msgs::Twist vel;
+  geometry_msgs::Twist vel;
 
-    // contest count down timer
-    std::chrono::time_point<std::chrono::system_clock> start;
-    start = std::chrono::system_clock::now();
-    uint64_t secondsElapsed = 0;
+  // Contest count down timer
+  std::chrono::time_point<std::chrono::system_clock> start;
+  start = std::chrono::system_clock::now();
+  uint64_t secondsElapsed = 0;
 
-    robotState state;
+  robotState state; // Initialize robot state machine
 
-    while(ros::ok() && secondsElapsed <= 480) {
-        ros::spinOnce();
+  while (ros::ok() && secondsElapsed <= 480) {
+    ros::spinOnce();
 
-        state.update();
+    state.update();
 
-        vel.angular.z = DEG2RAD(state.getVelCmd().angular);
-        vel.linear.x = state.getVelCmd().linear;
-        vel_pub.publish(vel);
-        
-        // The last thing to do is to update the timer.
-        secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()-start).count();
-        loop_rate.sleep();
-    }
+    vel.angular.z = DEG2RAD(state.getVelCmd().angular);
+    vel.linear.x = state.getVelCmd().linear;
+    vel_pub.publish(vel);
 
-    return 0;
+    // The last thing to do is to update the timer.
+    secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(
+                         std::chrono::system_clock::now() - start)
+                         .count();
+    loop_rate.sleep();
+  }
+
+  return 0;
 }
