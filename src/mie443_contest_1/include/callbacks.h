@@ -2,9 +2,9 @@
 #define CALLBACKS_H
 
 // CALLBACK FUNCTIONS
-extern void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg);
-extern void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
-extern void odomCallback(const nav_msgs::Odometry::ConstPtr& msg);
+void bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg);
+void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
+void odomCallback(const nav_msgs::Odometry::ConstPtr& msg);
 
 // CALLBACK VARIABLES
 extern float posX;

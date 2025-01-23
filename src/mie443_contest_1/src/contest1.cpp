@@ -5,8 +5,8 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "image_listener");
     ros::NodeHandle nh;
 
-    ros::Subscriber bumper_sub = nh.subscribe("mobile_base/events/bumper", 10, &bumperCallback);
-    ros::Subscriber laser_sub = nh.subscribe("scan", 10, &laserCallback);
+    ros::Subscriber bumper_sub = nh.subscribe("mobile_base/events/bumper", 1, &bumperCallback);
+    ros::Subscriber laser_sub = nh.subscribe("scan", 1, &laserCallback);
     ros::Subscriber odom_sub = nh.subscribe("odom", 1, &odomCallback);
 
     ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
