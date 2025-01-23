@@ -9,7 +9,8 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr& msg);
 // CALLBACK VARIABLES
 extern float posX;
 extern float posY;
-extern float yaw;
-extern float minimumDistance;
+extern float yaw; // deg
+extern float wallDist;
+extern float wallAngle; // deg
 extern uint8_t bumper[3];
 #endif // CALLBACKS_H
