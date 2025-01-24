@@ -77,7 +77,15 @@ public:
   void update();
 
 private:
-  bool doTurn(float relativeTarget, float reference);
+  /*
+  Turn the robot by the specified degrees wrt to a reference bearing
+  */
+  bool doTurn(float relativeTarget, float reference, bool quick = true);
+
+  /*
+  Move robot straight until the wall is within the target distance
+  */
+  bool moveToWall(float targetDist);
 };
 
 #endif // STATE_H

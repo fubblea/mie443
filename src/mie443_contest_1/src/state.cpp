@@ -2,17 +2,28 @@
 #include "contest1.h"
 
 // Angle tolerance
-const float ANGLE_TOL = 0.5; // deg
+const float ANGLE_TOL = 1; // deg
 
 void robotState::update() {
   if (currState == State::START) {
     setVelCmd(0, 0);
     setState(State::SPIN);
   } else if (currState == State::SPIN) {
-    if (doTurn(359, stateRef.yaw)) {
-      setState(State::END);
+    if (doTurn(359, stateRef.yaw, false)) {
+      setState(State::FIND_WALL);
     }
-  } else if (currState == State::END) {
+  } else if (currState == State::FIND_WALL) {
+    bool turnComplete = false;
+    // First, turn left 90 deg
+    if (!turnComplete) {
+      turnComplete = doTurn(90, stateRef.yaw, true);
+    } else {
+      // Then move up to the wall in front
+      if (moveToWall(0.2)) {
+        setState(State::FIND_WALL);
+      }
+    }
+  } else {
     setVelCmd(0, 0);
     ROS_INFO("Program End");
   }
@@ -30,21 +41,43 @@ float normalizeAngle(float angle) {
   return angle;
 }
 
-bool robotState::doTurn(float relativeTarget, float reference = 0) {
+bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
   bool isComplete = false;
 
   // Current angle is relative to the start of the state
   float targetBearing = normalizeAngle(reference + relativeTarget);
-  float error = std::fabs(normalizeAngle(stateVars.yaw - targetBearing));
+  float error = normalizeAngle(stateVars.yaw - targetBearing);
 
-  if (error > ANGLE_TOL) {
+  if (std::fabs(error) > ANGLE_TOL) {
     ROS_INFO("Turning to %f deg. Error: %f (%f) deg", targetBearing, error,
              stateVars.yaw);
 
-    float turn_vel = (relativeTarget > 0) ? MAX_ANG_VEL : -MAX_ANG_VEL;
+    float turn_speed = MAX_ANG_VEL;
+    // Slow down turning if we are close to the target
+    if (std::fabs(error) <= (ANGLE_TOL * 5)) {
+      turn_speed = turn_speed / 5;
+    }
+
+    float turn_vel;
+    if (quick) {
+      turn_vel = (error < 0) ? turn_speed : -turn_speed;
+    } else {
+      turn_vel = (relativeTarget > 0) ? turn_speed : -turn_speed;
+    }
     setVelCmd(turn_vel, 0);
   } else {
     isComplete = true;
+  }
+}
+
+bool robotState::moveToWall(float targetDist) {
+  if (stateVars.wallDist > targetDist) {
+    ROS_INFO("Moving to wall. Distance: %f", stateVars.wallDist);
+    setVelCmd(0, MAX_LIN_VEL);
+    return false;
+  } else {
+    setVelCmd(0, 0);
+    return true;
   }
 }
 
