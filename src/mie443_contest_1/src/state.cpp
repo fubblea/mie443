@@ -13,12 +13,9 @@ void robotState::update() {
       setState(State::FIND_WALL);
     }
   } else if (currState == State::FIND_WALL) {
-    bool turnComplete = false;
     // First, turn left 90 deg
-    if (!turnComplete) {
-      turnComplete = doTurn(90, stateRef.yaw, true);
-    } else {
-      // Then move up to the wall in front
+    if (doTurn(90, stateRef.yaw, true)) {
+      // Then, move up to the wall
       if (moveToWall(0.2)) {
         setState(State::FIND_WALL);
       }
@@ -68,6 +65,8 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
   } else {
     isComplete = true;
   }
+
+  return isComplete;
 }
 
 bool robotState::moveToWall(float targetDist) {
