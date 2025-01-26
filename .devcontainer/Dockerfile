@@ -51,7 +51,7 @@ WORKDIR /home/$USERNAME/ros2_ws
 
 # Copy configuration files
 RUN echo 'source /opt/ros/kinetic/setup.bash' >> /home/$USERNAME/.bashrc \
-    && echo "export TURTLEBOT_3D_SENSOR=kinect" >> /home/$USERNAME/.bashrc \
+    && echo 'export TURTLEBOT_3D_SENSOR=kinect' >> /home/$USERNAME/.bashrc \
     && echo 'source /home/'$USERNAME'/ros2_ws/devel/setup.bash' >> /home/$USERNAME/.bashrc
 
 # Setup entrypoint
