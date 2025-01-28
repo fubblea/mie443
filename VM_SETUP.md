@@ -85,6 +85,10 @@ If you get this far and it works, you owe me a beer. It took me wayyy too long t
 2. `sudo apt-get update -y`
 3. `sudo aptitude install code`
 
+If 3 does not work try:
+
+4. `sudo snap install --classic code`
+
 Reject other options and select yes when prompted to install the older version of code (1.11.2)
 
 ### Install terminator
