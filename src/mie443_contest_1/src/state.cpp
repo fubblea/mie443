@@ -5,24 +5,37 @@
 const float ANGLE_TOL = 1; // deg
 
 void robotState::update() {
-  if (currState == State::START) {
+  switch (currState) {
+
+  // Program start
+  case State::START:
     setVelCmd(0, 0);
-    setState(State::SPIN);
-  } else if (currState == State::SPIN) {
+    setState(State::FIND_WALL);
+    break;
+
+  // Spinning around
+  case State::SPIN:
     if (doTurn(359, stateRef.yaw, false)) {
       setState(State::FIND_WALL);
     }
-  } else if (currState == State::FIND_WALL) {
+    break;
+
+  // Finding nearest wall
+  case State::FIND_WALL:
     // First, turn left 90 deg
     if (doTurn(90, stateRef.yaw, true)) {
       // Then, move up to the wall
       if (moveToWall(0.2)) {
-        setState(State::FIND_WALL);
+        setState(State::END);
       }
     }
-  } else {
+    break;
+
+  // Prpgram end
+  case State::END:
     setVelCmd(0, 0);
     ROS_INFO("Program End");
+    break;
   }
 }
 

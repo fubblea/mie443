@@ -20,18 +20,18 @@ void StateVars::bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr &msg) {
 }
 
 void StateVars::laserCallback(const sensor_msgs::LaserScan::ConstPtr &msg) {
-  int startIndex = 0;
-  int endIndex = msg->ranges.size() - 1;
-  int minIndex = -1;
-  for (int range = 0; range < endIndex; range++) {
-    if (std::isfinite(msg->ranges[range]) &&
-        msg->ranges[range] >= msg->range_min &&
-        msg->ranges[range] <= msg->range_max) {
-      wallDist = std::min(wallDist, msg->ranges[range]);
-      minIndex = range;
+  int startIdx = 0;
+  int endIdx = msg->ranges.size() - 1;
+  int minIdx = -1;
+  for (int rangeIdx = 0; rangeIdx < endIdx; rangeIdx++) {
+    if (std::isfinite(msg->ranges[rangeIdx]) &&
+        msg->ranges[rangeIdx] >= msg->range_min &&
+        msg->ranges[rangeIdx] <= msg->range_max) {
+      wallDist = std::min(wallDist, msg->ranges[rangeIdx]);
+      minIdx = rangeIdx;
     };
   };
-  wallAngle = RAD2DEG(msg->angle_min + minIndex * msg->angle_increment);
+  wallAngle = RAD2DEG(msg->angle_min + minIdx * msg->angle_increment);
 }
 
 void StateVars::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
