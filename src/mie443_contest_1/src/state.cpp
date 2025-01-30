@@ -115,6 +115,35 @@ bool robotState::moveToWall(float targetDist, float speed) {
   }
 }
 
+int robotState::bumperHit(bool bumperPressed) {
+  // bool bumperPressed = false;
+  int bumperNum = 0;
+  for (uint32_t bumperID = 0; bumperID < 3; ++bumperID) {
+    bumperPressed |=
+        (stateVars.bumper[bumperID] == kobuki_msgs::BumperEvent::PRESSED);
+    bumperNum = bumperID;
+  }
+  if (bumperPressed = false) {
+    return -1;
+  } else {
+    return bumperNum;
+  }
+}
+
+// prior to running this, need to make sure bumperPressed = true. if not
+// pressed (-1), no need to run
+
+bool robotState::backAway(int bumperNum) {
+  // back away until x distance in front of wall
+
+  if (bumperNum != -1) {
+    while (stateVars.wallDist < 0.25) {
+      setVelCmd(0, -0.1);
+    }
+  }
+  return true;
+}
+
 bool robotState::checkVisit(float posX, float posY, float tol) {
   for (int idx = 0; idx < stateVars.visitedPos.size(); idx++) {
     float checkX = std::get<0>(stateVars.visitedPos[idx]);

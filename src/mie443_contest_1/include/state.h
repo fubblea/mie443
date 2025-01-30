@@ -104,6 +104,16 @@ private:
   Uses a box as a tolerance
   */
   bool checkVisit(float posX, float posY, float tol = 0.5);
+
+  /*
+  Determine if a bumper is hit and which bumper is hit
+  */
+  int bumperHit(bool bumperPressed);
+
+  /*
+  Move robot back from the hit
+  */
+  bool backAway(int bumperNum);
 };
 
 #endif // STATE_H
