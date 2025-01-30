@@ -4,6 +4,11 @@
 // Angle tolerance
 const float ANGLE_TOL = 1; // deg
 
+Vel::Vel(float angular, float linear) {
+  angular = angular;
+  linear = linear;
+}
+
 void robotState::updateVisitedPos() {
   // Add the current position to the vec of already visited positions
   std::tuple<float, float> currPos =
@@ -110,7 +115,22 @@ bool robotState::moveToWall(float targetDist, float speed) {
   }
 }
 
-Vel::Vel(float angular, float linear) {
-  angular = angular;
-  linear = linear;
+bool robotState::checkVisit(float posX, float posY, float tol) {
+  for (int idx = 0; idx < stateVars.visitedPos.size(); idx++) {
+    float checkX = std::get<0>(stateVars.visitedPos[idx]);
+    float checkY = std::get<1>(stateVars.visitedPos[idx]);
+
+    // Create a box around the point with the specified tolerance
+    float xMin = (checkX > tol) ? checkX - tol : 0;
+    float xMax = checkX + tol;
+    float yMin = (checkY > tol) ? checkY - tol : 0;
+    float yMax = checkY + tol;
+
+    // Check if the reference position is in this box
+    if (posX >= xMin && posX <= xMax && posY >= yMin && posY <= yMax) {
+      return true;
+    }
+  }
+
+  return false;
 }

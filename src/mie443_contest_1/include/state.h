@@ -97,6 +97,13 @@ private:
   Checks current vector to ensure that there aren't any duplicates
   */
   void updateVisitedPos();
+
+  /*
+  Checks to see if the robot has been here before.
+
+  Uses a box as a tolerance
+  */
+  bool checkVisit(float posX, float posY, float tol = 0.5);
 };
 
 #endif // STATE_H
