@@ -119,7 +119,6 @@ bool robotState::moveToWall(float targetDist, float speed) {
     setVelCmd(0, 0);
     return true;
   }
-  {}
 }
 
 bool robotState::checkVisit(float posX, float posY, float tol) {
