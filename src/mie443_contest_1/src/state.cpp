@@ -121,16 +121,17 @@ BumperHit robotState::checkBumper() {
         (stateVars.bumper[bumperID] == kobuki_msgs::BumperEvent::PRESSED);
     bumperNum = bumperID;
   }
-  if (bumperPressed = false) {
+  if (!bumperPressed) {
+    ROS_INFO("All good :)");
     return BumperHit::NOTHING;
   } else {
-    if (bumperNum = 0) {
+    if (bumperNum == 0) {
       ROS_INFO("I'm hit at left!");
       return BumperHit::LEFT;
-    } else if (bumperNum = 1) {
+    } else if (bumperNum == 1) {
       ROS_INFO("I'm hit at center!");
       return BumperHit::CENTER;
-    } else if (bumperNum = 2) {
+    } else if (bumperNum == 2) {
       ROS_INFO("I'm hit at right!");
       return BumperHit::RIGHT;
     }
