@@ -115,7 +115,7 @@ bool robotState::moveToWall(float targetDist, float speed) {
   }
 }
 
-int robotState::bumperHit(bool bumperPressed) {
+BumperHit robotState::bumperHit(bool bumperPressed) {
   // bool bumperPressed = false;
   int bumperNum = 0;
   for (uint32_t bumperID = 0; bumperID < 3; ++bumperID) {
@@ -124,19 +124,25 @@ int robotState::bumperHit(bool bumperPressed) {
     bumperNum = bumperID;
   }
   if (bumperPressed = false) {
-    return -1;
+    return BumperHit::NOTHING;
   } else {
-    return bumperNum;
+    if (bumperNum = 0) {
+      return BumperHit::LEFT;
+    } else if (bumperNum = 1) {
+      return BumperHit::CENTER;
+    } else if (bumperNum = 2) {
+      return BumperHit::RIGHT;
+    }
   }
 }
 
 // prior to running this, need to make sure bumperPressed = true. if not
 // pressed (-1), no need to run
 
-bool robotState::backAway(int bumperNum) {
+bool robotState::backAway(BumperHit bumper) {
   // back away until x distance in front of wall
 
-  if (bumperNum != -1) {
+  if (bumper != NOTHING) {
     while (stateVars.wallDist < 0.25) {
       setVelCmd(0, -0.1);
     }
