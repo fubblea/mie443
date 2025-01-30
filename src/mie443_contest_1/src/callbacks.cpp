@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "contest1.h"
 
 StateVars::StateVars() {

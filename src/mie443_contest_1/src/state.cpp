@@ -4,6 +4,21 @@
 // Angle tolerance
 const float ANGLE_TOL = 1; // deg
 
+void robotState::updateVisitedPos() {
+  // Add the current position to the vec of already visited positions
+  std::tuple<float, float> currPos =
+      std::make_tuple(stateVars.posX, stateVars.posY);
+  int cnt = std::count(stateVars.visitedPos.begin(), stateVars.visitedPos.end(),
+                       currPos);
+
+  // Add only if not previously added
+  if (cnt < 0) {
+    stateVars.visitedPos.push_back(currPos);
+    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
+             std::get<1>(currPos));
+  }
+}
+
 void robotState::update() {
   switch (currState) {
 
@@ -31,12 +46,14 @@ void robotState::update() {
     }
     break;
 
-  // Prpgram end
+  // Program end
   case State::END:
     setVelCmd(0, 0);
     ROS_INFO("Program End");
     break;
   }
+
+  updateVisitedPos();
 }
 
 /*

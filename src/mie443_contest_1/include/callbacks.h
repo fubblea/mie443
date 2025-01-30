@@ -1,6 +1,9 @@
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
+#include <tuple>
+#include <vector>
+
 /*
 Variables that represent the current robot state
 */
@@ -17,6 +20,9 @@ public:
 
   // Bumper Variables
   uint8_t bumper[NUM_BUMPERS]; // Bumper states
+
+  // Vector of previously visited positions
+  std::vector<std::tuple<float, float>> visitedPos;
 
   // Construct with default values
   StateVars();

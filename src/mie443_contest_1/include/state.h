@@ -90,6 +90,13 @@ private:
   the target distance
   */
   bool moveToWall(float targetDist, float speed = MAX_LIN_VEL);
+
+  /*
+  Update the vector of visited positions with the current position.
+
+  Checks current vector to ensure that there aren't any duplicates
+  */
+  void updateVisitedPos();
 };
 
 #endif // STATE_H
