@@ -6,9 +6,7 @@
 /*
 Possible robot states.
 */
-enum State { START, SPIN, IM_HIT, IM_SLOW, IM_SPEED, END };
-
-enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
+enum State { START, SPIN, THINK, IM_HIT, IM_SLOW, IM_SPEED, END };
 
 /*
 Angular and linear velocity
@@ -115,7 +113,7 @@ private:
   /*
   Move robot back from the hit
   */
-  bool backAway(BumperHit bumper);
+  bool backAway();
 
   /*
   Moves until the bumper is hit

@@ -30,20 +30,99 @@ void robotState::update() {
   // Program start
   case State::START:
     setVelCmd(0, 0);
-    setState(State::IM_SPEED);
+    if (checkBumper() != BumperHit::NOTHING) {
+      setState(State::IM_HIT);
+    } else {
+      setState(State::SPIN);
+    }
+
     break;
 
   // Spinning around
   case State::SPIN:
     if (doTurn(359, stateRef.yaw, false)) {
-      setState(State::IM_SPEED);
+      setState(State::THINK);
+    }
+    break;
+
+  // Think about what to do
+  case State::THINK:
+    ROS_INFO("Contemplating life");
+    if (checkBumper() != BumperHit::NOTHING) {
+      if (stateVars.wallDist > 0.455) {
+        setState(State::IM_SPEED);
+      } else {
+        setState(State::IM_SLOW);
+      }
+    } else {
+      setState(State::IM_HIT);
     }
     break;
 
   // Speed to the wall
   case State::IM_SPEED:
-    if (moveTilBumped()) {
-      setState(State::END);
+    ROS_INFO("Speed to the wall");
+    if (moveToWall(0, MAX_LIN_VEL)) {
+      setState(State::THINK);
+    }
+    break;
+
+  // Slowly creep to wall
+  case State::IM_SLOW:
+    ROS_INFO("Creeping to the wall");
+    if (moveTilBumped(SLOW_LIN_VEL)) {
+      setState(State::THINK);
+    }
+    break;
+
+  case State::IM_HIT:
+    if (backAway()) {
+      bool allSorted = false;
+      if (checkVisit(stateRef.posX, stateRef.posY)) {
+        switch (stateRef.bumperHit) {
+
+        case BumperHit::LEFT:
+          allSorted = doTurn(-45, stateVars.yaw, true);
+          break;
+
+        case BumperHit::RIGHT:
+          allSorted = doTurn(45, stateVars.yaw, true);
+          break;
+
+        case BumperHit::CENTER:
+          allSorted = doTurn(90, stateVars.yaw, true);
+          break;
+
+        case BumperHit::NOTHING:
+          ROS_ERROR("This should not be nothing!!!!");
+          ros::shutdown();
+          break;
+        }
+      } else {
+        switch (stateRef.bumperHit) {
+
+        case BumperHit::LEFT:
+          allSorted = doTurn(135, stateVars.yaw, true);
+          break;
+
+        case BumperHit::RIGHT:
+          allSorted = doTurn(-135, stateVars.yaw, true);
+          break;
+
+        case BumperHit::CENTER:
+          allSorted = doTurn(-90, stateVars.yaw, true);
+          break;
+
+        case BumperHit::NOTHING:
+          ROS_ERROR("This should not be nothing!!!!");
+          ros::shutdown();
+          break;
+        }
+      }
+
+      if (allSorted) {
+        setState(State::THINK);
+      }
     }
     break;
 
@@ -128,30 +207,25 @@ BumperHit robotState::checkBumper() {
     bumperNum = bumperID;
   }
   if (!bumperPressed) {
-    ROS_INFO("All good :)");
-    return BumperHit::NOTHING;
+    stateVars.bumperHit = BumperHit::NOTHING;
   } else {
     if (bumperNum == 0) {
       ROS_INFO("I'm hit at left!");
-      return BumperHit::LEFT;
+      stateVars.bumperHit = BumperHit::LEFT;
     } else if (bumperNum == 1) {
       ROS_INFO("I'm hit at center!");
-      return BumperHit::CENTER;
+      stateVars.bumperHit = BumperHit::CENTER;
     } else if (bumperNum == 2) {
       ROS_INFO("I'm hit at right!");
-      return BumperHit::RIGHT;
+      stateVars.bumperHit = BumperHit::RIGHT;
     }
   }
+
+  return stateVars.bumperHit;
 }
 
-bool robotState::backAway(BumperHit bumper) {
-  // back away until x distance in front of wall
-
-  if (bumper != NOTHING) {
-    while (stateVars.wallDist < 0.25) {
-      setVelCmd(0, -0.1);
-    }
-  }
+bool robotState::backAway() {
+  // setVelCmd(0, SLOW_LIN_VEL);
   return true;
 }
 

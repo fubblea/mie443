@@ -4,8 +4,10 @@
 // CONSTANTS
 
 const float MAX_LIN_VEL = 0.25; // Maximum linear velocity in [m/s]
-const float MAX_ANG_VEL = 15;   // Maximum angular velocity in [deg/s]
-const int NUM_BUMPERS = 3;      // Number of bumpers
+const float SLOW_LIN_VEL = 0.1; // Slow linear velocity in [m/s]
+
+const float MAX_ANG_VEL = 15; // Maximum angular velocity in [deg/s]
+const int NUM_BUMPERS = 3;    // Number of bumpers
 
 // EXTERNAL HEADER FILES
 

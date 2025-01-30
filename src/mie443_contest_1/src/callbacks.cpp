@@ -9,6 +9,7 @@ StateVars::StateVars() {
   wallAngle = 0;
 
   bumper[0] = bumper[1] = bumper[2] = kobuki_msgs::BumperEvent::RELEASED;
+  bumperHit = BumperHit::NOTHING;
 }
 
 void StateVars::bumperCallback(const kobuki_msgs::BumperEvent::ConstPtr &msg) {

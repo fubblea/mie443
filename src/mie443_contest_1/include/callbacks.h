@@ -4,6 +4,13 @@
 #include <tuple>
 #include <vector>
 
+#include "contest1.h"
+
+/*
+Possible bumper hit states
+*/
+enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
+
 /*
 Variables that represent the current robot state
 */
@@ -23,6 +30,9 @@ public:
 
   // Vector of previously visited positions
   std::vector<std::tuple<float, float>> visitedPos;
+
+  // The bumper that is hit
+  BumperHit bumperHit;
 
   // Construct with default values
   StateVars();
