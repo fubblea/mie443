@@ -48,7 +48,7 @@ void robotState::update() {
   // Think about what to do
   case State::THINK:
     ROS_INFO("Contemplating life");
-    if (checkBumper() != BumperHit::NOTHING) {
+    if (checkBumper() == BumperHit::NOTHING) {
       if (stateVars.wallDist > 0.455) {
         setState(State::IM_SPEED);
       } else {
