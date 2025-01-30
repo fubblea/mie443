@@ -49,7 +49,7 @@ void robotState::update() {
   case State::THINK:
     ROS_INFO("Contemplating life");
     if (checkBumper() == BumperHit::NOTHING) {
-      if (stateVars.wallDist > 0.45) {
+      if (stateVars.wallDist >= 0.455) {
         setState(State::IM_SPEED);
       } else {
         setState(State::IM_SLOW);
@@ -181,17 +181,18 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
 }
 
 bool robotState::moveToWall(float targetDist, float speed) {
-  if (targetDist < 0.455) {
-    targetDist = 0.455;
-    ROS_WARN("Distance to obstacle is less than 0.455m. Setting Target "
+  if (targetDist < 0.45) {
+    targetDist = 0.45;
+    ROS_WARN("Distance to obstacle is less than %fm. Setting Target "
              "Distance to: %f",
-             targetDist);
+             targetDist, targetDist);
   }
   if (stateVars.wallDist > targetDist) {
     ROS_INFO("Moving to wall. Distance: %f", stateVars.wallDist);
     setVelCmd(0, speed);
     return false;
   } else {
+    ROS_INFO("I'm at the wall. Distance: %f", stateVars.wallDist);
     setVelCmd(0, 0);
     return true;
   }
@@ -228,8 +229,8 @@ bool robotState::backAway(float deisredDist) {
   float current_x = stateRef.posX;
   float current_y = stateRef.posY;
   setVelCmd(0, SLOW_LIN_VEL);
-  float distMoved = sqrt(powf(2, (stateVars.posX - current_x)) +
-                         powf(2, (stateVars.posY - current_y)));
+  float distMoved = sqrt(powf((stateVars.posX - current_x), 2) +
+                         powf((stateVars.posY - current_y), 2));
   if (distMoved == deisredDist) {
     return true;
   } else {
