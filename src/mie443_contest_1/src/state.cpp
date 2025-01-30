@@ -49,7 +49,7 @@ void robotState::update() {
   case State::THINK:
     ROS_INFO("Contemplating life");
     if (checkBumper() == BumperHit::NOTHING) {
-      if (stateVars.wallDist > 0.455) {
+      if (stateVars.wallDist > 0.45) {
         setState(State::IM_SPEED);
       } else {
         setState(State::IM_SLOW);
@@ -76,7 +76,7 @@ void robotState::update() {
     break;
 
   case State::IM_HIT:
-    if (backAway()) {
+    if (backAway(0.1)) {
       bool allSorted = false;
       if (checkVisit(stateRef.posX, stateRef.posY)) {
         switch (stateRef.bumperHit) {
@@ -224,9 +224,17 @@ BumperHit robotState::checkBumper() {
   return stateVars.bumperHit;
 }
 
-bool robotState::backAway() {
-  // setVelCmd(0, SLOW_LIN_VEL);
-  return true;
+bool robotState::backAway(float deisredDist) {
+  float current_x = stateRef.posX;
+  float current_y = stateRef.posY;
+  setVelCmd(0, SLOW_LIN_VEL);
+  float distMoved = sqrt(powf(2, (stateVars.posX - current_x)) +
+                         powf(2, (stateVars.posY - current_y)));
+  if (distMoved == deisredDist) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool robotState::checkVisit(float posX, float posY, float tol) {

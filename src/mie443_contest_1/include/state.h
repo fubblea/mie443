@@ -113,7 +113,7 @@ private:
   /*
   Move robot back from the hit
   */
-  bool backAway();
+  bool backAway(float desiredDist);
 
   /*
   Moves until the bumper is hit
