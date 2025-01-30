@@ -78,7 +78,10 @@ public:
 
 private:
   /*
-  Turn the robot by the specified degrees wrt to a reference bearing
+  Turns the robot to a target angle with respect to a reference point.
+
+  If `quick` is true, it will find the shortest rotation to the target angle,
+  otherwise, it do the entire specified rotation.
   */
   bool doTurn(float relativeTarget, float reference, bool quick = true);
 
