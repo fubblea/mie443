@@ -86,9 +86,10 @@ private:
   bool doTurn(float relativeTarget, float reference, bool quick = true);
 
   /*
-  Move robot straight until the wall is within the target distance
+  Move robot straight at the specified speed until the wall is within
+  the target distance
   */
-  bool moveToWall(float targetDist);
+  bool moveToWall(float targetDist, float speed = MAX_LIN_VEL);
 };
 
 #endif // STATE_H

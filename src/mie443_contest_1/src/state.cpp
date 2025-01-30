@@ -69,10 +69,10 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
   return isComplete;
 }
 
-bool robotState::moveToWall(float targetDist) {
+bool robotState::moveToWall(float targetDist, float speed) {
   if (stateVars.wallDist > targetDist) {
     ROS_INFO("Moving to wall. Distance: %f", stateVars.wallDist);
-    setVelCmd(0, MAX_LIN_VEL);
+    setVelCmd(0, speed);
     return false;
   } else {
     setVelCmd(0, 0);
