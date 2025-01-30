@@ -6,7 +6,7 @@
 /*
 Possible robot states.
 */
-enum State { START, SPIN, FIND_WALL, END };
+enum State { START, SPIN, IM_HIT, IM_SLOW, IM_SPEED, END };
 
 enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
 
@@ -110,12 +110,17 @@ private:
   /*
   Determine if a bumper is hit and which bumper is hit
   */
-  BumperHit bumperHit(bool bumperPressed);
+  BumperHit checkBumper();
 
   /*
   Move robot back from the hit
   */
   bool backAway(BumperHit bumper);
+
+  /*
+  Moves until the bumper is hit
+  */
+  bool moveTilBumped(float vel = MAX_LIN_VEL);
 };
 
 #endif // STATE_H

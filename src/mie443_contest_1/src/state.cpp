@@ -30,31 +30,28 @@ void robotState::update() {
   // Program start
   case State::START:
     setVelCmd(0, 0);
-    setState(State::FIND_WALL);
+    setState(State::IM_SPEED);
     break;
 
   // Spinning around
   case State::SPIN:
     if (doTurn(359, stateRef.yaw, false)) {
-      setState(State::FIND_WALL);
+      setState(State::IM_SPEED);
     }
     break;
 
-  // Finding nearest wall
-  case State::FIND_WALL:
-    // First, turn left 90 deg
-    if (doTurn(90, stateRef.yaw, true)) {
-      // Then, move up to the wall
-      if (moveToWall(0.2)) {
-        setState(State::END);
-      }
+  // Speed to the wall
+  case State::IM_SPEED:
+    if (moveTilBumped()) {
+      setState(State::END);
     }
     break;
 
   // Program end
   case State::END:
     setVelCmd(0, 0);
-    ROS_INFO("Program End");
+    ROS_INFO("Aight I'm outta here");
+    ros::shutdown();
     break;
   }
 
@@ -115,9 +112,10 @@ bool robotState::moveToWall(float targetDist, float speed) {
   }
 }
 
-BumperHit robotState::bumperHit(bool bumperPressed) {
-  // bool bumperPressed = false;
+BumperHit robotState::checkBumper() {
+  bool bumperPressed = false;
   int bumperNum = 0;
+
   for (uint32_t bumperID = 0; bumperID < 3; ++bumperID) {
     bumperPressed |=
         (stateVars.bumper[bumperID] == kobuki_msgs::BumperEvent::PRESSED);
@@ -127,17 +125,17 @@ BumperHit robotState::bumperHit(bool bumperPressed) {
     return BumperHit::NOTHING;
   } else {
     if (bumperNum = 0) {
+      ROS_INFO("I'm hit at left!");
       return BumperHit::LEFT;
     } else if (bumperNum = 1) {
+      ROS_INFO("I'm hit at center!");
       return BumperHit::CENTER;
     } else if (bumperNum = 2) {
+      ROS_INFO("I'm hit at right!");
       return BumperHit::RIGHT;
     }
   }
 }
-
-// prior to running this, need to make sure bumperPressed = true. if not
-// pressed (-1), no need to run
 
 bool robotState::backAway(BumperHit bumper) {
   // back away until x distance in front of wall
@@ -168,4 +166,18 @@ bool robotState::checkVisit(float posX, float posY, float tol) {
   }
 
   return false;
+}
+
+bool robotState::moveTilBumped(float vel) {
+  switch (checkBumper()) {
+
+  case BumperHit::NOTHING:
+    setVelCmd(0, vel);
+    ROS_INFO("Moving till hit at %f m/s", vel);
+    return false;
+
+  default:
+    setVelCmd(0, 0);
+    return true;
+  }
 }
