@@ -102,6 +102,12 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
 }
 
 bool robotState::moveToWall(float targetDist, float speed) {
+  if (targetDist < 0.455) {
+    targetDist = 0.455;
+    ROS_WARN("Distance to obstacle is less than 0.455m. Setting Target "
+             "Distance to: %f",
+             targetDist);
+  }
   if (stateVars.wallDist > targetDist) {
     ROS_INFO("Moving to wall. Distance: %f", stateVars.wallDist);
     setVelCmd(0, speed);
