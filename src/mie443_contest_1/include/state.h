@@ -53,7 +53,18 @@ public:
     ROS_INFO("Changing state from %i to %i", currState, newState);
 
     // Take snapshot of current state to use as reference
-    stateRef = stateVars;
+    stateRef.posX = stateVars.posX;
+    stateRef.posY = stateVars.posY;
+    stateRef.yaw = stateVars.yaw;
+
+    stateRef.wallDist = stateVars.wallDist;
+    stateRef.wallAngle = stateVars.wallAngle;
+
+    stateRef.bumper[0] = stateVars.bumper[0];
+    stateRef.bumper[1] = stateVars.bumper[1];
+    stateRef.bumper[2] = stateVars.bumper[2];
+
+    stateRef.bumperHit = stateVars.bumperHit;
 
     // Update the state
     currState = newState;

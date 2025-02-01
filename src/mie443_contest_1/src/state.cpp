@@ -78,21 +78,23 @@ void robotState::update() {
     break;
 
   case State::IM_HIT:
+    ROS_INFO("I was hit at bumper %i. Reorienting.", stateRef.bumperHit);
     if (backAway(0.1)) {
       bool allSorted = false;
       if (checkVisit(stateRef.posX, stateRef.posY)) {
+        ROS_INFO("I've been here before");
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(-45, stateVars.yaw, true);
+          allSorted = doTurn(-45, stateRef.yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(45, stateVars.yaw, true);
+          allSorted = doTurn(45, stateRef.yaw, true);
           break;
 
         case BumperHit::CENTER:
-          allSorted = doTurn(90, stateVars.yaw, true);
+          allSorted = doTurn(90, stateRef.yaw, true);
           break;
 
         case BumperHit::NOTHING:
@@ -101,18 +103,19 @@ void robotState::update() {
           break;
         }
       } else {
+        ROS_INFO("I've NOT been here before");
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(135, stateVars.yaw, true);
+          allSorted = doTurn(135, stateRef.yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(-135, stateVars.yaw, true);
+          allSorted = doTurn(-135, stateRef.yaw, true);
           break;
 
         case BumperHit::CENTER:
-          allSorted = doTurn(-90, stateVars.yaw, true);
+          allSorted = doTurn(-90, stateRef.yaw, true);
           break;
 
         case BumperHit::NOTHING:
