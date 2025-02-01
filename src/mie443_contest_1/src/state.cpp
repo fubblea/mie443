@@ -24,6 +24,8 @@ void robotState::updateVisitedPos() {
   }
 }
 
+// ===================STATE MACHINE =============================
+
 void robotState::update() {
   switch (currState) {
 
@@ -49,7 +51,7 @@ void robotState::update() {
   case State::THINK:
     ROS_INFO("Contemplating life");
     if (checkBumper() == BumperHit::NOTHING) {
-      if (stateVars.wallDist >= 0.455) {
+      if (stateVars.wallDist >= 0.8) {
         setState(State::IM_SPEED);
       } else {
         setState(State::IM_SLOW);
@@ -137,6 +139,8 @@ void robotState::update() {
   updateVisitedPos();
 }
 
+// ===================STATE MACHINE =============================
+
 /*
 Normalize an angle to be in the range of [-180, +180]
 */
@@ -157,7 +161,7 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
   float error = normalizeAngle(stateVars.yaw - targetBearing);
 
   if (std::fabs(error) > ANGLE_TOL) {
-    ROS_INFO("Turning to %f deg. Error: %f (%f) deg", targetBearing, error,
+    ROS_INFO("Turning to %f deg. Delta: %f (%f) deg", targetBearing, error,
              stateVars.yaw);
 
     float turn_speed = MAX_ANG_VEL;
@@ -225,16 +229,19 @@ BumperHit robotState::checkBumper() {
   return stateVars.bumperHit;
 }
 
-bool robotState::backAway(float deisredDist) {
+bool robotState::backAway(float desiredDist) {
   float current_x = stateRef.posX;
   float current_y = stateRef.posY;
-  setVelCmd(0, SLOW_LIN_VEL);
+
   float distMoved = sqrt(powf((stateVars.posX - current_x), 2) +
                          powf((stateVars.posY - current_y), 2));
-  if (distMoved == deisredDist) {
-    return true;
-  } else {
+
+  if (distMoved < desiredDist) {
+    setVelCmd(0, -SLOW_LIN_VEL);
     return false;
+  } else {
+    setVelCmd(0, 0);
+    return true;
   }
 }
 
