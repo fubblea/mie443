@@ -57,7 +57,6 @@ void robotState::update() {
         setState(State::IM_SLOW);
       }
     } else {
-      ROS_INFO("Bumper state pre switch: %i", stateVars.bumperHit);
       setState(State::IM_HIT);
     }
     break;
@@ -87,15 +86,15 @@ void robotState::update() {
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(-45, stateVars.yaw, true);
+          allSorted = doTurn(-45, stateRef.yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(45, stateVars.yaw, true);
+          allSorted = doTurn(45, stateRef.yaw, true);
           break;
 
         case BumperHit::CENTER:
-          allSorted = doTurn(90, stateVars.yaw, true);
+          allSorted = doTurn(90, stateRef.yaw, true);
           break;
 
         case BumperHit::NOTHING:
@@ -108,15 +107,15 @@ void robotState::update() {
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(135, stateVars.yaw, true);
+          allSorted = doTurn(135, stateRef.yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(-135, stateVars.yaw, true);
+          allSorted = doTurn(-135, stateRef.yaw, true);
           break;
 
         case BumperHit::CENTER:
-          allSorted = doTurn(-90, stateVars.yaw, true);
+          allSorted = doTurn(-90, stateRef.yaw, true);
           break;
 
         case BumperHit::NOTHING:
