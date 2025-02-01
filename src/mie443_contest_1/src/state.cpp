@@ -57,6 +57,7 @@ void robotState::update() {
         setState(State::IM_SLOW);
       }
     } else {
+      ROS_INFO("Bumper state pre switch: %i", stateVars.bumperHit);
       setState(State::IM_HIT);
     }
     break;
@@ -78,9 +79,11 @@ void robotState::update() {
     break;
 
   case State::IM_HIT:
+    ROS_INFO("I was hit at bumper %i. Reorienting.", stateRef.bumperHit);
     if (backAway(0.1)) {
       bool allSorted = false;
       if (checkVisit(stateRef.posX, stateRef.posY)) {
+        ROS_INFO("I've been here before");
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:
@@ -101,6 +104,7 @@ void robotState::update() {
           break;
         }
       } else {
+        ROS_INFO("I've NOT been here before");
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:

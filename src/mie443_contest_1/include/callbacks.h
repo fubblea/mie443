@@ -37,21 +37,6 @@ public:
   // Construct with default values
   StateVars();
 
-  // Clone another StateVars
-  StateVars(const StateVars &rhs) {
-    posX = rhs.posX;
-    posY = rhs.posY;
-    yaw = rhs.yaw;
-
-    wallDist = rhs.wallDist;
-    wallAngle = rhs.wallAngle;
-
-    bumper[0] = rhs.bumper[0];
-    bumper[1] = rhs.bumper[1];
-    bumper[2] = rhs.bumper[2];
-  };
-  StateVars &operator=(const StateVars &rhs){};
-
   // Callbacks
   /*
   Callback for the turtlebot bumper
