@@ -130,7 +130,7 @@ void robotState::update() {
       }
 
       if (allSorted) {
-        setState(State::THINK);
+        setState(State::SPIN);
       }
     }
     break;
