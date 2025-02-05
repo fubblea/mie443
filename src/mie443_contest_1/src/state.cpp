@@ -86,11 +86,11 @@ void robotState::update() {
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(45, stateRef.yaw, true);
+          allSorted = doTurn(90, stateRef.yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(-45, stateRef.yaw, true);
+          allSorted = doTurn(-90, stateRef.yaw, true);
           break;
 
         case BumperHit::CENTER:
@@ -107,11 +107,11 @@ void robotState::update() {
         switch (stateRef.bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(-135, stateRef.yaw, true);
+          allSorted = doTurn(-90, stateRef.yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(135, stateRef.yaw, true);
+          allSorted = doTurn(90, stateRef.yaw, true);
           break;
 
         case BumperHit::CENTER:
