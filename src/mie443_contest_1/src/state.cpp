@@ -54,8 +54,10 @@ void robotState::update() {
     ROS_INFO("Contemplating life");
     if (checkBumper() == BumperHit::NOTHING) {
       if (stateVars.wallDist >= 0.6) {
+        ROS_INFO("Distance to wall is %f m, going FAST", stateVars.wallDist);
         setState(State::IM_SPEED);
       } else {
+        ROS_INFO("Distance to wall is %f m, going SLOW", stateVars.wallDist);
         setState(State::IM_SLOW);
       }
     } else {
@@ -73,8 +75,17 @@ void robotState::update() {
 
   // Slowly creep to wall
   case State::IM_SLOW:
-    ROS_INFO("Creeping to the wall");
-    if (moveTilBumped(SLOW_LIN_VEL)) {
+    ROS_INFO("Creeping to the wall. Distance to wall is %f m",
+             stateVars.wallDist);
+    if (stateVars.wallDist <= 0.6) {
+
+      if (moveTilBumped(SLOW_LIN_VEL)) {
+        setState(State::THINK);
+      }
+    } else {
+      ROS_INFO(
+          "We should be far enough now. Speeding up. Distance to wall is %f",
+          stateVars.wallDist);
       setState(State::THINK);
     }
     break;
@@ -82,7 +93,7 @@ void robotState::update() {
   case State::IM_HIT:
     ROS_INFO("I was hit at bumper %i. Reorienting.",
              stateHist.back().bumperHit);
-    if (backAway(0.1)) {
+    if (backAway(0.3)) {
       bool allSorted = false;
       if (checkVisit(stateHist.at(stateHist.size() - 2).posX,
                      stateHist.at(stateHist.size() - 2).posY)) {
