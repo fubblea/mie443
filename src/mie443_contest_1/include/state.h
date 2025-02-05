@@ -2,6 +2,7 @@
 #define STATE_H
 
 #include "contest1.h"
+#include <vector>
 
 /*
 Possible robot states.
@@ -30,7 +31,7 @@ private:
 
 public:
   StateVars stateVars = StateVars(); // Current state variables
-  StateVars stateRef = StateVars();  // State reference point
+  std::vector<StateVars> stateHist;  // State reference point
 
   // Getters
 
@@ -53,6 +54,7 @@ public:
     ROS_INFO("Changing state from %i to %i", currState, newState);
 
     // Take snapshot of current state to use as reference
+    StateVars stateRef = StateVars();
     stateRef.posX = stateVars.posX;
     stateRef.posY = stateVars.posY;
     stateRef.yaw = stateVars.yaw;
@@ -65,6 +67,8 @@ public:
     stateRef.bumper[2] = stateVars.bumper[2];
 
     stateRef.bumperHit = stateVars.bumperHit;
+
+    stateHist.push_back(stateRef);
 
     // Update the state
     currState = newState;

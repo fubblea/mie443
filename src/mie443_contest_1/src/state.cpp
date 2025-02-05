@@ -31,7 +31,9 @@ void robotState::update() {
 
   // Program start
   case State::START:
+    stateHist.push_back(StateVars());
     setVelCmd(0, 0);
+
     if (checkBumper() != BumperHit::NOTHING) {
       setState(State::IM_HIT);
     } else {
@@ -42,7 +44,7 @@ void robotState::update() {
 
   // Spinning around
   case State::SPIN:
-    if (doTurn(359, stateRef.yaw, false)) {
+    if (doTurn(359, stateHist.back().yaw, false)) {
       setState(State::THINK);
     }
     break;
@@ -78,23 +80,25 @@ void robotState::update() {
     break;
 
   case State::IM_HIT:
-    ROS_INFO("I was hit at bumper %i. Reorienting.", stateRef.bumperHit);
+    ROS_INFO("I was hit at bumper %i. Reorienting.",
+             stateHist.back().bumperHit);
     if (backAway(0.1)) {
       bool allSorted = false;
-      if (checkVisit(stateRef.posX, stateRef.posY)) {
+      if (checkVisit(stateHist.at(stateHist.size() - 2).posX,
+                     stateHist.at(stateHist.size() - 2).posY)) {
         ROS_INFO("I've been here before");
-        switch (stateRef.bumperHit) {
+        switch (stateHist.back().bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(90, stateRef.yaw, true);
+          allSorted = doTurn(90, stateHist.back().yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(-90, stateRef.yaw, true);
+          allSorted = doTurn(-90, stateHist.back().yaw, true);
           break;
 
         case BumperHit::CENTER:
-          allSorted = doTurn(-90, stateRef.yaw, true);
+          allSorted = doTurn(-90, stateHist.back().yaw, true);
           break;
 
         case BumperHit::NOTHING:
@@ -104,18 +108,18 @@ void robotState::update() {
         }
       } else {
         ROS_INFO("I've NOT been here before");
-        switch (stateRef.bumperHit) {
+        switch (stateHist.back().bumperHit) {
 
         case BumperHit::LEFT:
-          allSorted = doTurn(-90, stateRef.yaw, true);
+          allSorted = doTurn(-90, stateHist.back().yaw, true);
           break;
 
         case BumperHit::RIGHT:
-          allSorted = doTurn(90, stateRef.yaw, true);
+          allSorted = doTurn(90, stateHist.back().yaw, true);
           break;
 
         case BumperHit::CENTER:
-          allSorted = doTurn(90, stateRef.yaw, true);
+          allSorted = doTurn(90, stateHist.back().yaw, true);
           break;
 
         case BumperHit::NOTHING:
@@ -233,8 +237,8 @@ BumperHit robotState::checkBumper() {
 }
 
 bool robotState::backAway(float desiredDist) {
-  float current_x = stateRef.posX;
-  float current_y = stateRef.posY;
+  float current_x = stateHist.back().posX;
+  float current_y = stateHist.back().posY;
 
   float distMoved = sqrt(powf((stateVars.posX - current_x), 2) +
                          powf((stateVars.posY - current_y), 2));
