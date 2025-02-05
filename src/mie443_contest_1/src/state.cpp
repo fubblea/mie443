@@ -44,7 +44,7 @@ void robotState::update() {
 
   // Spinning around
   case State::SPIN:
-    if (doTurn(359, stateHist.back().yaw, false)) {
+    if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
       setState(State::THINK);
     }
     break;
