@@ -56,10 +56,13 @@ void robotState::update() {
         ROS_INFO("Distance to wall is %f m, going FAST", stateVars.wallDist);
         setState(State::IM_SPEED);
       } else {
-        ROS_INFO("Distance to wall is %f m, going SLOW", stateVars.wallDist);
-        setState(State::IM_SLOW);
+        // ROS_INFO("Distance to wall is %f m, going SLOW", stateVars.wallDist);
+        // setState(State::IM_SLOW);
+        ROS_INFO("I am close to wall, time to turn");
+        setState(State::IM_HIT);
       }
     } else {
+      ROS_INFO("I am close to wall, time to turn");
       setState(State::IM_HIT);
     }
     break;
@@ -84,7 +87,7 @@ void robotState::update() {
   case State::IM_HIT:
     ROS_INFO("I was hit at bumper %i. Reorienting.",
              stateHist.back().bumperHit);
-    if (backAway(0.3)) {
+    if (backAway(0.1)) {
       bool allSorted = false;
 
       // Check if this position has been preivously visited
