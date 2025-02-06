@@ -31,7 +31,6 @@ void robotState::update() {
 
   // Program start
   case State::START:
-    stateHist.push_back(StateVars());
     setVelCmd(0, 0);
 
     if (checkBumper() != BumperHit::NOTHING) {
