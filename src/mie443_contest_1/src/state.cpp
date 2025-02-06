@@ -2,7 +2,7 @@
 #include "contest1.h"
 
 // Angle tolerance
-const float ANGLE_TOL = 1; // deg
+const float ANGLE_TOL = 1.5; // deg
 
 Vel::Vel(float angular, float linear) {
   angular = angular;
