@@ -101,6 +101,7 @@ void robotState::update() {
         setState(State::IM_HIT);
       }
     } else {
+      ROS_INFO("I am close to wall, time to turn");
       setState(State::IM_HIT);
     }
     break;
@@ -109,7 +110,7 @@ void robotState::update() {
   case State::IM_SPEED:
     ROS_INFO("Speed to the wall");
     if (moveToWall(0, MAX_LIN_VEL)) {
-      setState(State::THINK);
+      setState(State::IM_HIT);
     }
     break;
 
