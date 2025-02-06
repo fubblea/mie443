@@ -1,6 +1,23 @@
 #ifndef CONTEST1_H
 #define CONTEST1_H
 
+// EXTERNAL HEADER FILES
+
+#include "ros/ros.h"
+#include <geometry_msgs/Twist.h>
+#include <kobuki_msgs/BumperEvent.h>
+#include <nav_msgs/Odometry.h>
+#include <ros/console.h>
+#include <sensor_msgs/LaserScan.h>
+#include <tf/transform_datatypes.h>
+
+#include <cmath>
+#include <stdio.h>
+#include <tuple>
+#include <vector>
+
+#include <chrono>
+
 // CONSTANTS
 
 const float MAX_LIN_VEL = 0.25; // Maximum linear velocity in [m/s]
@@ -16,21 +33,8 @@ const int NUM_BUMPERS = 3; // Number of bumpers
 
 const float MIN_WALL_DIST =
     0.46; // Minimum wall distance that the lidar can detect in [m]
-
-// EXTERNAL HEADER FILES
-
-#include "ros/ros.h"
-#include <geometry_msgs/Twist.h>
-#include <kobuki_msgs/BumperEvent.h>
-#include <nav_msgs/Odometry.h>
-#include <ros/console.h>
-#include <sensor_msgs/LaserScan.h>
-#include <tf/transform_datatypes.h>
-
-#include <cmath>
-#include <stdio.h>
-
-#include <chrono>
+const std::tuple<float, float> ANGLE_CONE =
+    std::make_tuple(-15, 15); // Angle cone for lidar detection[deg]
 
 // INTERAL HEADER FILES
 

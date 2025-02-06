@@ -1,9 +1,6 @@
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
-#include <tuple>
-#include <vector>
-
 #include "contest1.h"
 
 /*

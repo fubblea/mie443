@@ -2,7 +2,6 @@
 #define STATE_H
 
 #include "contest1.h"
-#include <vector>
 
 /*
 Possible robot states.
