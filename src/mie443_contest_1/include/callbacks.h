@@ -52,6 +52,11 @@ public:
   Callback for the turtlebot odometer
   */
   void odomCallback(const nav_msgs::Odometry::ConstPtr &msg);
+
+  /*
+  Callback for the turtlebot occupancy grid
+  */
+  void mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg);
 };
 
 #endif // CALLBACKS_H

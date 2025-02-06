@@ -54,3 +54,7 @@ void StateVars::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
   posY = msg->pose.pose.position.y;
   yaw = RAD2DEG(tf::getYaw(msg->pose.pose.orientation));
 }
+
+void StateVars::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg) {
+  ROS_INFO("Reading map at: %f", msg->info.resolution);
+}

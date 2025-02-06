@@ -12,9 +12,10 @@ find_package(catkin REQUIRED COMPONENTS
 	genmsg
 	image_transport
 	sensor_msgs
+	nav_msgs
 	kobuki_msgs)
 
-generate_messages(DEPENDENCIES sensor_msgs kobuki_msgs)
+generate_messages(DEPENDENCIES sensor_msgs kobuki_msgs nav_msgs)
 
 catkin_package()
 

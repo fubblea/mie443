@@ -4,8 +4,10 @@
 // EXTERNAL HEADER FILES
 
 #include "ros/ros.h"
+#include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Twist.h>
 #include <kobuki_msgs/BumperEvent.h>
+#include <nav_msgs/OccupancyGrid.h>
 #include <nav_msgs/Odometry.h>
 #include <ros/console.h>
 #include <sensor_msgs/LaserScan.h>

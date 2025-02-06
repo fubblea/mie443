@@ -6,6 +6,7 @@ int main(int argc, char **argv) {
 
   robotState state; // Initialize robot state machine
 
+  // Subscribers
   ros::Subscriber bumper_sub =
       nh.subscribe("mobile_base/events/bumper", 10, &StateVars::bumperCallback,
                    &state.stateVars);
@@ -13,9 +14,14 @@ int main(int argc, char **argv) {
       nh.subscribe("scan", 10, &StateVars::laserCallback, &state.stateVars);
   ros::Subscriber odom_sub =
       nh.subscribe("odom", 1, &StateVars::odomCallback, &state.stateVars);
+  ros::Subscriber map_sub =
+      nh.subscribe("map", 1, &StateVars::mapCallback, &state.stateVars);
 
+  // Publishers
   ros::Publisher vel_pub =
       nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
+  ros::Publisher goal_pub =
+      nh.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 1);
 
   ros::Rate loop_rate(20); // Processing frequency [Hz]
 
@@ -29,7 +35,7 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 480) {
     ros::spinOnce();
 
-    state.update();
+    // state.update();
 
     vel.angular.z = DEG2RAD(state.getVelCmd().angular);
     vel.linear.x = state.getVelCmd().linear;
