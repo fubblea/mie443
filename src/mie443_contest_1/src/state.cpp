@@ -26,13 +26,13 @@ void robotState::updateVisitedPos() {
 
 // ===================STATE MACHINE =============================
 
-void robotState::update() {
+void robotState::update(float secondsElapsed) {
   switch (currState) {
 
   // Program start
   case State::START:
     setVelCmd(0, 0);
-
+    secondsElapsed = 420;
     if (checkBumper() != BumperHit::NOTHING) {
       setState(State::IM_HIT);
     } else {
@@ -59,7 +59,13 @@ void robotState::update() {
         ROS_INFO("Distance to wall is %f m, going SLOW", stateVars.wallDist);
         setState(State::IM_SLOW);
       }
-    } else {
+
+    } else if (secondsElapsed == 420){
+      ROS_INFO("Time's running out");
+      setState(State::FOLLOW_WALL);
+    
+    } 
+    else {
       setState(State::IM_HIT);
     }
     break;
@@ -100,6 +106,11 @@ void robotState::update() {
         setState(State::SPIN);
       }
     }
+    break;
+  
+  case State::FOLLOW_WALL:
+    ROS_INFO("Times up! Following Wall");
+    followTillEnd(0.1);
     break;
 
   // Program end
@@ -159,7 +170,7 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
 }
 
 bool robotState::moveToWall(float targetDist, float speed) {
-  if (targetDist < 0.5) {
+  if (targetDist < MIN_LIDAR_DIST + 0.05) {
     targetDist = 0.5;
     ROS_WARN("Distance to obstacle is less than %fm. Setting Target "
              "Distance to: %f",
@@ -254,4 +265,20 @@ bool robotState::moveTilBumped(float vel) {
     setVelCmd(0, 0);
     return true;
   }
+}
+
+bool robotState::followTillEnd(float vel){
+  if (stateVars.wallDist > MIN_LIDAR_DIST + 0.2){
+    setVelCmd(0, MAX_LIN_VEL);
+    return true;
+  }else if (stateVars.wallDist < MIN_LIDAR_DIST -0.1){
+    backAway(0.1);
+    return true;
+  
+  }else{
+    doTurn(90, stateHist.back().yaw, true);
+    setVelCmd(0, vel);
+    return false;
+  }
+
 }

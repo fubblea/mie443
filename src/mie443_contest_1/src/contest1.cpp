@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 480) {
     ros::spinOnce();
 
-    state.update();
+    state.update(secondsElapsed);
 
     vel.angular.z = DEG2RAD(state.getVelCmd().angular);
     vel.linear.x = state.getVelCmd().linear;

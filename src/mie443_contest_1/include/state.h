@@ -7,7 +7,7 @@
 /*
 Possible robot states.
 */
-enum State { START, SPIN, THINK, IM_HIT, IM_SLOW, IM_SPEED, END };
+enum State { START, SPIN, THINK, IM_HIT, IM_SLOW, IM_SPEED, FOLLOW_WALL, END };
 
 /*
 Angular and linear velocity
@@ -89,7 +89,7 @@ public:
 
   Runs every loop iteration.
   */
-  void update();
+  void update(float secondsElapsed);
 
 private:
   /*
@@ -134,6 +134,8 @@ private:
   Moves until the bumper is hit
   */
   bool moveTilBumped(float vel = MAX_LIN_VEL);
+
+  bool followTillEnd(float vel);
 };
 
 #endif // STATE_H
