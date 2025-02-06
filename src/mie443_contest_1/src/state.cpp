@@ -89,26 +89,34 @@ void robotState::update() {
 
       // Check if this position has been previously visited
 
-      if (STUPID_RIGHT && stateVars.turnt > 2) {
-        allSorted = doTurn(-85, stateHist.back().yaw, true);
-        stateVars.turnt = 0;
-        ROS_INFO("Time to turn right!! Lit");
-      } else if (checkVisit(stateHist.back().posX, stateHist.back().posY), 1) {
-        ROS_INFO("I've been here before");
-        allSorted = doTurn(-85, stateHist.back().yaw, true);
-        if (STUPID_RIGHT) {
+      if (STUPID_RIGHT) {
+        if (stateVars.turnt > 2) {
+          allSorted = doTurn(-85, stateHist.back().yaw, true);
+          stateVars.turnt = 0;
+          ROS_INFO("Time to turn right!! Lit");
+        } else {
+          allSorted = doTurn(95, stateHist.back().yaw, true);
           stateVars.turnt++;
+          ROS_INFO("Turning left");
+        }
+
+        if (allSorted) {
+          setState(State::SPIN);
         }
       } else {
-        ROS_INFO("I've NOT been here before");
-        allSorted = doTurn(95, stateHist.back().yaw, true);
-        if (STUPID_RIGHT) {
-          stateVars.turnt++;
-        }
-      }
 
-      if (allSorted) {
-        setState(State::SPIN);
+        if (checkVisit(stateHist.back().posX, stateHist.back().posY), 1) {
+          ROS_INFO("I've been here before");
+          allSorted = doTurn(-85, stateHist.back().yaw, true);
+
+        } else {
+          ROS_INFO("I've NOT been here before");
+          allSorted = doTurn(95, stateHist.back().yaw, true);
+        }
+
+        if (allSorted) {
+          setState(State::SPIN);
+        }
       }
     }
     break;
