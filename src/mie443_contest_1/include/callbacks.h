@@ -34,6 +34,9 @@ public:
   // The bumper that is hit
   BumperHit bumperHit;
 
+  // Space either side of the robot. Used in CHECK_RIGHT/CHECK_LEFT
+  std::tuple<float, float> sideSpace;
+
   // Construct with default values
   StateVars();
 

@@ -7,7 +7,18 @@
 /*
 Possible robot states.
 */
-enum State { START, SPIN, THINK, IM_HIT, IM_SLOW, IM_SPEED, END };
+enum State {
+  START,
+  SPIN,
+  THINK,
+  IM_HIT,
+  IM_SLOW,
+  IM_SPEED,
+  CHECK_RIGHT,
+  CHECK_LEFT,
+  REORIENT,
+  END
+};
 
 /*
 Angular and linear velocity

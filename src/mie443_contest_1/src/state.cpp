@@ -1,9 +1,6 @@
 #include "state.h"
 #include "contest1.h"
 
-// Angle tolerance
-const float ANGLE_TOL = 1.5; // deg
-
 Vel::Vel(float angular, float linear) {
   angular = angular;
   linear = linear;
@@ -41,6 +38,49 @@ void robotState::update() {
 
     break;
 
+  // Check left side and record wall distance
+  case State::CHECK_LEFT:
+    ROS_INFO("Checking left side");
+
+    // Check the left side
+    if (doTurn(90, stateHist.back().yaw, false)) {
+      // Record the distance in front
+      std::get<0>(stateVars.sideSpace) = stateVars.wallDist;
+
+      ROS_INFO("Left side wallDist is: %f", std::get<0>(stateVars.sideSpace));
+      setState(State::CHECK_RIGHT);
+    }
+    break;
+
+  // Check right side and record wall distance
+  case State::CHECK_RIGHT:
+    ROS_INFO("Checking right side");
+
+    // Check the right side
+    if (doTurn(180, stateHist.back().yaw, false)) {
+      // Record the distance in front
+      std::get<1>(stateVars.sideSpace) = stateVars.wallDist;
+
+      ROS_INFO("Right side wallDist is: %f", std::get<1>(stateVars.sideSpace));
+      setState(State::REORIENT);
+    }
+    break;
+
+  // Reorient the bot depending on which side has more space
+  case State::REORIENT:
+
+    if (std::get<0>(stateVars.sideSpace) >= std::get<1>(stateVars.sideSpace)) {
+      ROS_INFO("Left side has more space. Flipping around");
+      if (doTurn(180, stateHist.back().yaw, false)) {
+        setState(State::THINK);
+      }
+    } else {
+      ROS_INFO("Right side has more space. Good to go");
+      setState(State::THINK);
+    }
+
+    break;
+
   // Spinning around
   case State::SPIN:
     if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
@@ -52,12 +92,13 @@ void robotState::update() {
   case State::THINK:
     ROS_INFO("Contemplating life");
     if (checkBumper() == BumperHit::NOTHING) {
-      if (stateVars.wallDist >= 0.6) {
+      if (stateVars.wallDist >= 0.5) {
         ROS_INFO("Distance to wall is %f m, going FAST", stateVars.wallDist);
         setState(State::IM_SPEED);
       } else {
-        ROS_INFO("Distance to wall is %f m, going SLOW", stateVars.wallDist);
-        setState(State::IM_SLOW);
+        ROS_INFO("Distance to wall is %f m, checking around",
+                 stateVars.wallDist);
+        setState(State::IM_HIT);
       }
     } else {
       setState(State::IM_HIT);
@@ -82,23 +123,10 @@ void robotState::update() {
     break;
 
   case State::IM_HIT:
-    ROS_INFO("I was hit at bumper %i. Reorienting.",
+    ROS_INFO("I was hit at bumper %i. Backing away.",
              stateHist.back().bumperHit);
-    if (backAway(0.3)) {
-      bool allSorted = false;
-
-      // Check if this position has been preivously visited
-      if (checkVisit(stateHist.back().posX, stateHist.back().posY), 1) {
-        ROS_INFO("I've been here before");
-        allSorted = doTurn(-85, stateHist.back().yaw, true);
-      } else {
-        ROS_INFO("I've NOT been here before");
-        allSorted = doTurn(95, stateHist.back().yaw, true);
-      }
-
-      if (allSorted) {
-        setState(State::SPIN);
-      }
+    if (backAway(0.1)) {
+      setState(State::CHECK_LEFT);
     }
     break;
 
