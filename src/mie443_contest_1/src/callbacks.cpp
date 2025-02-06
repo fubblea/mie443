@@ -34,7 +34,7 @@ void StateVars::laserCallback(const sensor_msgs::LaserScan::ConstPtr &msg) {
   };
 
   if (wallDist == 20) {
-    ROS_WARN("Could not find a valid LIDAR range. Setting to 0");
+    ROS_WARN("Could not find valid LIDAR value.");
     wallDist = 0;
   };
 
