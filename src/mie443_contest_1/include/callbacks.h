@@ -27,6 +27,7 @@ public:
 
   // Bumper Variables
   uint8_t bumper[NUM_BUMPERS]; // Bumper states
+  float turnt;                 // Number of turns performed
 
   // Vector of previously visited positions
   std::vector<std::tuple<float, float>> visitedPos;

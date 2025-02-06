@@ -87,13 +87,24 @@ void robotState::update() {
     if (backAway(0.3)) {
       bool allSorted = false;
 
-      // Check if this position has been preivously visited
-      if (checkVisit(stateHist.back().posX, stateHist.back().posY), 1) {
+      // Check if this position has been previously visited
+
+      if (STUPID_RIGHT && stateVars.turnt > 2) {
+        allSorted = doTurn(-85, stateHist.back().yaw, true);
+        stateVars.turnt = 0;
+        ROS_INFO("Time to turn right!! Lit");
+      } else if (checkVisit(stateHist.back().posX, stateHist.back().posY), 1) {
         ROS_INFO("I've been here before");
         allSorted = doTurn(-85, stateHist.back().yaw, true);
+        if (STUPID_RIGHT) {
+          stateVars.turnt++;
+        }
       } else {
         ROS_INFO("I've NOT been here before");
         allSorted = doTurn(95, stateHist.back().yaw, true);
+        if (STUPID_RIGHT) {
+          stateVars.turnt++;
+        }
       }
 
       if (allSorted) {

@@ -1,6 +1,10 @@
 #ifndef CONTEST1_H
 #define CONTEST1_H
 
+// FLAGS
+
+const bool STUPID_RIGHT = true;
+
 // CONSTANTS
 
 const float MAX_LIN_VEL = 0.25;   // Maximum linear velocity in [m/s]
