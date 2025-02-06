@@ -92,7 +92,7 @@ void robotState::update() {
   case State::THINK:
     ROS_INFO("Contemplating life");
     if (checkBumper() == BumperHit::NOTHING) {
-      if (stateVars.wallDist >= 0.5) {
+      if (stateVars.wallDist > MIN_WALL_DIST) {
         ROS_INFO("Distance to wall is %f m, going FAST", stateVars.wallDist);
         setState(State::IM_SPEED);
       } else {
@@ -168,8 +168,8 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
 
     float turn_speed = MAX_ANG_VEL;
     // Slow down turning if we are close to the target
-    if (std::fabs(error) <= (ANGLE_TOL * 5)) {
-      turn_speed = turn_speed / 5;
+    if (std::fabs(error) <= (ANGLE_TOL * 2)) {
+      turn_speed = MIN_ANG_VEL;
     }
 
     float turn_vel;
@@ -187,8 +187,8 @@ bool robotState::doTurn(float relativeTarget, float reference, bool quick) {
 }
 
 bool robotState::moveToWall(float targetDist, float speed) {
-  if (targetDist < 0.5) {
-    targetDist = 0.5;
+  if (targetDist < MIN_WALL_DIST) {
+    targetDist = MIN_WALL_DIST;
     ROS_WARN("Distance to obstacle is less than %fm. Setting Target "
              "Distance to: %f",
              targetDist, targetDist);
