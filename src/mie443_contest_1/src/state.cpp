@@ -76,14 +76,7 @@ void robotState::update() {
   case State::IM_SLOW:
     ROS_INFO("Creeping to the wall. Distance to wall is %f m",
              stateVars.wallDist);
-    if (stateVars.wallDist <= 0.6) {
-      if (moveTilBumped(SLOW_LIN_VEL)) {
-        setState(State::THINK);
-      }
-    } else {
-      ROS_INFO(
-          "We should be far enough now. Speeding up. Distance to wall is %f",
-          stateVars.wallDist);
+    if (moveTilBumped(SLOW_LIN_VEL)) {
       setState(State::THINK);
     }
     break;

@@ -7,17 +7,17 @@ int main(int argc, char **argv) {
   robotState state; // Initialize robot state machine
 
   ros::Subscriber bumper_sub =
-      nh.subscribe("mobile_base/events/bumper", 1, &StateVars::bumperCallback,
+      nh.subscribe("mobile_base/events/bumper", 10, &StateVars::bumperCallback,
                    &state.stateVars);
   ros::Subscriber laser_sub =
-      nh.subscribe("scan", 1, &StateVars::laserCallback, &state.stateVars);
+      nh.subscribe("scan", 10, &StateVars::laserCallback, &state.stateVars);
   ros::Subscriber odom_sub =
       nh.subscribe("odom", 1, &StateVars::odomCallback, &state.stateVars);
 
   ros::Publisher vel_pub =
       nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
 
-  ros::Rate loop_rate(50); // Processing frequency [Hz]
+  ros::Rate loop_rate(100); // Processing frequency [Hz]
 
   geometry_msgs::Twist vel;
 
