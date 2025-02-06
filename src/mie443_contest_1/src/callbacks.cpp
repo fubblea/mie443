@@ -23,7 +23,7 @@ void StateVars::laserCallback(const sensor_msgs::LaserScan::ConstPtr &msg) {
   int endIdx = msg->ranges.size() - 1;
   int minIdx = -1;
 
-  wallDist = msg->ranges[0];
+  wallDist = 20;
   for (int rangeIdx = 0; rangeIdx < endIdx; rangeIdx++) {
     if (std::isfinite(msg->ranges[rangeIdx]) &&
         msg->ranges[rangeIdx] >= msg->range_min &&
