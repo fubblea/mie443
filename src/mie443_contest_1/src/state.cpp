@@ -78,7 +78,6 @@ void robotState::update() {
     ROS_INFO("Creeping to the wall. Distance to wall is %f m",
              stateVars.wallDist);
     if (stateVars.wallDist <= 0.6) {
-
       if (moveTilBumped(SLOW_LIN_VEL)) {
         setState(State::THINK);
       }
@@ -95,49 +94,14 @@ void robotState::update() {
              stateHist.back().bumperHit);
     if (backAway(0.3)) {
       bool allSorted = false;
-      if (checkVisit(stateHist.at(stateHist.size() - 2).posX,
-                     stateHist.at(stateHist.size() - 2).posY)) {
+
+      // Check if this position has been preivously visited
+      if (checkVisit(stateHist.back().posX, stateHist.back().posY)) {
         ROS_INFO("I've been here before");
-        switch (stateHist.back().bumperHit) {
-
-        case BumperHit::LEFT:
-          allSorted = doTurn(90, stateHist.back().yaw, true);
-          break;
-
-        case BumperHit::RIGHT:
-          allSorted = doTurn(-90, stateHist.back().yaw, true);
-          break;
-
-        case BumperHit::CENTER:
-          allSorted = doTurn(-90, stateHist.back().yaw, true);
-          break;
-
-        case BumperHit::NOTHING:
-          ROS_ERROR("This should not be nothing!!!!");
-          ros::shutdown();
-          break;
-        }
+        allSorted = doTurn(-85, stateHist.back().yaw, true);
       } else {
         ROS_INFO("I've NOT been here before");
-        switch (stateHist.back().bumperHit) {
-
-        case BumperHit::LEFT:
-          allSorted = doTurn(-90, stateHist.back().yaw, true);
-          break;
-
-        case BumperHit::RIGHT:
-          allSorted = doTurn(90, stateHist.back().yaw, true);
-          break;
-
-        case BumperHit::CENTER:
-          allSorted = doTurn(90, stateHist.back().yaw, true);
-          break;
-
-        case BumperHit::NOTHING:
-          ROS_ERROR("This should not be nothing!!!!");
-          ros::shutdown();
-          break;
-        }
+        allSorted = doTurn(95, stateHist.back().yaw, true);
       }
 
       if (allSorted) {
@@ -264,9 +228,12 @@ bool robotState::backAway(float desiredDist) {
 }
 
 bool robotState::checkVisit(float posX, float posY, float tol) {
-  for (int idx = 0; idx < stateVars.visitedPos.size(); idx++) {
-    float checkX = std::get<0>(stateVars.visitedPos[idx]);
-    float checkY = std::get<1>(stateVars.visitedPos[idx]);
+  // Using the second to last history state to avoid points overlap
+  StateVars reference = stateHist.at(stateHist.size() - 2);
+
+  for (int idx = 0; idx < reference.visitedPos.size(); idx++) {
+    float checkX = std::get<0>(reference.visitedPos[idx]);
+    float checkY = std::get<1>(reference.visitedPos[idx]);
 
     // Create a box around the point with the specified tolerance
     float xMin = (checkX > tol) ? checkX - tol : 0;

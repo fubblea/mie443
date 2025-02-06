@@ -42,5 +42,7 @@ int main(int argc, char **argv) {
     loop_rate.sleep();
   }
 
+  ROS_ERROR("I'm outta time!!!!");
+
   return 0;
 }
