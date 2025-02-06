@@ -60,6 +60,7 @@ void robotState::update() {
         setState(State::IM_SLOW);
       }
     } else {
+      ROS_INFO("I am close to wall, time to turn");
       setState(State::IM_HIT);
     }
     break;
@@ -68,7 +69,7 @@ void robotState::update() {
   case State::IM_SPEED:
     ROS_INFO("Speed to the wall");
     if (moveToWall(0, MAX_LIN_VEL)) {
-      setState(State::THINK);
+      setState(State::IM_HIT);
     }
     break;
 
@@ -84,7 +85,7 @@ void robotState::update() {
   case State::IM_HIT:
     ROS_INFO("I was hit at bumper %i. Reorienting.",
              stateHist.back().bumperHit);
-    if (backAway(0.3)) {
+    if (backAway(0.1)) {
       bool allSorted = false;
 
       // Check if this position has been preivously visited
