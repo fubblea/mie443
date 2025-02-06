@@ -58,8 +58,6 @@ void robotState::update() {
       } else {
         ROS_INFO("Distance to wall is %f m, going SLOW", stateVars.wallDist);
         setState(State::IM_SLOW);
-        // ROS_INFO("I am close to wall, time to turn");
-        // setState(State::IM_HIT);
       }
     } else {
       ROS_INFO("I am close to wall, time to turn");
