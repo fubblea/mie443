@@ -88,7 +88,7 @@ void robotState::update() {
       bool allSorted = false;
 
       // Check if this position has been preivously visited
-      if (checkVisit(stateHist.back().posX, stateHist.back().posY)) {
+      if (checkVisit(stateHist.back().posX, stateHist.back().posY), 1) {
         ROS_INFO("I've been here before");
         allSorted = doTurn(-85, stateHist.back().yaw, true);
       } else {
