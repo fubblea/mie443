@@ -1,7 +1,7 @@
 #include "state.h"
 #include "contest1.h"
 
-// ===================STATE MACHINE =============================
+// =================== STATE MACHINE START =============================
 
 void robotState::update(tf::TransformListener &tfListener) {
   switch (currState) {
@@ -21,7 +21,6 @@ void robotState::update(tf::TransformListener &tfListener) {
   // Check left side and record wall distance
   case State::CHECK_LEFT:
     ROS_INFO("Checking left side");
-
     // Check the left side
     if (doTurn(90, stateHist.back().yaw, false)) {
       // Record the distance in front
@@ -48,6 +47,11 @@ void robotState::update(tf::TransformListener &tfListener) {
 
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
+    ROS_INFO("Checking side known");
+    // First check how known either side is before turning
+    updateSideKnown(-90);
+    ROS_INFO("Side know: %i left, %i right", std::get<0>(stateVars.sideKnown),
+             std::get<1>(stateVars.sideKnown));
 
     if (std::get<0>(stateVars.sideSpace) >= std::get<1>(stateVars.sideSpace)) {
       ROS_INFO("Left side has more space. Flipping around");
@@ -89,7 +93,7 @@ void robotState::update(tf::TransformListener &tfListener) {
   // Speed to the wall
   case State::IM_SPEED:
     ROS_INFO("Speed to the wall");
-    if (moveToWall(0, MAX_LIN_VEL)) {
+    if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
       setState(State::IM_HIT);
     }
     break;
@@ -123,7 +127,7 @@ void robotState::update(tf::TransformListener &tfListener) {
   updateMapPose(tfListener);
 }
 
-// ===================STATE MACHINE =============================
+// =================== STATE MACHINE END =============================
 
 /*
 Normalize an angle to be in the range of [-180, +180]
@@ -252,6 +256,44 @@ bool robotState::checkVisit(float posX, float posY, float tol) {
   return false;
 }
 
+int robotState::scoreSideKnown(bool checkLeft, float yawOffset) {
+  int startX = std::get<0>(stateVars.gridIdx);
+  int startY = std::get<1>(stateVars.gridIdx);
+  int yaw = stateVars.mapPose.yaw + yawOffset;
+
+  int totalScore = 0;
+
+  // Direction base on left or right
+  int dir = checkLeft ? -1 : 1;
+
+  // Costmap index step based on direction of the robot
+  int dx = round(dir * cos(yaw));
+  int dy = round(-dir * sin(yaw));
+
+  for (int i = 0; i < MAP_SEARCH_DEPTH; i++) {
+    for (int j = 0; j < MAP_SEARCH_WIDTH; j++) {
+      int x = startX + i * dx + j * dy;
+      int y = startY + i * dy + j * dx;
+
+      // Check to make sure point is within map bounds
+      if (x >= 0 && x < stateVars.map.info.width && y >= 0 &&
+          y < stateVars.map.info.height) {
+        int idx = y * stateVars.map.info.width + x;
+
+        if (stateVars.map.data[idx] < 0) {
+          totalScore += stateVars.map.data[idx] * UNKNOWN_WEIGHT;
+        } else {
+          totalScore += stateVars.map.data[idx];
+        }
+      } else {
+        ROS_WARN("Value not in map range, omitting");
+      }
+    }
+  }
+
+  return totalScore;
+}
+
 bool robotState::moveTilBumped(float vel) {
   switch (checkBumper()) {
 
@@ -264,6 +306,11 @@ bool robotState::moveTilBumped(float vel) {
     setVelCmd(0, 0);
     return true;
   }
+}
+
+void robotState::updateSideKnown(float yawOffset) {
+  std::get<0>(stateVars.sideKnown) = scoreSideKnown(true, yawOffset);
+  std::get<1>(stateVars.sideKnown) = scoreSideKnown(false, yawOffset);
 }
 
 void robotState::updateOccGridIdx() {

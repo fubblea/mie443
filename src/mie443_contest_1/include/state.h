@@ -123,6 +123,13 @@ private:
   void updateOccGridIdx();
 
   /*
+  Updates the points for the known map on either side of the robot.
+
+  Based on the current orientation.
+  */
+  void updateSideKnown(float yawOffset);
+
+  /*
   Checks to see if the robot has been here before.
 
   Uses a box as a tolerance
@@ -143,6 +150,17 @@ private:
   Moves until the bumper is hit
   */
   bool moveTilBumped(float vel = MAX_LIN_VEL);
+
+  /*
+  Score the specified side based on how much of the map is know.
+
+  The greater the score, the more is known about this side.
+
+  Takes into account the orientation of the robot.
+
+  Applies an additional penalty for completely unknown cells.
+  */
+  int scoreSideKnown(bool checkLeft, float yawOffset);
 };
 
 #endif // STATE_H
