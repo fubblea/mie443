@@ -43,6 +43,9 @@ public:
 
   std::tuple<float, float> sideScore; // Weighted score of each side
 
+  // Variables for bigger brain strat
+  Pose goal;
+
   // Construct with default values
   StateVars();
 

@@ -90,19 +90,13 @@ void robotState::update(tf::TransformListener &tfListener) {
   // Think about what to do
   case State::THINK:
     ROS_INFO("Contemplating life");
-    if (checkBumper() == BumperHit::NOTHING) {
-      if (stateVars.wallDist > MIN_WALL_DIST) {
-        ROS_INFO("Distance to wall is %f m, going FAST", stateVars.wallDist);
-        setState(State::IM_SPEED);
-      } else {
-        ROS_INFO("Distance to wall is %f m, checking around",
-                 stateVars.wallDist);
-        setState(State::IM_HIT);
-      }
+    // NOTE: Has a loop, so won't exit until done
+    if (setFrontierGoal()) {
+      setState(State::END);
     } else {
-      ROS_INFO("I am close to wall, time to turn");
-      setState(State::IM_HIT);
+      setState(State::END);
     }
+
     break;
 
   // Speed to the wall
@@ -402,4 +396,50 @@ void robotState::updateVisitedPos() {
     ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
              std::get<1>(currPos));
   }
+}
+
+std::tuple<float, float> robotState::mapIdxToPos(std::tuple<int, int> gridIdx) {
+  float resolution = stateVars.map.info.resolution;
+
+  float originX = stateVars.map.info.origin.position.x;
+  float originY = stateVars.map.info.origin.position.y;
+
+  float posX = (std::get<0>(stateVars.gridIdx) * resolution) + originX;
+  float posY = (std::get<1>(stateVars.gridIdx) * resolution) + originY;
+
+  return std::make_tuple(posX, posY);
+}
+
+bool robotState::setFrontierGoal() {
+  int searchSize = START_SEARCH_SIZE;
+  int searchAttempts = 0;
+
+  int startX = std::max(0, std::get<0>(stateVars.gridIdx) - searchSize);
+  int startY = std::min(static_cast<int>(stateVars.map.info.height),
+                        std::get<1>(stateVars.gridIdx) + searchSize);
+
+  while (searchAttempts < MAX_SEARCH_ATTEMPTS) {
+    for (int x = startX; x <= stateVars.map.info.width; x++) {
+      for (int y = startY; y <= stateVars.map.info.height; y++) {
+        int idx = y * stateVars.map.info.width + x;
+
+        if (stateVars.map.data[idx] == -1) {
+          std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
+          stateVars.goal.posX = std::get<0>(goal);
+          stateVars.goal.posY = std::get<1>(goal);
+
+          ROS_INFO("Found frontier goal: (%f, %f)", stateVars.goal.posX,
+                   stateVars.goal.posY);
+          return true;
+        }
+      }
+    }
+
+    ROS_WARN("Could not find a frontier point. Increasing search size");
+    searchSize += 50;
+    searchAttempts++;
+  }
+
+  ROS_ERROR("Could not find frontier goal.");
+  return false;
 }

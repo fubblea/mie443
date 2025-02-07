@@ -163,6 +163,9 @@ private:
   */
   int scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
                      int searchDepth);
+
+  std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx);
+  bool setFrontierGoal();
 };
 
 #endif // STATE_H
