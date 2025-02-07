@@ -31,10 +31,13 @@ int main(int argc, char **argv) {
   // Publishers
   ros::Publisher vel_pub =
       nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
+  ros::Publisher goal_pub =
+      nh.advertise<geometry_msgs::PointStamped>("/clicked_point", 1);
 
   ros::Rate loop_rate(20); // Processing frequency [Hz]
 
   geometry_msgs::Twist vel;
+  geometry_msgs::PointStamped goal;
 
   // Contest count down timer
   std::chrono::time_point<std::chrono::system_clock> start;
@@ -50,11 +53,11 @@ int main(int argc, char **argv) {
     vel.linear.x = state.getVelCmd().linear;
     vel_pub.publish(vel);
 
-    // ROS_INFO("Map Pose: (%f, %f, %f)", state.stateVars.mapPose.posX,
-    //          state.stateVars.mapPose.posY, state.stateVars.mapPose.yaw);
-
-    // ROS_INFO("Grid idx: (%i, %i)", std::get<0>(state.stateVars.gridIdx),
-    //          std::get<1>(state.stateVars.gridIdx));
+    goal.header.stamp = ros::Time::now();
+    goal.header.frame_id = "map";
+    goal.point.x = state.stateVars.goal.posX;
+    goal.point.y = state.stateVars.goal.posY;
+    goal_pub.publish(goal);
 
     // The last thing to do is to update the timer.
     secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(

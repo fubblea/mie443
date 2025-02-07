@@ -170,6 +170,7 @@ private:
 
   std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx);
   bool setFrontierGoal();
+  bool checkNeighbors(int x, int y);
 };
 
 #endif // STATE_H

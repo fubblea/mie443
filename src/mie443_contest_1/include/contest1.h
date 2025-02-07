@@ -4,6 +4,7 @@
 // EXTERNAL HEADER FILES
 
 #include "ros/ros.h"
+#include <geometry_msgs/PointStamped.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Twist.h>
 #include <kobuki_msgs/BumperEvent.h>
@@ -47,8 +48,8 @@ const float SPACE_WEIGHT = 1.2; // Weight to assign to available space
 const float KNOWN_WEIGHT = 0;   // Weight to assign to known areas
 
 // Big brain start consts
-const int START_SEARCH_SIZE = 100;
-const int MAX_SEARCH_ATTEMPTS = 5;
+const int START_SEARCH_SIZE = 20;
+const int MAX_SEARCH_ATTEMPTS = 10;
 
 // CLASS DEFS
 

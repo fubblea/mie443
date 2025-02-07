@@ -129,7 +129,7 @@ void robotState::update(tf::TransformListener &tfListener) {
   case State::IM_CHECKING:
     ROS_INFO("Speeding to wall to make space");
     if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
-      setState(State::REORIENT_GOAL);
+      setState(State::THINK);
     }
     break;
 
@@ -421,8 +421,8 @@ std::tuple<float, float> robotState::mapIdxToPos(std::tuple<int, int> gridIdx) {
   float originX = stateVars.map.info.origin.position.x;
   float originY = stateVars.map.info.origin.position.y;
 
-  float posX = (std::get<0>(stateVars.gridIdx) * resolution) + originX;
-  float posY = (std::get<1>(stateVars.gridIdx) * resolution) + originY;
+  float posX = (std::get<0>(gridIdx) * resolution) + originX;
+  float posY = (std::get<1>(gridIdx) * resolution) + originY;
 
   return std::make_tuple(posX, posY);
 }
@@ -452,9 +452,8 @@ bool robotState::setFrontierGoal() {
           std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
           stateVars.goal.posX = std::get<0>(goal);
           stateVars.goal.posY = std::get<1>(goal);
-
-          ROS_INFO("Found frontier goal: (%f, %f)", stateVars.goal.posX,
-                   stateVars.goal.posY);
+          ROS_INFO("Found frontier goal: (%f, %f). Idx: (%i, %i)",
+                   stateVars.goal.posX, stateVars.goal.posY, x, y);
           return true;
         }
       }
