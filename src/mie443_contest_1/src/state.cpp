@@ -63,11 +63,25 @@ void robotState::update(tf::TransformListener &tfListener) {
     ROS_INFO("Side score: %f left, %f right", std::get<0>(stateVars.sideScore),
              std::get<1>(stateVars.sideScore));
 
-    setState(State::REORIENT);
+    setState(State::REORIENT_SPACE);
+    break;
+
+  case State::REORIENT_SPACE:
+    ROS_INFO("Reorienting towards space");
+
+    if (std::get<0>(stateVars.sideScore) >= std::get<1>(stateVars.sideScore)) {
+      ROS_INFO("Left side has more space, flipping around");
+      if (doTurn(180, stateHist.back().yaw, true)) {
+        setState(IM_CHECKING);
+      }
+    } else {
+      ROS_INFO("Right side has more space, good to go");
+      setState(IM_CHECKING);
+    }
     break;
 
   // Reorient the bot towards the goal
-  case State::REORIENT:
+  case State::REORIENT_GOAL:
     ROS_INFO("Reorienting towards frontier goal: (%f, %f)", stateVars.goal.posX,
              stateVars.goal.posY);
     ROS_INFO("Ref point: (%f, %f)", stateHist.back().mapPose.posX,
@@ -79,7 +93,7 @@ void robotState::update(tf::TransformListener &tfListener) {
                          stateVars.goal.posX - stateHist.back().mapPose.posX)) +
                    stateHist.back().mapPose.yaw,
                stateHist.back().mapPose.yaw, true)) {
-      setState(State::END);
+      setState(State::IM_SPEED);
     }
 
     break;
@@ -96,7 +110,7 @@ void robotState::update(tf::TransformListener &tfListener) {
     ROS_INFO("Contemplating life");
     // NOTE: Has a loop, so won't exit until done
     if (setFrontierGoal()) {
-      setState(State::REORIENT);
+      setState(State::REORIENT_GOAL);
     } else {
       setState(State::END);
     }
@@ -112,11 +126,10 @@ void robotState::update(tf::TransformListener &tfListener) {
     break;
 
   // Slowly creep to wall
-  case State::IM_SLOW:
-    ROS_INFO("Creeping to the wall. Distance to wall is %f m",
-             stateVars.wallDist);
-    if (moveTilBumped(SLOW_LIN_VEL)) {
-      setState(State::THINK);
+  case State::IM_CHECKING:
+    ROS_INFO("Speeding to wall to make space");
+    if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
+      setState(State::REORIENT_GOAL);
     }
     break;
 
