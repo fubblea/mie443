@@ -4,6 +4,7 @@
 // =================== STATE MACHINE START =============================
 
 void robotState::update(tf::TransformListener &tfListener) {
+  float distToGoal;
   switch (currState) {
 
   // Program start
@@ -93,26 +94,49 @@ void robotState::update(tf::TransformListener &tfListener) {
                           stateVars.goal.posX - stateHist.back().mapPose.posX) -
                     DEG2RAD(stateHist.back().mapPose.yaw)),
             stateHist.back().mapPose.yaw, true)) {
-      setState(State::IM_SPEED);
-    }
 
-    break;
+      distToGoal =
+          sqrt(powf((stateVars.goal.posX - stateHist.back().mapPose.posX), 2) +
+               powf((stateVars.goal.posY - stateHist.back().mapPose.posY), 2));
 
-  // Spinning around
-  case State::SPIN:
-    if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
-      setState(State::THINK);
-    }
-    break;
+      ROS_INFO("Goal dist: %f", distToGoal);
+      ROS_INFO("Wall dist: %f", stateVars.wallDist);
 
-  // Think about what to do
-  case State::THINK:
-    ROS_INFO("Contemplating life");
-    // NOTE: Has a loop, so won't exit until done
-    if (setFrontierGoal()) {
-      setState(State::REORIENT_GOAL);
-    } else {
-      setState(State::END);
+      if ((stateVars.wallDist < distToGoal) &&
+          (stateVars.excludeAttempts < 5)) {
+        ROS_WARN("Excluding frontier point: (%f, %f)", stateVars.goal.posX,
+                 stateVars.goal.posY);
+        stateVars.excludedPoints.push_back(
+            std::make_tuple(stateVars.goal.posX, stateVars.goal.posY));
+        stateVars.excludeAttempts++;
+
+        setState(State::THINK);
+      } else if (stateVars.wallDist > distToGoal) {
+        ROS_INFO("Wall is not in the way. Let's ago");
+        stateVars.excludeAttempts = 0;
+        setState(State::IM_SPEED);
+      } else {
+        ROS_INFO("Can't find a good goal. Making space");
+        stateVars.excludeAttempts = 0;
+        setState(State::CHECK_LEFT);
+      }
+
+      break;
+
+    // Spinning around
+    case State::SPIN:
+      if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
+        setState(State::THINK);
+      }
+      break;
+
+    // Think about what to do
+    case State::THINK:
+      ROS_INFO("Contemplating life");
+
+      if (setFrontierGoal(stateVars.excludedPoints)) {
+        setState(State::REORIENT_GOAL);
+      }
     }
 
     break;
@@ -121,7 +145,7 @@ void robotState::update(tf::TransformListener &tfListener) {
   case State::IM_SPEED:
     ROS_INFO("Speed to the wall");
     if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
-      setState(State::IM_HIT);
+      setState(State::THINK);
     }
     break;
 
@@ -427,7 +451,20 @@ std::tuple<float, float> robotState::mapIdxToPos(std::tuple<int, int> gridIdx) {
   return std::make_tuple(posX, posY);
 }
 
-bool robotState::setFrontierGoal() {
+bool checkInVec(std::tuple<float, float> testPoint,
+                std::vector<std::tuple<float, float>> checkPoints) {
+  int cnt = std::count(checkPoints.begin(), checkPoints.end(), testPoint);
+
+  // This means it's not in the vector
+  if (cnt <= 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool robotState::setFrontierGoal(
+    std::vector<std::tuple<float, float>> excludedPoints) {
   int searchSize = START_SEARCH_SIZE;
   int searchAttempts = 0;
 
@@ -447,9 +484,9 @@ bool robotState::setFrontierGoal() {
     for (int x = startX; x <= endX; x++) {
       for (int y = startY; y <= endY; y++) {
         int idx = y * stateVars.map.info.width + x;
+        std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
 
-        if (stateVars.map.data[idx] == -1) {
-          std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
+        if (stateVars.map.data[idx] == -1 && checkInVec(goal, excludedPoints)) {
           stateVars.goal.posX = std::get<0>(goal);
           stateVars.goal.posY = std::get<1>(goal);
           ROS_INFO("Found frontier goal: (%f, %f). Idx: (%i, %i)",

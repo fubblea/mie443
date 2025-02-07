@@ -45,6 +45,8 @@ public:
 
   // Variables for bigger brain strat
   Pose goal;
+  std::vector<std::tuple<float, float>> excludedPoints;
+  int excludeAttempts = 0;
 
   // Construct with default values
   StateVars();

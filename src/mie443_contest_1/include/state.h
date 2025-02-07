@@ -169,7 +169,7 @@ private:
                      int searchDepth);
 
   std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx);
-  bool setFrontierGoal();
+  bool setFrontierGoal(std::vector<std::tuple<float, float>> excludedPoints);
   bool checkNeighbors(int x, int y);
 };
 
