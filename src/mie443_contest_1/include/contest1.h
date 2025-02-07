@@ -41,7 +41,10 @@ const std::tuple<float, float> ANGLE_CONE =
 
 const int MAP_SEARCH_WIDTH = 10; // Costmap search width
 const int MAP_SEARCH_DEPTH = 5;  // Costmap search depth
-const int UNKNOWN_WEIGHT = -100; // Weight to assign to squares that are unknown
+const int UNKNOWN_WEIGHT = -50;  // Weight to assign to squares that are unknown
+
+const float KNOWN_VS_SPACE =
+    -0.1; // Weight to assign to known areas vs amount of space available
 
 // CLASS DEFS
 

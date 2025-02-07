@@ -41,6 +41,8 @@ public:
   std::tuple<int, int> sideKnown; // Point value of how mapped each side is.
                                   // (Higher value means more is mapped)
 
+  std::tuple<float, float> sideScore; // Weighted score of each side
+
   // Construct with default values
   StateVars();
 

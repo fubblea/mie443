@@ -45,21 +45,28 @@ void robotState::update(tf::TransformListener &tfListener) {
     }
     break;
 
-  // Reorient the bot depending on which side has more space
+  // Reorient the bot depending on which side has a greater score
   case State::REORIENT:
-    ROS_INFO("Checking side known");
-    // First check how known either side is before turning
+    // First check how known either side and score it
     updateSideKnown(-90);
-    ROS_INFO("Side know: %i left, %i right", std::get<0>(stateVars.sideKnown),
-             std::get<1>(stateVars.sideKnown));
 
-    if (std::get<0>(stateVars.sideSpace) >= std::get<1>(stateVars.sideSpace)) {
-      ROS_INFO("Left side has more space. Flipping around");
+    std::get<0>(stateVars.sideScore) =
+        std::get<0>(stateVars.sideSpace) +
+        KNOWN_VS_SPACE * std::get<0>(stateVars.sideKnown);
+    std::get<1>(stateVars.sideScore) =
+        std::get<1>(stateVars.sideSpace) +
+        KNOWN_VS_SPACE * std::get<1>(stateVars.sideKnown);
+
+    ROS_INFO("Side score: %f left, %f right", std::get<0>(stateVars.sideScore),
+             std::get<1>(stateVars.sideScore));
+
+    if (std::get<0>(stateVars.sideScore) >= std::get<1>(stateVars.sideScore)) {
+      ROS_INFO("Left side has a higher score. Flipping around");
       if (doTurn(180, stateHist.back().yaw, false)) {
         setState(State::THINK);
       }
     } else {
-      ROS_INFO("Right side has more space. Good to go");
+      ROS_INFO("Right side has a higher score. Good to go");
       setState(State::THINK);
     }
 
