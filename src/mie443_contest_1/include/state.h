@@ -118,6 +118,11 @@ private:
   void updateMapPose(tf::TransformListener &tfListener);
 
   /*
+  Converts the map pose to occupancy grid indices
+  */
+  void updateOccGridIdx();
+
+  /*
   Checks to see if the robot has been here before.
 
   Uses a box as a tolerance

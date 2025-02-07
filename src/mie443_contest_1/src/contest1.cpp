@@ -53,6 +53,9 @@ int main(int argc, char **argv) {
     ROS_INFO("Map Pose: (%f, %f, %f)", state.stateVars.mapPose.posX,
              state.stateVars.mapPose.posY, state.stateVars.mapPose.yaw);
 
+    ROS_INFO("Grid idx: (%i, %i)", std::get<0>(state.stateVars.gridIdx),
+             std::get<1>(state.stateVars.gridIdx));
+
     // The last thing to do is to update the timer.
     secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(
                          std::chrono::system_clock::now() - start)

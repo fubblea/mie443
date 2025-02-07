@@ -1,37 +1,6 @@
 #include "state.h"
 #include "contest1.h"
 
-posvoid robotState::updateMapPose(tf::TransformListener &tfListener) {
-  tf::StampedTransform transform;
-
-  try {
-    tfListener.lookupTransform("map", "base_link", ros::Time(0), transform);
-
-    // Convert robot position to map coordinates
-    stateVars.mapPose.posX = transform.getOrigin().x();
-    stateVars.mapPose.posY = transform.getOrigin().y();
-    stateVars.mapPose.yaw = RAD2DEG(tf::getYaw(transform.getRotation()));
-
-  } catch (tf::TransformException &ex) {
-    ROS_WARN("%s", ex.what());
-  }
-}
-
-void robotState::updateVisitedPos() {
-  // Add the current position to the vec of already visited positions
-  std::tuple<float, float> currPos =
-      std::make_tuple(stateVars.posX, stateVars.posY);
-  int cnt = std::count(stateVars.visitedPos.begin(), stateVars.visitedPos.end(),
-                       currPos);
-
-  // Add only if not previously added
-  if (cnt < 0) {
-    stateVars.visitedPos.push_back(currPos);
-    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
-             std::get<1>(currPos));
-  }
-}
-
 // ===================STATE MACHINE =============================
 
 void robotState::update(tf::TransformListener &tfListener) {
@@ -294,5 +263,51 @@ bool robotState::moveTilBumped(float vel) {
   default:
     setVelCmd(0, 0);
     return true;
+  }
+}
+
+void robotState::updateOccGridIdx() {
+  float resolution = stateVars.map.info.resolution;
+
+  float originX = stateVars.map.info.origin.position.x;
+  float originY = stateVars.map.info.origin.position.y;
+
+  std::get<0>(stateVars.gridIdx) =
+      (stateVars.mapPose.posX - originX) / resolution;
+  std::get<1>(stateVars.gridIdx) =
+      (stateVars.mapPose.posY - originY) / resolution;
+};
+
+void robotState::updateMapPose(tf::TransformListener &tfListener) {
+  tf::StampedTransform transform;
+
+  try {
+    tfListener.lookupTransform("map", "base_link", ros::Time(0), transform);
+
+    // Convert robot position to map coordinates
+    stateVars.mapPose.posX = transform.getOrigin().x();
+    stateVars.mapPose.posY = transform.getOrigin().y();
+    stateVars.mapPose.yaw = RAD2DEG(tf::getYaw(transform.getRotation()));
+
+    // Update the occupancy grid index
+    updateOccGridIdx();
+
+  } catch (tf::TransformException &ex) {
+    ROS_WARN("%s", ex.what());
+  }
+}
+
+void robotState::updateVisitedPos() {
+  // Add the current position to the vec of already visited positions
+  std::tuple<float, float> currPos =
+      std::make_tuple(stateVars.posX, stateVars.posY);
+  int cnt = std::count(stateVars.visitedPos.begin(), stateVars.visitedPos.end(),
+                       currPos);
+
+  // Add only if not previously added
+  if (cnt < 0) {
+    stateVars.visitedPos.push_back(currPos);
+    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
+             std::get<1>(currPos));
   }
 }

@@ -35,8 +35,9 @@ public:
   std::tuple<float, float> sideSpace;
 
   // Map variables
-  nav_msgs::OccupancyGrid map; // Costmap
-  Pose mapPose;                // Robot pose wrt map frame
+  nav_msgs::OccupancyGrid map;  // Costmap
+  Pose mapPose;                 // Robot pose wrt map frame
+  std::tuple<int, int> gridIdx; // Indexes of the robot on the costmap
 
   // Construct with default values
   StateVars();
