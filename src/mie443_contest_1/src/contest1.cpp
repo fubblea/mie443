@@ -6,6 +6,9 @@ int main(int argc, char **argv) {
 
   robotState state; // Initialize robot state machine
 
+  // Set Params
+  nh.setParam("/slam_gmapping/map_update_interval", 0.03);
+
   // Subscribers
   ros::Subscriber bumper_sub =
       nh.subscribe("mobile_base/events/bumper", 10, &StateVars::bumperCallback,
@@ -20,8 +23,6 @@ int main(int argc, char **argv) {
   // Publishers
   ros::Publisher vel_pub =
       nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
-  ros::Publisher goal_pub =
-      nh.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 1);
 
   ros::Rate loop_rate(20); // Processing frequency [Hz]
 
@@ -35,7 +36,7 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 480) {
     ros::spinOnce();
 
-    // state.update();
+    state.update();
 
     vel.angular.z = DEG2RAD(state.getVelCmd().angular);
     vel.linear.x = state.getVelCmd().linear;
