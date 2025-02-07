@@ -144,6 +144,9 @@ private:
   Moves until the bumper is hit
   */
   bool moveTilBumped(float vel = MAX_LIN_VEL);
+
+  bool leftVisited(float distance);
+  bool rightVisited(float distance);
 };
 
 #endif // STATE_H

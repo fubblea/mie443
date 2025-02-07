@@ -69,6 +69,23 @@ void robotState::update() {
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
 
+    
+    
+    if(!leftVisited(1.0) && rightVisited(1.0)){
+      ROS_INFO("I haven't been to the left, turning there");
+      if(doTurn(90, stateHist.back().yaw, false)){
+        setState(State::THINK);
+      }
+      
+    }else if(leftVisited(1.0) && !rightVisited(1.0)){
+      ROS_INFO("I haven't been to the right, turning there");
+      if(doTurn(-90, stateHist.back().yaw, false)){
+        setState(State::THINK);
+      }
+      
+
+    }else {
+    ROS_INFO("Neither side has been visited");
     if (std::get<0>(stateVars.sideSpace) >= std::get<1>(stateVars.sideSpace)) {
       ROS_INFO("Left side has more space. Flipping around");
       if (doTurn(180, stateHist.back().yaw, false)) {
@@ -78,13 +95,14 @@ void robotState::update() {
       ROS_INFO("Right side has more space. Good to go");
       setState(State::THINK);
     }
-
+    }
+ 
     break;
 
   // Spinning around
   case State::SPIN:
     if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
-      setState(State::END);
+      setState(State::THINK);
     }
     break;
 
@@ -282,5 +300,21 @@ bool robotState::moveTilBumped(float vel) {
   default:
     setVelCmd(0, 0);
     return true;
+  }
+}
+
+bool robotState::leftVisited(float distance){
+  if(checkVisit(stateVars.posX + cos(stateVars.yaw + 90), stateVars.posY + sin(stateVars.yaw + 90), distance)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+bool robotState::rightVisited(float distance){
+  if(checkVisit(stateVars.posX + cos(stateVars.yaw - 90), stateVars.posY + sin(stateVars.yaw - 90), distance)){
+    return true;
+  }else{
+    return false;
   }
 }
