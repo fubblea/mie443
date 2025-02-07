@@ -15,6 +15,7 @@ enum State {
   IM_SPEED,
   CHECK_RIGHT,
   CHECK_LEFT,
+  DO_MATH,
   REORIENT,
   END
 };
@@ -160,7 +161,8 @@ private:
 
   Applies an additional penalty for completely unknown cells.
   */
-  int scoreSideKnown(bool checkLeft, float yawOffset);
+  int scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
+                     int searchDepth);
 };
 
 #endif // STATE_H

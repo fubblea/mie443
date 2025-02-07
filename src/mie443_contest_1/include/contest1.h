@@ -39,12 +39,12 @@ const float MIN_WALL_DIST =
 const std::tuple<float, float> ANGLE_CONE =
     std::make_tuple(-15, 15); // Angle cone for lidar detection[deg]
 
-const int MAP_SEARCH_WIDTH = 10; // Costmap search width
-const int MAP_SEARCH_DEPTH = 5;  // Costmap search depth
-const int UNKNOWN_WEIGHT = -50;  // Weight to assign to squares that are unknown
+const int MAP_SEARCH_WIDTH = 1000; // Costmap search width
+const int MAP_SEARCH_DEPTH = 1000; // Costmap search depth
+const int UNKNOWN_WEIGHT = -50; // Weight to assign to squares that are unknown
 
-const float KNOWN_VS_SPACE =
-    -0.1; // Weight to assign to known areas vs amount of space available
+const float SPACE_WEIGHT = 1;  // Weight to assign to available space
+const float KNOWN_WEIGHT = -1; // Weight to assign to known areas
 
 // CLASS DEFS
 

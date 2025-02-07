@@ -41,25 +41,33 @@ void robotState::update(tf::TransformListener &tfListener) {
       std::get<1>(stateVars.sideSpace) = stateVars.wallDist;
 
       ROS_INFO("Right side wallDist is: %f", std::get<1>(stateVars.sideSpace));
-      setState(State::REORIENT);
+      setState(State::DO_MATH);
     }
     break;
 
-  // Reorient the bot depending on which side has a greater score
-  case State::REORIENT:
-    // First check how known either side and score it
-    updateSideKnown(-90);
+  // Calculate the left and right scores
+  case State::DO_MATH:
+    // First check how known either side is and score it
+    updateSideKnown(-90); // This has a loop, won't exit until done
 
     std::get<0>(stateVars.sideScore) =
-        std::get<0>(stateVars.sideSpace) +
-        KNOWN_VS_SPACE * std::get<0>(stateVars.sideKnown);
+        SPACE_WEIGHT * std::get<0>(stateVars.sideSpace) +
+        KNOWN_WEIGHT * std::get<0>(stateVars.sideKnown);
     std::get<1>(stateVars.sideScore) =
-        std::get<1>(stateVars.sideSpace) +
-        KNOWN_VS_SPACE * std::get<1>(stateVars.sideKnown);
+        SPACE_WEIGHT * std::get<1>(stateVars.sideSpace) +
+        KNOWN_WEIGHT * std::get<1>(stateVars.sideKnown);
+
+    ROS_INFO("Side known: %i left, %i right", std::get<0>(stateVars.sideKnown),
+             std::get<1>(stateVars.sideKnown));
 
     ROS_INFO("Side score: %f left, %f right", std::get<0>(stateVars.sideScore),
              std::get<1>(stateVars.sideScore));
 
+    setState(State::REORIENT);
+    break;
+
+  // Reorient the bot depending on which side has a greater score
+  case State::REORIENT:
     if (std::get<0>(stateVars.sideScore) >= std::get<1>(stateVars.sideScore)) {
       ROS_INFO("Left side has a higher score. Flipping around");
       if (doTurn(180, stateHist.back().yaw, false)) {
@@ -263,12 +271,14 @@ bool robotState::checkVisit(float posX, float posY, float tol) {
   return false;
 }
 
-int robotState::scoreSideKnown(bool checkLeft, float yawOffset) {
+int robotState::scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
+                               int searchDepth) {
   int startX = std::get<0>(stateVars.gridIdx);
   int startY = std::get<1>(stateVars.gridIdx);
   int yaw = stateVars.mapPose.yaw + yawOffset;
 
   int totalScore = 0;
+  int cellCount = 0;
 
   // Direction base on left or right
   int dir = checkLeft ? -1 : 1;
@@ -277,8 +287,8 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset) {
   int dx = round(dir * cos(yaw));
   int dy = round(-dir * sin(yaw));
 
-  for (int i = 0; i < MAP_SEARCH_DEPTH; i++) {
-    for (int j = 0; j < MAP_SEARCH_WIDTH; j++) {
+  for (int i = 0; i < searchDepth; i++) {
+    for (int j = 0; j < searchWidth; j++) {
       int x = startX + i * dx + j * dy;
       int y = startY + i * dy + j * dx;
 
@@ -287,18 +297,23 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset) {
           y < stateVars.map.info.height) {
         int idx = y * stateVars.map.info.width + x;
 
-        if (stateVars.map.data[idx] < 0) {
-          totalScore += stateVars.map.data[idx] * UNKNOWN_WEIGHT;
+        if (stateVars.map.data[idx] < 50) {
+          // totalScore += stateVars.map.data[idx] * UNKNOWN_WEIGHT;
+          totalScore++;
+          cellCount++;
         } else {
-          totalScore += stateVars.map.data[idx];
+          // totalScore += stateVars.map.data[idx];
+          totalScore += 0;
+          cellCount++;
         }
       } else {
-        ROS_WARN("Value not in map range, omitting");
+        ROS_WARN("Value not in map range, early break");
+        break;
       }
     }
   }
 
-  return totalScore;
+  return totalScore / cellCount; // Normalize by cell count
 }
 
 bool robotState::moveTilBumped(float vel) {
@@ -316,8 +331,25 @@ bool robotState::moveTilBumped(float vel) {
 }
 
 void robotState::updateSideKnown(float yawOffset) {
-  std::get<0>(stateVars.sideKnown) = scoreSideKnown(true, yawOffset);
-  std::get<1>(stateVars.sideKnown) = scoreSideKnown(false, yawOffset);
+  int searchWidth = MAP_SEARCH_WIDTH;
+  int searchDepth = MAP_SEARCH_DEPTH;
+
+  if (MAP_SEARCH_WIDTH > stateVars.map.info.width) {
+    ROS_WARN("MAP_SEARCH_WIDTH is more than actual width: %i. Set to %i",
+             MAP_SEARCH_WIDTH, stateVars.map.info.width);
+    searchWidth = stateVars.map.info.width / 2;
+  }
+
+  if (MAP_SEARCH_DEPTH > stateVars.map.info.height) {
+    ROS_WARN("MAP_SEARCH_DEPTH is more than actual height: %i. Set to %i",
+             MAP_SEARCH_DEPTH, stateVars.map.info.height);
+    searchDepth = stateVars.map.info.height / 2;
+  }
+
+  std ::get<0>(stateVars.sideKnown) =
+      scoreSideKnown(true, yawOffset, searchWidth, searchDepth);
+  std::get<1>(stateVars.sideKnown) =
+      scoreSideKnown(false, yawOffset, searchWidth, searchDepth);
 }
 
 void robotState::updateOccGridIdx() {
