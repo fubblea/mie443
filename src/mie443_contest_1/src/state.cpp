@@ -69,14 +69,29 @@ void robotState::update() {
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
 
-    if (std::get<0>(stateVars.sideSpace) >= std::get<1>(stateVars.sideSpace)) {
-      ROS_INFO("Left side has more space. Flipping around");
-      if (doTurn(180, stateHist.back().yaw, false)) {
+    if (!leftCheck(0.6) && rightCheck(0.6)){
+      ROS_INFO("Right is unexplored. Turning there");
+      if (doTurn(-90, stateHist.back().yaw, false)) {
         setState(State::THINK);
       }
-    } else {
-      ROS_INFO("Right side has more space. Good to go");
-      setState(State::THINK);
+    }else if (leftCheck(0.6) && !rightCheck(0.6)){
+      ROS_INFO("Left is unxplored. Turning there");
+      if (doTurn(90, stateHist.back().yaw, false)) {
+        setState(State::THINK);
+      }
+    } else{
+
+      ROS_INFO("Neither side explored. Checking distances");
+
+      if (std::get<0>(stateVars.sideSpace) >= std::get<1>(stateVars.sideSpace)) {
+        ROS_INFO("Left side has more space. Flipping around");
+        if (doTurn(180, stateHist.back().yaw, false)) {
+          setState(State::THINK);
+        }
+      } else {
+        ROS_INFO("Right side has more space. Good to go");
+        setState(State::THINK);
+      }
     }
 
     break;
@@ -282,5 +297,32 @@ bool robotState::moveTilBumped(float vel) {
   default:
     setVelCmd(0, 0);
     return true;
+  }
+}
+
+bool robotState::rightCheck(float dist){
+  ROS_INFO("Checking Ahead. Right");
+  float rightX = stateVars.posX + cos(stateVars.yaw - DEG2RAD(90))*dist;
+  float rightY = stateVars.posY + sin(stateVars.yaw - DEG2RAD(90))*dist;
+
+  for (const auto &pos : stateVars.visitedPos) {
+    if (std::fabs(std::get<0>(pos) - rightX) < 0.05 && 
+        std::fabs(std::get<1>(pos) - rightY) < 0.05) {
+      return true;  // Left position was visited before
+    }
+  } 
+  
+}
+
+bool robotState::leftCheck(float dist){
+  ROS_INFO("Checking Ahead. Left");
+  float leftX = stateVars.posX + cos(stateVars.yaw + DEG2RAD(90))*dist;
+  float leftY = stateVars.posY + sin(stateVars.yaw + DEG2RAD(90))*dist;
+
+  for (const auto &pos : stateVars.visitedPos) {
+    if (std::fabs(std::get<0>(pos) - leftX) < 0.05 && 
+        std::fabs(std::get<1>(pos) - leftY) < 0.05) {
+      return true;  // Left position was visited before
+    }
   }
 }
