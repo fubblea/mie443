@@ -66,7 +66,10 @@ public:
     stateRef.bumper[2] = stateVars.bumper[2];
 
     stateRef.bumperHit = stateVars.bumperHit;
+
     stateRef.mapPose = stateVars.mapPose;
+    stateRef.gridIdx = stateVars.gridIdx;
+    stateRef.goal = stateVars.goal;
 
     stateHist.push_back(stateRef);
 

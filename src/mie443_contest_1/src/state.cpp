@@ -68,8 +68,20 @@ void robotState::update(tf::TransformListener &tfListener) {
 
   // Reorient the bot towards the goal
   case State::REORIENT:
-    ROS_INFO("Reorienting towards frontier goal");
-    setState(State::END);
+    ROS_INFO("Reorienting towards frontier goal: (%f, %f)", stateVars.goal.posX,
+             stateVars.goal.posY);
+    ROS_INFO("Ref point: (%f, %f)", stateHist.back().mapPose.posX,
+             stateHist.back().mapPose.posY);
+
+    // Find vector angle from current pos to goal
+    if (doTurn(RAD2DEG(
+                   atan2(stateVars.goal.posY - stateHist.back().mapPose.posY,
+                         stateVars.goal.posX - stateHist.back().mapPose.posX)) +
+                   stateHist.back().mapPose.yaw,
+               stateHist.back().mapPose.yaw, true)) {
+      setState(State::END);
+    }
+
     break;
 
   // Spinning around
