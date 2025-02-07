@@ -66,18 +66,10 @@ void robotState::update(tf::TransformListener &tfListener) {
     setState(State::REORIENT);
     break;
 
-  // Reorient the bot depending on which side has a greater score
+  // Reorient the bot towards the goal
   case State::REORIENT:
-    if (std::get<0>(stateVars.sideScore) >= std::get<1>(stateVars.sideScore)) {
-      ROS_INFO("Left side has a higher score. Flipping around");
-      if (doTurn(180, stateHist.back().yaw, false)) {
-        setState(State::THINK);
-      }
-    } else {
-      ROS_INFO("Right side has a higher score. Good to go");
-      setState(State::THINK);
-    }
-
+    ROS_INFO("Reorienting towards frontier goal");
+    setState(State::END);
     break;
 
   // Spinning around
@@ -92,7 +84,7 @@ void robotState::update(tf::TransformListener &tfListener) {
     ROS_INFO("Contemplating life");
     // NOTE: Has a loop, so won't exit until done
     if (setFrontierGoal()) {
-      setState(State::END);
+      setState(State::REORIENT);
     } else {
       setState(State::END);
     }
@@ -414,13 +406,21 @@ bool robotState::setFrontierGoal() {
   int searchSize = START_SEARCH_SIZE;
   int searchAttempts = 0;
 
-  int startX = std::max(0, std::get<0>(stateVars.gridIdx) - searchSize);
-  int startY = std::min(static_cast<int>(stateVars.map.info.height),
+  while (searchAttempts < MAX_SEARCH_ATTEMPTS) {
+    // Find the indices for the search space
+    int startX = std::max(0, std::get<0>(stateVars.gridIdx) - searchSize);
+    int endX = std::min(static_cast<int>(stateVars.map.info.width),
+                        std::get<0>(stateVars.gridIdx) + searchSize);
+
+    int startY = std::max(0, std::get<1>(stateVars.gridIdx) - searchSize);
+    int endY = std::min(static_cast<int>(stateVars.map.info.height),
                         std::get<1>(stateVars.gridIdx) + searchSize);
 
-  while (searchAttempts < MAX_SEARCH_ATTEMPTS) {
-    for (int x = startX; x <= stateVars.map.info.width; x++) {
-      for (int y = startY; y <= stateVars.map.info.height; y++) {
+    ROS_INFO("Starting frontier search. X=[%i, %i], Y=[%i, %i]", startX, endX,
+             startY, endY);
+
+    for (int x = startX; x <= endX; x++) {
+      for (int y = startY; y <= endY; y++) {
         int idx = y * stateVars.map.info.width + x;
 
         if (stateVars.map.data[idx] == -1) {
@@ -436,7 +436,7 @@ bool robotState::setFrontierGoal() {
     }
 
     ROS_WARN("Could not find a frontier point. Increasing search size");
-    searchSize += 50;
+    searchSize += START_SEARCH_SIZE;
     searchAttempts++;
   }
 

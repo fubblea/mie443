@@ -47,7 +47,7 @@ const float SPACE_WEIGHT = 1.2; // Weight to assign to available space
 const float KNOWN_WEIGHT = -1;  // Weight to assign to known areas
 
 // Big brain start consts
-const int START_SEARCH_SIZE = 50;
+const int START_SEARCH_SIZE = 100;
 const int MAX_SEARCH_ATTEMPTS = 5;
 
 // CLASS DEFS
