@@ -88,11 +88,11 @@ void robotState::update(tf::TransformListener &tfListener) {
              stateHist.back().mapPose.posY);
 
     // Find vector angle from current pos to goal
-    if (doTurn(RAD2DEG(
-                   atan2(stateVars.goal.posY - stateHist.back().mapPose.posY,
-                         stateVars.goal.posX - stateHist.back().mapPose.posX)) +
-                   stateHist.back().mapPose.yaw,
-               stateHist.back().mapPose.yaw, true)) {
+    if (doTurn(
+            RAD2DEG(atan2(stateVars.goal.posY - stateHist.back().mapPose.posY,
+                          stateVars.goal.posX - stateHist.back().mapPose.posX) -
+                    DEG2RAD(stateHist.back().mapPose.yaw)),
+            stateHist.back().mapPose.yaw, true)) {
       setState(State::IM_SPEED);
     }
 
