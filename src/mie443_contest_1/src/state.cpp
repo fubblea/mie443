@@ -287,6 +287,7 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
   int dx = round(dir * cos(yaw));
   int dy = round(-dir * sin(yaw));
 
+  bool earlyBreak = false;
   for (int i = 0; i < searchDepth; i++) {
     for (int j = 0; j < searchWidth; j++) {
       int x = startX + i * dx + j * dy;
@@ -308,8 +309,13 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
         }
       } else {
         ROS_WARN("Value not in map range, early break");
+        earlyBreak = true;
         break;
       }
+    }
+
+    if (earlyBreak) {
+      break;
     }
   }
 

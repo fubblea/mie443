@@ -43,8 +43,8 @@ const int MAP_SEARCH_WIDTH = 1000; // Costmap search width
 const int MAP_SEARCH_DEPTH = 1000; // Costmap search depth
 const int UNKNOWN_WEIGHT = -50; // Weight to assign to squares that are unknown
 
-const float SPACE_WEIGHT = 1;  // Weight to assign to available space
-const float KNOWN_WEIGHT = -1; // Weight to assign to known areas
+const float SPACE_WEIGHT = 1.2; // Weight to assign to available space
+const float KNOWN_WEIGHT = -1;  // Weight to assign to known areas
 
 // CLASS DEFS
 
