@@ -9,6 +9,7 @@ find_package(OpenCV 3 REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
 	cv_bridge
+	tf
 	genmsg
 	image_transport
 	sensor_msgs

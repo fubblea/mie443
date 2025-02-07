@@ -20,18 +20,6 @@ enum State {
 };
 
 /*
-Angular and linear velocity
-*/
-class Vel {
-public:
-  float angular = 0.0; // Angular velocity [deg/s]
-  float linear = 0.0;  // Linear velocity [m/s]
-
-  // Constructor
-  Vel(float angular, float linear);
-};
-
-/*
 Current state of the robot including state variables.
 */
 class robotState {
@@ -77,6 +65,7 @@ public:
     stateRef.bumper[2] = stateVars.bumper[2];
 
     stateRef.bumperHit = stateVars.bumperHit;
+    stateRef.mapPose = stateVars.mapPose;
 
     stateHist.push_back(stateRef);
 
@@ -99,7 +88,7 @@ public:
 
   Runs every loop iteration.
   */
-  void update();
+  void update(tf::TransformListener &tfListener);
 
 private:
   /*
@@ -122,6 +111,11 @@ private:
   Checks current vector to ensure that there aren't any duplicates
   */
   void updateVisitedPos();
+
+  /*
+  Updates the position of the robot with respect to the map frame
+  */
+  void updateMapPose(tf::TransformListener &tfListener);
 
   /*
   Checks to see if the robot has been here before.

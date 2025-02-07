@@ -1,10 +1,18 @@
 #include "contest1.h"
 
+// Class constructors
+
+Vel::Vel(float angular, float linear) {
+  angular = angular;
+  linear = linear;
+}
+
 int main(int argc, char **argv) {
   ros::init(argc, argv, "image_listener");
   ros::NodeHandle nh;
 
-  robotState state; // Initialize robot state machine
+  robotState state;                 // Initialize robot state machine
+  tf::TransformListener tfListener; // Init transform listener
 
   // Set Params
   nh.setParam("/slam_gmapping/map_update_interval", 0.03);
@@ -36,11 +44,14 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 480) {
     ros::spinOnce();
 
-    state.update();
+    state.update(tfListener);
 
     vel.angular.z = DEG2RAD(state.getVelCmd().angular);
     vel.linear.x = state.getVelCmd().linear;
     vel_pub.publish(vel);
+
+    ROS_INFO("Map Pose: (%f, %f, %f)", state.stateVars.mapPose.posX,
+             state.stateVars.mapPose.posY, state.stateVars.mapPose.yaw);
 
     // The last thing to do is to update the timer.
     secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(

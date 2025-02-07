@@ -1,9 +1,20 @@
 #include "state.h"
 #include "contest1.h"
 
-Vel::Vel(float angular, float linear) {
-  angular = angular;
-  linear = linear;
+posvoid robotState::updateMapPose(tf::TransformListener &tfListener) {
+  tf::StampedTransform transform;
+
+  try {
+    tfListener.lookupTransform("map", "base_link", ros::Time(0), transform);
+
+    // Convert robot position to map coordinates
+    stateVars.mapPose.posX = transform.getOrigin().x();
+    stateVars.mapPose.posY = transform.getOrigin().y();
+    stateVars.mapPose.yaw = RAD2DEG(tf::getYaw(transform.getRotation()));
+
+  } catch (tf::TransformException &ex) {
+    ROS_WARN("%s", ex.what());
+  }
 }
 
 void robotState::updateVisitedPos() {
@@ -23,7 +34,7 @@ void robotState::updateVisitedPos() {
 
 // ===================STATE MACHINE =============================
 
-void robotState::update() {
+void robotState::update(tf::TransformListener &tfListener) {
   switch (currState) {
 
   // Program start
@@ -140,6 +151,7 @@ void robotState::update() {
   }
 
   updateVisitedPos();
+  updateMapPose(tfListener);
 }
 
 // ===================STATE MACHINE =============================

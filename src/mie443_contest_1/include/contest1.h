@@ -12,6 +12,7 @@
 #include <ros/console.h>
 #include <sensor_msgs/LaserScan.h>
 #include <tf/transform_datatypes.h>
+#include <tf/transform_listener.h>
 
 #include <cmath>
 #include <stdio.h>
@@ -38,7 +39,32 @@ const float MIN_WALL_DIST =
 const std::tuple<float, float> ANGLE_CONE =
     std::make_tuple(-15, 15); // Angle cone for lidar detection[deg]
 
-// INTERAL HEADER FILES
+// CLASS DEFS
+
+/*
+Angular and linear velocity
+*/
+class Vel {
+public:
+  float angular = 0.0; // Angular velocity [deg/s]
+  float linear = 0.0;  // Linear velocity [m/s]
+
+  // Constructor
+  Vel();
+  Vel(float angular, float linear);
+};
+
+/*
+Robot pose
+*/
+class Pose {
+public:
+  float posX = 0; // X position relative to frame origin [m]
+  float posY = 0; // Y position relative to frame origin [m]
+  float yaw = 0;  // Yaw angle [deg]
+};
+
+// INTERNAL HEADER FILES
 
 #include <callbacks.h>
 #include <state.h>
