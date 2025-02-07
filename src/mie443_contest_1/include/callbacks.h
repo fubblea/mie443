@@ -34,6 +34,9 @@ public:
   // Space either side of the robot. Used in CHECK_RIGHT/CHECK_LEFT
   std::tuple<float, float> sideSpace;
 
+  // GMapping Costmap
+  nav_msgs::OccupancyGrid map;
+
   // Construct with default values
   StateVars();
 

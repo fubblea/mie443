@@ -56,5 +56,5 @@ void StateVars::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
 }
 
 void StateVars::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg) {
-  ROS_INFO("Reading map at: %f", msg->info.resolution);
+  map = *msg;
 }
