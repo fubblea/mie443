@@ -12,13 +12,14 @@ void robotState::updateVisitedPos() {
       std::make_tuple(stateVars.posX, stateVars.posY);
   int cnt = std::count(stateVars.visitedPos.begin(), stateVars.visitedPos.end(),
                        currPos);
-
+  
+  
   // Add only if not previously added
-  if (cnt < 0) {
+  if (cnt == 0) {
     stateVars.visitedPos.push_back(currPos);
-    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
-             std::get<1>(currPos));
+    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos), std::get<1>(currPos));
   }
+  
 }
 
 // ===================STATE MACHINE =============================
