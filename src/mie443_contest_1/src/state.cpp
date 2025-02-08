@@ -69,21 +69,22 @@ void robotState::update() {
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
 
-    if (!leftCheck(0.6) && rightCheck(0.6)){
+    if (!leftCheck(2.0) && rightCheck(2.0)) {
       ROS_INFO("Right is unexplored. Turning there");
       if (doTurn(-90, stateHist.back().yaw, false)) {
         setState(State::THINK);
       }
-    }else if (leftCheck(0.6) && !rightCheck(0.6)){
+    } else if (leftCheck(2.0) && !rightCheck(2.0)) {
       ROS_INFO("Left is unxplored. Turning there");
       if (doTurn(90, stateHist.back().yaw, false)) {
         setState(State::THINK);
       }
-    } else{
+    } else {
 
       ROS_INFO("Neither side explored. Checking distances");
 
-      if (std::get<0>(stateVars.sideSpace) >= std::get<1>(stateVars.sideSpace)) {
+      if (std::get<0>(stateVars.sideSpace) >=
+          std::get<1>(stateVars.sideSpace)) {
         ROS_INFO("Left side has more space. Flipping around");
         if (doTurn(180, stateHist.back().yaw, false)) {
           setState(State::THINK);
@@ -153,8 +154,9 @@ void robotState::update() {
     ros::shutdown();
     break;
   }
-
+  ROS_INFO("Position Updated");
   updateVisitedPos();
+  ROS_INFO("Happy. VisitedPos size: %lu", stateVars.visitedPos.size());
 }
 
 // ===================STATE MACHINE =============================
@@ -300,29 +302,41 @@ bool robotState::moveTilBumped(float vel) {
   }
 }
 
-bool robotState::rightCheck(float dist){
+bool robotState::rightCheck(float dist) {
   ROS_INFO("Checking Ahead. Right");
-  float rightX = stateVars.posX + cos(stateVars.yaw - DEG2RAD(90))*dist;
-  float rightY = stateVars.posY + sin(stateVars.yaw - DEG2RAD(90))*dist;
+  float rightXUB = stateVars.posX;
+  float rightYUB = stateVars.posY + dist / 2;
+  float rightXLB = stateVars.posX - dist;
+  float rightYLB = stateVars.posY - dist / 2;
 
   for (const auto &pos : stateVars.visitedPos) {
-    if (std::fabs(std::get<0>(pos) - rightX) < 0.05 && 
-        std::fabs(std::get<1>(pos) - rightY) < 0.05) {
-      return true;  // Left position was visited before
+    float recordedX = std::get<0>(pos);
+    float recordedY = std::get<1>(pos);
+
+    if (recordedX >= rightXLB && recordedX <= rightXUB &&
+        recordedY >= rightYLB && recordedY <= rightYUB) {
+      return true;
     }
-  } 
-  
+  }
 }
 
-bool robotState::leftCheck(float dist){
-  ROS_INFO("Checking Ahead. Left");
-  float leftX = stateVars.posX + cos(stateVars.yaw + DEG2RAD(90))*dist;
-  float leftY = stateVars.posY + sin(stateVars.yaw + DEG2RAD(90))*dist;
+bool robotState::leftCheck(float dist) {
 
+  ROS_INFO("Checking Ahead. Left");
+  float leftXUB = stateVars.posX;
+  float leftYUB = stateVars.posY + dist / 2;
+  float leftXLB = stateVars.posX - dist;
+  float leftYLB = stateVars.posY - dist / 2;
+  ROS_INFO("visitedPos size: %lu", stateVars.visitedPos.size());
   for (const auto &pos : stateVars.visitedPos) {
-    if (std::fabs(std::get<0>(pos) - leftX) < 0.05 && 
-        std::fabs(std::get<1>(pos) - leftY) < 0.05) {
-      return true;  // Left position was visited before
+    ROS_INFO("Checking if this is in range: (%f, %f)", std::get<0>(pos),
+             std::get<1>(pos));
+    float recordedX = std::get<0>(pos);
+    float recordedY = std::get<1>(pos);
+
+    if (recordedX >= leftXLB && recordedX <= leftXUB && recordedY >= leftYLB &&
+        recordedY <= leftYUB) {
+      return true;
     }
   }
 }
