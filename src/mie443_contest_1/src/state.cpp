@@ -70,12 +70,12 @@ void robotState::update() {
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
 
-    if (!leftCheck(2.0) && rightCheck(2.0)) {
+    if (!leftCheck(4.0) && rightCheck(4.0)) {
       ROS_INFO("Right is unexplored. Turning there");
       if (doTurn(-90, stateHist.back().yaw, false)) {
         setState(State::THINK);
       }
-    } else if (leftCheck(2.0) && !rightCheck(2.0)) {
+    } else if (leftCheck(4.0) && !rightCheck(4.0)) {
       ROS_INFO("Left is unxplored. Turning there");
       if (doTurn(90, stateHist.back().yaw, false)) {
         setState(State::THINK);
@@ -155,9 +155,9 @@ void robotState::update() {
     ros::shutdown();
     break;
   }
-  ROS_INFO("Position Updated");
+  
   updateVisitedPos();
-  ROS_INFO("Happy. VisitedPos size: %lu", stateVars.visitedPos.size());
+  
 }
 
 // ===================STATE MACHINE =============================
@@ -330,8 +330,7 @@ bool robotState::leftCheck(float dist) {
   float leftYLB = stateVars.posY - dist / 2;
   ROS_INFO("visitedPos size: %lu", stateVars.visitedPos.size());
   for (const auto &pos : stateVars.visitedPos) {
-    ROS_INFO("Checking if this is in range: (%f, %f)", std::get<0>(pos),
-             std::get<1>(pos));
+    
     float recordedX = std::get<0>(pos);
     float recordedY = std::get<1>(pos);
 
