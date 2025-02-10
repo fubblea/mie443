@@ -70,7 +70,7 @@ void robotState::update() {
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
 
-    if (!leftCheck(4.0) && rightCheck(4.0)) {
+    if (!leftCheck(2.0) && rightCheck(2.0)) {
       ROS_INFO("Right is unexplored. Turning there");
       if (doTurn(-90, stateHist.back().yaw, false)) {
         setState(State::THINK);
@@ -309,16 +309,19 @@ bool robotState::rightCheck(float dist) {
   float rightYUB = stateVars.posY + dist / 2;
   float rightXLB = stateVars.posX - dist;
   float rightYLB = stateVars.posY - dist / 2;
-
+  ROS_INFO("Right box is defined between: (%f, %f) and (%f, %f)", rightXLB, rightXUB, rightYLB, rightYLB);
   for (const auto &pos : stateVars.visitedPos) {
     float recordedX = std::get<0>(pos);
     float recordedY = std::get<1>(pos);
-
+    ROS_INFO("checking against: (%f, %f)", std::get<0>(pos), std::get<1>(pos) );
     if (recordedX >= rightXLB && recordedX <= rightXUB &&
         recordedY >= rightYLB && recordedY <= rightYUB) {
+      ROS_INFO("Visited");
       return true;
+      
     }
   }
+  return false;
 }
 
 bool robotState::leftCheck(float dist) {
@@ -328,15 +331,18 @@ bool robotState::leftCheck(float dist) {
   float leftYUB = stateVars.posY + dist / 2;
   float leftXLB = stateVars.posX - dist;
   float leftYLB = stateVars.posY - dist / 2;
-  ROS_INFO("visitedPos size: %lu", stateVars.visitedPos.size());
+  ROS_INFO("Right box is defined between: (%f, %f) and (%f, %f)", leftXLB, leftXUB, leftYLB, leftYLB);
   for (const auto &pos : stateVars.visitedPos) {
     
     float recordedX = std::get<0>(pos);
     float recordedY = std::get<1>(pos);
-
+    ROS_INFO("checking against: (%f, %f)", std::get<0>(pos), std::get<1>(pos) );
     if (recordedX >= leftXLB && recordedX <= leftXUB && recordedY >= leftYLB &&
         recordedY <= leftYUB) {
+      ROS_INFO("Visited");
       return true;
+      
     }
   }
+  return false;
 }
