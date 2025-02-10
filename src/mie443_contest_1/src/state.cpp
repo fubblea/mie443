@@ -46,8 +46,13 @@ void robotState::update() {
     if (doTurn(90, stateHist.back().yaw, false)) {
       // Record the distance in front
       std::get<0>(stateVars.sideSpace) = stateVars.wallDist;
-
       ROS_INFO("Left side wallDist is: %f", std::get<0>(stateVars.sideSpace));
+
+      // Check if the side has been visited before
+      std::get<0>(stateVars.sideVisited) = checkVisit(VISITED_BOX);
+      ROS_INFO("Has left side been visited?: %i",
+               std::get<0>(stateVars.sideVisited));
+
       setState(State::CHECK_RIGHT);
     }
     break;
@@ -60,8 +65,13 @@ void robotState::update() {
     if (doTurn(180, stateHist.back().yaw, false)) {
       // Record the distance in front
       std::get<1>(stateVars.sideSpace) = stateVars.wallDist;
-
       ROS_INFO("Right side wallDist is: %f", std::get<1>(stateVars.sideSpace));
+
+      // Check if the side has been visited before
+      std::get<1>(stateVars.sideVisited) = checkVisit(VISITED_BOX);
+      ROS_INFO("Has right side been visited?: %i",
+               std::get<1>(stateVars.sideVisited));
+
       setState(State::REORIENT);
     }
     break;
@@ -69,18 +79,16 @@ void robotState::update() {
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
 
-    if (!leftCheck(2.0) && rightCheck(2.0)) {
-      ROS_INFO("Right is unexplored. Turning there");
-      if (doTurn(-90, stateHist.back().yaw, false)) {
-        setState(State::THINK);
-      }
-    } else if (leftCheck(4.0) && !rightCheck(4.0)) {
-      ROS_INFO("Left is unxplored. Turning there");
-      if (doTurn(90, stateHist.back().yaw, false)) {
+    // Check if right side is good first
+    if (std::get<1>(stateVars.sideVisited)) {
+      ROS_INFO("Right side hasn't been visited. Good to go");
+      setState(State::THINK);
+    } else if (std::get<0>(stateVars.sideVisited)) {
+      ROS_INFO("Left side hasn't been visited. Flipping around");
+      if (doTurn(180, stateHist.back().yaw, false)) {
         setState(State::THINK);
       }
     } else {
-
       ROS_INFO("Neither side explored. Checking distances");
 
       if (std::get<0>(stateVars.sideSpace) >=

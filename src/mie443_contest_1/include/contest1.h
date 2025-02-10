@@ -36,6 +36,8 @@ const float MIN_WALL_DIST =
 const std::tuple<float, float> ANGLE_CONE =
     std::make_tuple(-20, 20); // Angle cone for lidar detection[deg]
 
+const float VISITED_BOX = 0.5; // [m]
+
 // INTERAL HEADER FILES
 
 #include <callbacks.h>
@@ -43,7 +45,7 @@ const std::tuple<float, float> ANGLE_CONE =
 
 // MACROS
 
-#define RAD2DEG(rad) ((rad) * 180. / M_PI) // Convert from radians to degrees
-#define DEG2RAD(deg) ((deg) * M_PI / 180.) // Convert from degrees to radians
+#define RAD2DEG(rad) ((rad)*180. / M_PI) // Convert from radians to degrees
+#define DEG2RAD(deg) ((deg)*M_PI / 180.) // Convert from degrees to radians
 
 #endif // CONTEST1_H

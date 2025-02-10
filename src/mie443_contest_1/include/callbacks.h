@@ -34,6 +34,9 @@ public:
   // Space either side of the robot. Used in CHECK_RIGHT/CHECK_LEFT
   std::tuple<float, float> sideSpace;
 
+  // Check if a certain side has been visited previously
+  std::tuple<bool, bool> sideVisited;
+
   // Construct with default values
   StateVars();
 
