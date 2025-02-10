@@ -6,21 +6,6 @@ Vel::Vel(float angular, float linear) {
   linear = linear;
 }
 
-void robotState::updateVisitedPos() {
-  // Add the current position to the vec of already visited positions
-  std::tuple<float, float> currPos =
-      std::make_tuple(stateVars.posX, stateVars.posY);
-  int cnt = std::count(stateVars.visitedPos.begin(), stateVars.visitedPos.end(),
-                       currPos);
-
-  // Add only if not previously added
-  if (cnt == 0) {
-    stateVars.visitedPos.push_back(currPos);
-    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
-             std::get<1>(currPos));
-  }
-}
-
 // ===================STATE MACHINE =============================
 
 void robotState::update() {
@@ -28,6 +13,7 @@ void robotState::update() {
 
   // Program start
   case State::START:
+    ROS_INFO("Okayyyyy let's go");
     setVelCmd(0, 0);
 
     if (checkBumper() != BumperHit::NOTHING) {
@@ -78,7 +64,6 @@ void robotState::update() {
 
   // Reorient the bot depending on which side has more space
   case State::REORIENT:
-
     // Check if right side is good first
     if (std::get<1>(stateVars.sideVisited)) {
       ROS_INFO("Right side hasn't been visited. Good to go");
@@ -107,6 +92,8 @@ void robotState::update() {
 
   // Spinning around
   case State::SPIN:
+    ROS_INFO("You spin me right round baby right round like a record baby "
+             "right round right round");
     if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
       setState(State::THINK);
     }
@@ -138,15 +125,6 @@ void robotState::update() {
       setState(State::IM_HIT);
     } else if (moveToWall(0, MAX_LIN_VEL)) {
       setState(State::IM_HIT);
-    }
-    break;
-
-  // Slowly creep to wall
-  case State::IM_SLOW:
-    ROS_INFO("Creeping to the wall. Distance to wall is %f m",
-             stateVars.wallDist);
-    if (moveTilBumped(SLOW_LIN_VEL)) {
-      setState(State::THINK);
     }
     break;
 
@@ -307,5 +285,20 @@ bool robotState::moveTilBumped(float vel) {
   default:
     setVelCmd(0, 0);
     return true;
+  }
+}
+
+void robotState::updateVisitedPos() {
+  // Add the current position to the vec of already visited positions
+  std::tuple<float, float> currPos =
+      std::make_tuple(stateVars.posX, stateVars.posY);
+  int cnt = std::count(stateVars.visitedPos.begin(), stateVars.visitedPos.end(),
+                       currPos);
+
+  // Add only if not previously added
+  if (cnt == 0) {
+    stateVars.visitedPos.push_back(currPos);
+    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
+             std::get<1>(currPos));
   }
 }

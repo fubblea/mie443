@@ -11,7 +11,6 @@ enum State {
   SPIN,
   THINK,
   IM_HIT,
-  IM_SLOW,
   IM_SPEED,
   CHECK_RIGHT,
   CHECK_LEFT,
@@ -144,8 +143,6 @@ private:
   Moves until the bumper is hit
   */
   bool moveTilBumped(float vel = MAX_LIN_VEL);
-  bool rightCheck(float dist);
-  bool leftCheck(float dist);
 };
 
 #endif // STATE_H
