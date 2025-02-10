@@ -19,3 +19,4 @@ Always run `catkin_make` after any code changes.
 2. Start mapping: `roslaunch turtlebot_navigation gmapping_demo.launch`
 3. Start RViz: `roslaunch turtlebot_rviz_launchers view_navigation.launch`
 4. Start custom node: `rosrun mie443_contest1 contest1`
+5. Save map: `rosrun map_server map_saver -f logs/`

@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
   }
 
   ROS_ERROR("I'm outta time!!!!");
-
+  ROS_INFO("Map saved");
+  system("rosrun map_server map_saver -f logs/");
   return 0;
 }
