@@ -128,7 +128,7 @@ private:
 
   Uses a box as a tolerance
   */
-  bool checkVisit(float posX, float posY, float tol = 0.5);
+  bool checkVisit(float dist);
 
   /*
   Determine if a bumper is hit and which bumper is hit
@@ -146,7 +146,6 @@ private:
   bool moveTilBumped(float vel = MAX_LIN_VEL);
   bool rightCheck(float dist);
   bool leftCheck(float dist);
-
 };
 
 #endif // STATE_H
