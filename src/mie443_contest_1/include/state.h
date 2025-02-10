@@ -2,12 +2,22 @@
 #define STATE_H
 
 #include "contest1.h"
-#include <vector>
 
 /*
 Possible robot states.
 */
-enum State { START, SPIN, THINK, IM_HIT, IM_SLOW, IM_SPEED, END };
+enum State {
+  START,
+  SPIN,
+  THINK,
+  IM_HIT,
+  IM_SLOW,
+  IM_SPEED,
+  CHECK_RIGHT,
+  CHECK_LEFT,
+  REORIENT,
+  END
+};
 
 /*
 Angular and linear velocity
@@ -134,6 +144,9 @@ private:
   Moves until the bumper is hit
   */
   bool moveTilBumped(float vel = MAX_LIN_VEL);
+  bool rightCheck(float dist);
+  bool leftCheck(float dist);
+
 };
 
 #endif // STATE_H

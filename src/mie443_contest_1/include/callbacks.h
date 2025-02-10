@@ -1,9 +1,6 @@
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
-#include <tuple>
-#include <vector>
-
 #include "contest1.h"
 
 /*
@@ -33,6 +30,9 @@ public:
 
   // The bumper that is hit
   BumperHit bumperHit;
+
+  // Space either side of the robot. Used in CHECK_RIGHT/CHECK_LEFT
+  std::tuple<float, float> sideSpace;
 
   // Construct with default values
   StateVars();
