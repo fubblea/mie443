@@ -9,6 +9,24 @@ Possible bumper hit states
 enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
 
 /*
+Possible robot states.
+*/
+enum State {
+  START,
+  SPIN,
+  THINK,
+  IM_HIT,
+  IM_CHECKING,
+  IM_SPEED,
+  CHECK_RIGHT,
+  CHECK_LEFT,
+  DO_MATH,
+  REORIENT_GOAL,
+  REORIENT_SPACE,
+  END
+};
+
+/*
 Variables that represent the current robot state
 */
 class StateVars {
@@ -47,6 +65,8 @@ public:
   Pose goal;
   std::vector<std::tuple<float, float>> excludedPoints;
   int excludeAttempts = 0;
+
+  State oldState;
 
   // Construct with default values
   StateVars();

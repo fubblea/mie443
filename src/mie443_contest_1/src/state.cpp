@@ -103,7 +103,8 @@ void robotState::update(tf::TransformListener &tfListener) {
       ROS_INFO("Wall dist: %f", stateVars.wallDist);
 
       if ((stateVars.wallDist < distToGoal) &&
-          (stateVars.excludeAttempts < 5)) {
+          (stateVars.excludeAttempts < MAX_EXCLUSIONS) &&
+          distToGoal > MIN_WALL_DIST) {
         ROS_WARN("Excluding frontier point: (%f, %f)", stateVars.goal.posX,
                  stateVars.goal.posY);
         stateVars.excludedPoints.push_back(
@@ -111,12 +112,13 @@ void robotState::update(tf::TransformListener &tfListener) {
         stateVars.excludeAttempts++;
 
         setState(State::THINK);
-      } else if (stateVars.wallDist > distToGoal) {
+      } else if (stateVars.wallDist > distToGoal &&
+                 stateVars.excludeAttempts < MAX_EXCLUSIONS) {
         ROS_INFO("Wall is not in the way. Let's ago");
         stateVars.excludeAttempts = 0;
         setState(State::IM_SPEED);
       } else {
-        ROS_INFO("Can't find a good goal. Making space");
+        ROS_WARN("Can't find a good goal. Making space");
         stateVars.excludeAttempts = 0;
         setState(State::CHECK_LEFT);
       }
@@ -145,7 +147,7 @@ void robotState::update(tf::TransformListener &tfListener) {
   case State::IM_SPEED:
     ROS_INFO("Speed to the wall");
     if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
-      setState(State::THINK);
+      setState(State::IM_HIT);
     }
     break;
 
@@ -153,7 +155,7 @@ void robotState::update(tf::TransformListener &tfListener) {
   case State::IM_CHECKING:
     ROS_INFO("Speeding to wall to make space");
     if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
-      setState(State::THINK);
+      setState(State::IM_HIT);
     }
     break;
 
@@ -161,7 +163,11 @@ void robotState::update(tf::TransformListener &tfListener) {
     ROS_INFO("I was hit at bumper %i. Backing away.",
              stateHist.back().bumperHit);
     if (backAway(0.1)) {
-      setState(State::CHECK_LEFT);
+      if (stateHist.back().oldState == State::IM_SPEED) {
+        setState(State::THINK);
+      } else {
+        setState(State::CHECK_LEFT);
+      }
     }
     break;
 

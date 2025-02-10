@@ -38,7 +38,7 @@ const int NUM_BUMPERS = 3; // Number of bumpers
 const float MIN_WALL_DIST =
     0.46; // Minimum wall distance that the lidar can detect in [m]
 const std::tuple<float, float> ANGLE_CONE =
-    std::make_tuple(-15, 15); // Angle cone for lidar detection[deg]
+    std::make_tuple(-20, 20); // Angle cone for lidar detection[deg]
 
 const int MAP_SEARCH_WIDTH = 1000; // Costmap search width
 const int MAP_SEARCH_DEPTH = 1000; // Costmap search depth
@@ -48,8 +48,9 @@ const float SPACE_WEIGHT = 1.2; // Weight to assign to available space
 const float KNOWN_WEIGHT = 0;   // Weight to assign to known areas
 
 // Big brain start consts
-const int START_SEARCH_SIZE = 10;
-const int MAX_SEARCH_ATTEMPTS = 10;
+const int START_SEARCH_SIZE = 20;
+const int MAX_SEARCH_ATTEMPTS = 100;
+const int MAX_EXCLUSIONS = 100;
 
 // CLASS DEFS
 

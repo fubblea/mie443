@@ -4,24 +4,6 @@
 #include "contest1.h"
 
 /*
-Possible robot states.
-*/
-enum State {
-  START,
-  SPIN,
-  THINK,
-  IM_HIT,
-  IM_CHECKING,
-  IM_SPEED,
-  CHECK_RIGHT,
-  CHECK_LEFT,
-  DO_MATH,
-  REORIENT_GOAL,
-  REORIENT_SPACE,
-  END
-};
-
-/*
 Current state of the robot including state variables.
 */
 class robotState {
@@ -71,6 +53,8 @@ public:
     stateRef.mapPose = stateVars.mapPose;
     stateRef.gridIdx = stateVars.gridIdx;
     stateRef.goal = stateVars.goal;
+
+    stateRef.oldState = currState;
 
     stateHist.push_back(stateRef);
 
