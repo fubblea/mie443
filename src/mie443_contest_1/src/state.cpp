@@ -12,14 +12,13 @@ void robotState::updateVisitedPos() {
       std::make_tuple(stateVars.posX, stateVars.posY);
   int cnt = std::count(stateVars.visitedPos.begin(), stateVars.visitedPos.end(),
                        currPos);
-  
-  
+
   // Add only if not previously added
   if (cnt == 0) {
     stateVars.visitedPos.push_back(currPos);
-    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos), std::get<1>(currPos));
+    ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
+             std::get<1>(currPos));
   }
-  
 }
 
 // ===================STATE MACHINE =============================
@@ -126,7 +125,10 @@ void robotState::update() {
   // Speed to the wall
   case State::IM_SPEED:
     ROS_INFO("Speed to the wall");
-    if (moveToWall(0, MAX_LIN_VEL)) {
+
+    if (checkBumper() != BumperHit::NOTHING) {
+      setState(State::IM_HIT);
+    } else if (moveToWall(0, MAX_LIN_VEL)) {
       setState(State::IM_HIT);
     }
     break;
@@ -155,9 +157,8 @@ void robotState::update() {
     ros::shutdown();
     break;
   }
-  
+
   updateVisitedPos();
-  
 }
 
 // ===================STATE MACHINE =============================
@@ -309,16 +310,16 @@ bool robotState::rightCheck(float dist) {
   float rightYUB = stateVars.posY + dist / 2;
   float rightXLB = stateVars.posX - dist;
   float rightYLB = stateVars.posY - dist / 2;
-  ROS_INFO("Right box is defined between: (%f, %f) and (%f, %f)", rightXLB, rightXUB, rightYLB, rightYLB);
+  ROS_INFO("Right box is defined between: (%f, %f) and (%f, %f)", rightXLB,
+           rightXUB, rightYLB, rightYLB);
   for (const auto &pos : stateVars.visitedPos) {
     float recordedX = std::get<0>(pos);
     float recordedY = std::get<1>(pos);
-    ROS_INFO("checking against: (%f, %f)", std::get<0>(pos), std::get<1>(pos) );
+    ROS_INFO("checking against: (%f, %f)", std::get<0>(pos), std::get<1>(pos));
     if (recordedX >= rightXLB && recordedX <= rightXUB &&
         recordedY >= rightYLB && recordedY <= rightYUB) {
       ROS_INFO("Visited");
       return true;
-      
     }
   }
   return false;
@@ -331,17 +332,17 @@ bool robotState::leftCheck(float dist) {
   float leftYUB = stateVars.posY + dist / 2;
   float leftXLB = stateVars.posX - dist;
   float leftYLB = stateVars.posY - dist / 2;
-  ROS_INFO("Right box is defined between: (%f, %f) and (%f, %f)", leftXLB, leftXUB, leftYLB, leftYLB);
+  ROS_INFO("Right box is defined between: (%f, %f) and (%f, %f)", leftXLB,
+           leftXUB, leftYLB, leftYLB);
   for (const auto &pos : stateVars.visitedPos) {
-    
+
     float recordedX = std::get<0>(pos);
     float recordedY = std::get<1>(pos);
-    ROS_INFO("checking against: (%f, %f)", std::get<0>(pos), std::get<1>(pos) );
+    ROS_INFO("checking against: (%f, %f)", std::get<0>(pos), std::get<1>(pos));
     if (recordedX >= leftXLB && recordedX <= leftXUB && recordedY >= leftYLB &&
         recordedY <= leftYUB) {
       ROS_INFO("Visited");
       return true;
-      
     }
   }
   return false;
