@@ -1,4 +1,6 @@
 #include "contest1.h"
+#include "geometry_msgs/PoseStamped.h"
+#include "nav_msgs/Path.h"
 
 // Class constructors
 
@@ -31,13 +33,18 @@ int main(int argc, char **argv) {
   // Publishers
   ros::Publisher vel_pub =
       nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
+
+  // Advertise additional topics for debugging
   ros::Publisher goal_pub =
-      nh.advertise<geometry_msgs::PointStamped>("/clicked_point", 1);
+      nh.advertise<geometry_msgs::PointStamped>("robot_debug/robot_goal", 1);
+  ros::Publisher path_pub =
+      nh.advertise<nav_msgs::Path>("robot_debug/robot_path", 1);
 
   ros::Rate loop_rate(20); // Processing frequency [Hz]
 
   geometry_msgs::Twist vel;
   geometry_msgs::PointStamped goal;
+  nav_msgs::Path path;
 
   // Contest count down timer
   std::chrono::time_point<std::chrono::system_clock> start;
@@ -49,15 +56,31 @@ int main(int argc, char **argv) {
 
     state.update(tfListener);
 
+    // Publish velocity
     vel.angular.z = DEG2RAD(state.getVelCmd().angular);
     vel.linear.x = state.getVelCmd().linear;
     vel_pub.publish(vel);
 
+    // Publish goal
     goal.header.stamp = ros::Time::now();
-    goal.header.frame_id = "map";
+    goal.header.frame_id = state.stateVars.map.header.frame_id;
     goal.point.x = state.stateVars.goal.posX;
     goal.point.y = state.stateVars.goal.posY;
     goal_pub.publish(goal);
+
+    // Publish the path
+    path.header.stamp = ros::Time::now();
+    path.header.frame_id = state.stateVars.map.header.frame_id;
+    for (std::tuple<float, float> point : state.stateVars.pathPoints) {
+      geometry_msgs::PoseStamped pose;
+      pose.header = path.header;
+      pose.pose.position.x = std::get<0>(point);
+      pose.pose.position.y = std::get<1>(point);
+      pose.pose.position.z = 0;
+      pose.pose.orientation.w = 1.0;
+      path.poses.push_back(pose);
+    }
+    path_pub.publish(path);
 
     // The last thing to do is to update the timer.
     secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(

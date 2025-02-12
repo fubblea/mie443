@@ -11,6 +11,7 @@
 #include <kobuki_msgs/BumperEvent.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include <nav_msgs/Odometry.h>
+#include <nav_msgs/Path.h>
 #include <random>
 #include <ros/console.h>
 #include <sensor_msgs/LaserScan.h>
