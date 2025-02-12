@@ -80,11 +80,11 @@ void robotState::update(tf::TransformListener &tfListener) {
     if (std::get<0>(stateVars.sideScore) >= std::get<1>(stateVars.sideScore)) {
       ROS_INFO("Left side has more space, flipping around");
       if (doTurn(180, stateHist.back().yaw, true)) {
-        setState(State::IM_SPEED);
+        setState(State::IM_CHECKING);
       }
     } else {
       ROS_INFO("Right side has more space, good to go");
-      setState(State::IM_SPEED);
+      setState(State::IM_CHECKING);
     }
     break;
 
@@ -176,7 +176,12 @@ void robotState::update(tf::TransformListener &tfListener) {
   // Slowly creep to wall
   case State::IM_CHECKING:
     ROS_INFO("Speeding to wall to make space");
-    if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
+    if (checkBumper() == BumperHit::NOTHING) {
+
+      if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
+        setState(State::THINK);
+      }
+    } else {
       setState(State::IM_HIT);
     }
     break;

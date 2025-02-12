@@ -35,7 +35,7 @@ bool isGoodCell(const nav_msgs::OccupancyGrid &grid, int x, int y,
   int maxX = std::max(width, x + padding);
   int maxY = std::max(height, y + padding);
 
-  return (x >= minX && x <= maxX && y >= minY && y <= maxY);
+  return ((x < minX || x > maxX) && (y < minY || y > maxY));
 }
 
 std::vector<std::tuple<float, float>>

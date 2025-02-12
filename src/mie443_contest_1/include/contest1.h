@@ -59,9 +59,9 @@ const int MAX_EXCLUSIONS = 10;
 // Path mapping consts
 const int CELL_OCCUPANCY_THRESH = 1;
 const int NEIGHBOR_COST = 1;
-const float WAYPOINT_DIST_TOL = 0.1;
-const int OBSTACLE_PADDING = 0;
-const int MAX_MOVE_ATTEMPTS = 3;
+const float WAYPOINT_DIST_TOL = 0.5;
+const int OBSTACLE_PADDING = 100;
+const int MAX_MOVE_ATTEMPTS = 1;
 
 // CLASS DEFS
 

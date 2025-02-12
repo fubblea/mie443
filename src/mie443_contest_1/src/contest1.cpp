@@ -43,8 +43,6 @@ int main(int argc, char **argv) {
   ros::Rate loop_rate(20); // Processing frequency [Hz]
 
   geometry_msgs::Twist vel;
-  geometry_msgs::PointStamped goal;
-  nav_msgs::Path path;
 
   // Contest count down timer
   std::chrono::time_point<std::chrono::system_clock> start;
@@ -52,6 +50,10 @@ int main(int argc, char **argv) {
   uint64_t secondsElapsed = 0;
 
   while (ros::ok() && secondsElapsed <= 480) {
+    // These are reset every loop
+    geometry_msgs::PointStamped goal;
+    nav_msgs::Path path;
+
     ros::spinOnce();
 
     state.update(tfListener);
