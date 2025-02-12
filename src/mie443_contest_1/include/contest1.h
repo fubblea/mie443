@@ -4,6 +4,7 @@
 // EXTERNAL HEADER FILES
 
 #include "ros/ros.h"
+#include <algorithm>
 #include <geometry_msgs/PointStamped.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Twist.h>
@@ -54,6 +55,10 @@ const int MAX_IN_BOX_SEARCHES = 100;
 const int MAX_SEARCH_ATTEMPTS = 10;
 const int MAX_EXCLUSIONS = 10;
 
+// Path mapping consts
+const int CELL_OCCUPANCY_THRESH = 1;
+const int NEIGHBOR_COST = 1;
+
 // CLASS DEFS
 
 /*
@@ -82,6 +87,7 @@ public:
 // INTERNAL HEADER FILES
 
 #include <callbacks.h>
+#include <pathfind.h>
 #include <state.h>
 
 // MACROS

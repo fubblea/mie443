@@ -344,7 +344,8 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
       // Check to make sure point is within map bounds
       if (x >= 0 && x < stateVars.map.info.width && y >= 0 &&
           y < stateVars.map.info.height) {
-        int idx = idxToRowMajor(std::make_tuple(x, y));
+        int idx =
+            idxToRowMajor(std::make_tuple(x, y), stateVars.map.info.width);
 
         if (stateVars.map.data[idx] < 50) {
           // totalScore += stateVars.map.data[idx] * UNKNOWN_WEIGHT;
@@ -368,17 +369,6 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
   }
 
   return totalScore / cellCount; // Normalize by cell count
-}
-
-int robotState::idxToRowMajor(std::tuple<int, int> gridIdx) {
-  return std::get<1>(gridIdx) * stateVars.map.info.width + std::get<0>(gridIdx);
-}
-
-std::tuple<int, int> robotState::rowMajorToIdx(int rowMajorIdx) {
-  int x = rowMajorIdx % stateVars.map.info.width;
-  int y = rowMajorIdx / stateVars.map.info.width;
-
-  return std::make_tuple(x, y);
 }
 
 bool robotState::moveTilBumped(float vel) {
