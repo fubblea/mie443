@@ -50,8 +50,9 @@ const float KNOWN_WEIGHT = 0;   // Weight to assign to known areas
 
 // Big brain start consts
 const int START_SEARCH_SIZE = 10;
-const int MAX_SEARCH_ATTEMPTS = 100;
-const int MAX_EXCLUSIONS = 100;
+const int MAX_IN_BOX_SEARCHES = 100;
+const int MAX_SEARCH_ATTEMPTS = 10;
+const int MAX_EXCLUSIONS = 10;
 
 // CLASS DEFS
 

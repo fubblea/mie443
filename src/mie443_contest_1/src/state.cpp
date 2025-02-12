@@ -491,18 +491,23 @@ bool robotState::setFrontierGoal(
     std::uniform_int_distribution<> distY(
         startY, endY); // define the range for the Y values
 
-    int x = distX(gen);
-    int y = distY(gen);
+    int inBoxSearches = 0;
+    while (inBoxSearches <= MAX_IN_BOX_SEARCHES) {
+      int x = distX(gen);
+      int y = distY(gen);
 
-    int idx = y * stateVars.map.info.width + x;
-    std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
+      int idx = y * stateVars.map.info.width + x;
+      std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
 
-    if (stateVars.map.data[idx] == -1 && checkInVec(goal, excludedPoints)) {
-      stateVars.goal.posX = std::get<0>(goal);
-      stateVars.goal.posY = std::get<1>(goal);
-      ROS_INFO("Found frontier goal: (%f, %f). Idx: (%i, %i)",
-               stateVars.goal.posX, stateVars.goal.posY, x, y);
-      return true;
+      if (stateVars.map.data[idx] == -1 && checkInVec(goal, excludedPoints)) {
+        stateVars.goal.posX = std::get<0>(goal);
+        stateVars.goal.posY = std::get<1>(goal);
+        ROS_INFO("Found possible frontier goal: (%f, %f). Idx: (%i, %i)",
+                 stateVars.goal.posX, stateVars.goal.posY, x, y);
+        return true;
+      }
+
+      inBoxSearches++;
     }
 
     ROS_WARN("Could not find a frontier point. Increasing search size");
