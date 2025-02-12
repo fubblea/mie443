@@ -71,6 +71,7 @@ public:
   // Variables for path following
   std::vector<std::tuple<float, float>> pathPoints;
   Pose wayPoint;
+  int moveAttemps = 0;
 
   State oldState;
 

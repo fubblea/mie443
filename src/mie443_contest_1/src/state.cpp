@@ -28,6 +28,7 @@ void robotState::update(tf::TransformListener &tfListener) {
   // Check left side and record wall distance
   case State::CHECK_LEFT:
     ROS_INFO("Checking left side");
+    stateVars.moveAttemps = 0;
     // Check the left side
     if (doTurn(90, stateHist.back().yaw, false)) {
       // Record the distance in front
@@ -183,7 +184,13 @@ void robotState::update(tf::TransformListener &tfListener) {
     ROS_INFO("I was hit at bumper %i. Backing away.",
              stateHist.back().bumperHit);
     if (backAway(0.1)) {
-      setState(State::THINK);
+      if (stateVars.moveAttemps > MAX_MOVE_ATTEMPTS) {
+        ROS_WARN("Hit max move attempts, making space");
+        setState(State::CHECK_LEFT);
+      } else {
+        stateVars.moveAttemps++;
+        setState(State::REORIENT_GOAL);
+      }
     }
     break;
 
