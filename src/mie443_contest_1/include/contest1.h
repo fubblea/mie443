@@ -38,6 +38,13 @@ const std::tuple<float, float> ANGLE_CONE =
 
 const float VISITED_BOX = 1; // Size of the box [m]
 
+// Wall following params
+const float WALL_FOLLOW_TIME = 0;
+const int FRONT_DETECT_RANGE = 30; // In samples
+const int SIDE_DETECT_RANGE = 5;   // Positive values are left side. In samples
+const float WALL_FOLLOW_DIST = 0.5;
+const float CONTROLLER_KP = 5;
+
 // INTERAL HEADER FILES
 
 #include <callbacks.h>
@@ -45,7 +52,7 @@ const float VISITED_BOX = 1; // Size of the box [m]
 
 // MACROS
 
-#define RAD2DEG(rad) ((rad)*180. / M_PI) // Convert from radians to degrees
-#define DEG2RAD(deg) ((deg)*M_PI / 180.) // Convert from degrees to radians
+#define RAD2DEG(rad) ((rad) * 180. / M_PI) // Convert from radians to degrees
+#define DEG2RAD(deg) ((deg) * M_PI / 180.) // Convert from degrees to radians
 
 #endif // CONTEST1_H

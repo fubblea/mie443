@@ -19,8 +19,9 @@ public:
   float yaw;  // Yaw angle [deg]
 
   // Lidar Variables
-  float wallDist;  // Distance to closest wall [m]
-  float wallAngle; // Angle to closed wall [deg]
+  float wallDist;                     // Distance to closest wall [m]
+  float wallAngle;                    // Angle to closest wall [deg]
+  sensor_msgs::LaserScan rawScanData; // Raw lidar scan data
 
   // Bumper Variables
   uint8_t bumper[NUM_BUMPERS]; // Bumper states
@@ -36,6 +37,10 @@ public:
 
   // Check if a certain side has been visited previously
   std::tuple<bool, bool> sideVisited;
+
+  // Wall following variables
+  float frontWallDist;
+  float sideWallDist;
 
   // Construct with default values
   StateVars();

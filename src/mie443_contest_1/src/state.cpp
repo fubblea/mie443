@@ -1,5 +1,10 @@
 #include "state.h"
+#include "callbacks.h"
 #include "contest1.h"
+#include "ros/console.h"
+#include <cmath>
+#include <cstdlib>
+#include <limits>
 
 Vel::Vel(float angular, float linear) {
   angular = angular;
@@ -8,7 +13,7 @@ Vel::Vel(float angular, float linear) {
 
 // ===================STATE MACHINE =============================
 
-void robotState::update() {
+void robotState::update(float secondsElapsed) {
   switch (currState) {
 
   // Program start
@@ -103,14 +108,20 @@ void robotState::update() {
   case State::THINK:
     ROS_INFO("Contemplating life");
     if (checkBumper() == BumperHit::NOTHING) {
-      if (stateVars.wallDist > MIN_WALL_DIST) {
-        ROS_INFO("Distance to wall is %f m, going FAST", stateVars.wallDist);
-        setState(State::IM_SPEED);
+      if (secondsElapsed > WALL_FOLLOW_TIME) {
+        setState(State::WALL_FOLLOW);
       } else {
-        ROS_INFO("Distance to wall is %f m, checking around",
-                 stateVars.wallDist);
-        setState(State::IM_HIT);
+
+        if (stateVars.wallDist > MIN_WALL_DIST) {
+          ROS_INFO("Distance to wall is %f m, going FAST", stateVars.wallDist);
+          setState(State::IM_SPEED);
+        } else {
+          ROS_INFO("Distance to wall is %f m, checking around",
+                   stateVars.wallDist);
+          setState(State::IM_HIT);
+        }
       }
+
     } else {
       ROS_INFO("I am close to wall, time to turn");
       setState(State::IM_HIT);
@@ -141,6 +152,31 @@ void robotState::update() {
     setVelCmd(0, 0);
     ROS_INFO("Aight I'm outta here");
     ros::shutdown();
+    break;
+
+  // Wall following mode
+  case State::WALL_FOLLOW:
+    ROS_INFO("Following the wall");
+    // Check distance in front
+    if (checkBumper() == BumperHit::NOTHING) {
+      stateVars.frontWallDist = calcFrontWallDist();
+      stateVars.sideWallDist = calcSideWallDist();
+
+      ROS_INFO("Wall follow dists. Front: %f, Side: %f",
+               stateVars.frontWallDist, stateVars.sideWallDist);
+
+      if (stateVars.frontWallDist < MIN_WALL_DIST) {
+        setVelCmd(MAX_ANG_VEL, 0);
+      } else {
+
+        setVelCmd(RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist)),
+                  MAX_LIN_VEL);
+      }
+
+    } else {
+      setState(State::IM_HIT);
+    }
+
     break;
   }
 
@@ -301,4 +337,69 @@ void robotState::updateVisitedPos() {
     ROS_INFO("Added (%f, %f) to visitedPos", std::get<0>(currPos),
              std::get<1>(currPos));
   }
+}
+
+float robotState::calcFrontWallDist() {
+  int centerIdx = stateVars.rawScanData.ranges.size() / 2;
+  float frontDist = std::numeric_limits<float>::max();
+
+  for (int i = -FRONT_DETECT_RANGE / 2; i <= FRONT_DETECT_RANGE / 2; i++) {
+    int idx = centerIdx + i;
+
+    if (idx >= 0 &&
+        idx < static_cast<int>(stateVars.rawScanData.ranges.size())) {
+      frontDist = std::min(frontDist, stateVars.rawScanData.ranges[idx]);
+    } else {
+      ROS_ERROR("FRONT_DETECT_RANGE invalid: %i", FRONT_DETECT_RANGE);
+    }
+  }
+
+  return frontDist;
+}
+
+float robotState::calcSideWallDist() {
+  float sum = 0;
+  int count = 0;
+
+  int startIdx;
+  int increment;
+  int endIdx;
+  // Positive is left side
+  if (SIDE_DETECT_RANGE >= 0) {
+    startIdx = 0;
+    increment = 1;
+    endIdx = startIdx + std::abs(SIDE_DETECT_RANGE);
+  } else {
+    startIdx = static_cast<int>(stateVars.rawScanData.ranges.size());
+    increment = -1;
+    endIdx = startIdx - std::abs(SIDE_DETECT_RANGE);
+  }
+
+  for (int i = startIdx; i <= endIdx; i += increment) {
+    float dist = stateVars.rawScanData.ranges[i];
+
+    if (std::isfinite(dist) && dist >= stateVars.rawScanData.range_min &&
+        dist <= stateVars.rawScanData.range_max) {
+      sum += dist;
+      count++;
+    }
+  }
+
+  if (count == 0) {
+    ROS_WARN("No valid laser readings for side. Setting to 0");
+    return 0;
+  } else {
+    float avgDist = sum / count;
+
+    // Calculate the perpendicular component
+    return avgDist * sin(DEG2RAD(30));
+  }
+}
+
+float robotState::calcAngleControlCmd(float sideDist) {
+  float error = WALL_FOLLOW_DIST - sideDist;
+  float controlCmd = CONTROLLER_KP * error;
+
+  ROS_INFO("Wall follow error: %f. Control command: %f", error, controlCmd);
+  return controlCmd;
 }
