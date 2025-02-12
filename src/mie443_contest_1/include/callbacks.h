@@ -72,6 +72,7 @@ public:
   std::vector<std::tuple<float, float>> pathPoints;
   Pose wayPoint;
   int moveAttemps = 0;
+  nav_msgs::OccupancyGrid inflatedMap; // Costmap with inflated obstacles
 
   State oldState;
 

@@ -54,8 +54,7 @@ nav_msgs::OccupancyGrid inflateObstacles(const nav_msgs::OccupancyGrid &grid,
 }
 
 std::vector<std::tuple<float, float>>
-findPath(const nav_msgs::OccupancyGrid &gridOg, int startIdx, int goalIdx) {
-  nav_msgs::OccupancyGrid grid = inflateObstacles(gridOg, OBSTACLE_PADDING);
+findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
 
   std::vector<std::tuple<float, float>> path;
   const int dx[4] = {

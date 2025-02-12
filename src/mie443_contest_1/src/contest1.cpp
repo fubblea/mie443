@@ -1,5 +1,6 @@
 #include "contest1.h"
 #include "geometry_msgs/PoseStamped.h"
+#include "nav_msgs/OccupancyGrid.h"
 #include "nav_msgs/Path.h"
 
 // Class constructors
@@ -39,6 +40,8 @@ int main(int argc, char **argv) {
       nh.advertise<geometry_msgs::PointStamped>("robot_debug/robot_goal", 1);
   ros::Publisher path_pub =
       nh.advertise<nav_msgs::Path>("robot_debug/robot_path", 1);
+  ros::Publisher inflatedMap_pub =
+      nh.advertise<nav_msgs::OccupancyGrid>("robot_debug/inflated_map", 1);
 
   ros::Rate loop_rate(20); // Processing frequency [Hz]
 
@@ -83,6 +86,9 @@ int main(int argc, char **argv) {
       path.poses.push_back(pose);
     }
     path_pub.publish(path);
+
+    // Publish the inflated map
+    inflatedMap_pub.publish(state.stateVars.inflatedMap);
 
     // The last thing to do is to update the timer.
     secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(
