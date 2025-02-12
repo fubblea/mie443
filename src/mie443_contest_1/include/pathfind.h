@@ -16,6 +16,8 @@ struct Node {
 std::vector<std::tuple<float, float>>
 findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx);
 
+bool isGoodCell(const nav_msgs::OccupancyGrid &grid, int x, int y, int padding);
+
 std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx,
                                      float resolution, float originX,
                                      float originY);

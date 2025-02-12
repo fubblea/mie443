@@ -1,4 +1,5 @@
 #include "pathfind.h"
+#include "contest1.h"
 #include "ros/console.h"
 #include <algorithm>
 #include <limits>
@@ -21,6 +22,20 @@ std::tuple<int, int> rowMajorToIdx(int rowMajorIdx, int gridWidth) {
   int y = rowMajorIdx / gridWidth;
 
   return std::make_tuple(x, y);
+}
+
+bool isGoodCell(const nav_msgs::OccupancyGrid &grid, int x, int y,
+                int padding) {
+  int width = grid.info.width;
+  int height = grid.info.height;
+
+  int minX = std::min(0, x - padding);
+  int minY = std::min(0, y - padding);
+
+  int maxX = std::max(width, x + padding);
+  int maxY = std::max(height, y + padding);
+
+  return (x >= minX && x <= maxX && y >= minY && y <= maxY);
 }
 
 std::vector<std::tuple<float, float>>
@@ -86,7 +101,8 @@ findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
       int nIdx = idxToRowMajor(std::make_tuple(nx, ny), width);
 
       // Check if the cell is valid
-      if (grid.data[nIdx] > CELL_OCCUPANCY_THRESH && grid.data[nIdx] >= 0) {
+      if (grid.data[nIdx] > CELL_OCCUPANCY_THRESH && grid.data[nIdx] >= 0 &&
+          isGoodCell(grid, nx, ny, OBSTACLE_PADDING)) {
         continue;
       }
 
