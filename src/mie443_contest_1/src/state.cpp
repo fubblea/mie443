@@ -1,6 +1,7 @@
 #include "state.h"
 #include "callbacks.h"
 #include "contest1.h"
+#include <tuple>
 
 std::random_device rd;  // obtain a random number from hardware
 std::mt19937 gen(rd()); // seed the generator
@@ -343,7 +344,7 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
       // Check to make sure point is within map bounds
       if (x >= 0 && x < stateVars.map.info.width && y >= 0 &&
           y < stateVars.map.info.height) {
-        int idx = y * stateVars.map.info.width + x;
+        int idx = idxToRowMajor(std::make_tuple(x, y));
 
         if (stateVars.map.data[idx] < 50) {
           // totalScore += stateVars.map.data[idx] * UNKNOWN_WEIGHT;
@@ -367,6 +368,17 @@ int robotState::scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
   }
 
   return totalScore / cellCount; // Normalize by cell count
+}
+
+int robotState::idxToRowMajor(std::tuple<int, int> gridIdx) {
+  return std::get<1>(gridIdx) * stateVars.map.info.width + std::get<0>(gridIdx);
+}
+
+std::tuple<int, int> robotState::rowMajorToIdx(int rowMajorIdx) {
+  int x = rowMajorIdx % stateVars.map.info.width;
+  int y = rowMajorIdx / stateVars.map.info.width;
+
+  return std::make_tuple(x, y);
 }
 
 bool robotState::moveTilBumped(float vel) {

@@ -154,7 +154,8 @@ private:
 
   std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx);
   bool setFrontierGoal(std::vector<std::tuple<float, float>> excludedPoints);
-  bool checkNeighbors(int x, int y);
+  int idxToRowMajor(std::tuple<int, int> gridIdx);
+  std::tuple<int, int> rowMajorToIdx(int rowMajorIdx);
 };
 
 #endif // STATE_H
