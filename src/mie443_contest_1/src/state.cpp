@@ -1,6 +1,9 @@
 #include "state.h"
 #include "contest1.h"
 
+std::random_device rd;  // obtain a random number from hardware
+std::mt19937 gen(rd()); // seed the generator
+
 // =================== STATE MACHINE START =============================
 
 void robotState::update(tf::TransformListener &tfListener) {
@@ -163,11 +166,7 @@ void robotState::update(tf::TransformListener &tfListener) {
     ROS_INFO("I was hit at bumper %i. Backing away.",
              stateHist.back().bumperHit);
     if (backAway(0.1)) {
-      if (stateHist.back().oldState == State::IM_SPEED) {
-        setState(State::THINK);
-      } else {
-        setState(State::CHECK_LEFT);
-      }
+      setState(State::THINK);
     }
     break;
 
@@ -487,19 +486,23 @@ bool robotState::setFrontierGoal(
     ROS_INFO("Starting frontier search. X=[%i, %i], Y=[%i, %i]", startX, endX,
              startY, endY);
 
-    for (int x = startX; x <= endX; x++) {
-      for (int y = startY; y <= endY; y++) {
-        int idx = y * stateVars.map.info.width + x;
-        std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
+    std::uniform_int_distribution<> distX(
+        startX, endX); // define the range for the X values
+    std::uniform_int_distribution<> distY(
+        startY, endY); // define the range for the Y values
 
-        if (stateVars.map.data[idx] == -1 && checkInVec(goal, excludedPoints)) {
-          stateVars.goal.posX = std::get<0>(goal);
-          stateVars.goal.posY = std::get<1>(goal);
-          ROS_INFO("Found frontier goal: (%f, %f). Idx: (%i, %i)",
-                   stateVars.goal.posX, stateVars.goal.posY, x, y);
-          return true;
-        }
-      }
+    int x = distX(gen);
+    int y = distY(gen);
+
+    int idx = y * stateVars.map.info.width + x;
+    std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
+
+    if (stateVars.map.data[idx] == -1 && checkInVec(goal, excludedPoints)) {
+      stateVars.goal.posX = std::get<0>(goal);
+      stateVars.goal.posY = std::get<1>(goal);
+      ROS_INFO("Found frontier goal: (%f, %f). Idx: (%i, %i)",
+               stateVars.goal.posX, stateVars.goal.posY, x, y);
+      return true;
     }
 
     ROS_WARN("Could not find a frontier point. Increasing search size");
