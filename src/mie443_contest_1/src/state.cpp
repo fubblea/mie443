@@ -156,25 +156,44 @@ void robotState::update(float secondsElapsed) {
 
   // Wall following mode
   case State::WALL_FOLLOW:
-  ROS_INFO("Following the wall");
-    
+    ROS_INFO("Following the wall");
+    // Check distance in front
+    /*if (checkBumper() == BumperHit::NOTHING) {
+      stateVars.frontWallDist = calcFrontWallDist();
+      stateVars.sideWallDist = calcSideWallDist();
 
-  //changing state to check hit first
+      ROS_INFO("Wall follow dists. Front: %f, Side: %f",
+               stateVars.frontWallDist, stateVars.sideWallDist);
 
-  if(checkBumper() != BumperHit::NOTHING){
+      if (stateVars.frontWallDist < MIN_WALL_DIST) {
+        setVelCmd(MAX_ANG_VEL, 0);
+      } else {
+
+        setVelCmd(RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist)),
+                  MAX_LIN_VEL);
+      }
+
+    } else {
+      setState(State::IM_HIT);
+    }*/
+
+   //changing state to check hit first
+
+   if(checkBumper() != BumperHit::NOTHING){
     setState(State::IM_HIT);
     break;
-  }
+   }
   stateVars.frontWallDist = calcFrontWallDist();
   stateVars.sideWallDist = calcSideWallDist();
 
-  ROS_INFO("Wall follow dists. Front: %f, Side: %f", stateVars.frontWallDist, stateVars.sideWallDist);
+  ROS_INFO("Wall follow dists. Front: %f, Side: %f",
+            stateVars.frontWallDist, stateVars.sideWallDist);
 
   if (stateVars.frontWallDist < MIN_WALL_DIST) {
     setVelCmd(MAX_ANG_VEL, 0);
   } else {
     float anglecmd = RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist));
-    setVelCmd(anglecmd, MAX_LIN_VEL);
+    setVelCmd(anglecmd,MAX_LIN_VEL);
   }
 
   break;
