@@ -1,4 +1,5 @@
 #include "state.h"
+#include "callbacks.h"
 #include "contest1.h"
 
 std::random_device rd;  // obtain a random number from hardware
@@ -76,11 +77,11 @@ void robotState::update(tf::TransformListener &tfListener) {
     if (std::get<0>(stateVars.sideScore) >= std::get<1>(stateVars.sideScore)) {
       ROS_INFO("Left side has more space, flipping around");
       if (doTurn(180, stateHist.back().yaw, true)) {
-        setState(IM_CHECKING);
+        setState(State::IM_SPEED);
       }
     } else {
       ROS_INFO("Right side has more space, good to go");
-      setState(IM_CHECKING);
+      setState(State::IM_SPEED);
     }
     break;
 
@@ -149,9 +150,15 @@ void robotState::update(tf::TransformListener &tfListener) {
   // Speed to the wall
   case State::IM_SPEED:
     ROS_INFO("Speed to the wall");
-    if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
+    if (checkBumper() == BumperHit::NOTHING) {
+
+      if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
+        setState(State::IM_HIT);
+      }
+    } else {
       setState(State::IM_HIT);
     }
+
     break;
 
   // Slowly creep to wall

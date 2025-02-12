@@ -48,7 +48,7 @@ const int UNKNOWN_WEIGHT = -50; // Weight to assign to squares that are unknown
 const float SPACE_WEIGHT = 1.2; // Weight to assign to available space
 const float KNOWN_WEIGHT = 0;   // Weight to assign to known areas
 
-// Big brain start consts
+// Frontier goal setting consts
 const int START_SEARCH_SIZE = 10;
 const int MAX_IN_BOX_SEARCHES = 100;
 const int MAX_SEARCH_ATTEMPTS = 10;
