@@ -128,10 +128,9 @@ void robotState::update(tf::TransformListener &tfListener) {
       if (stateVars.pathPoints.empty()) {
         setState(State::CHECK_LEFT);
       } else {
+        stateVars.wayPoint.posX = std::get<0>(stateVars.pathPoints.front());
+        stateVars.wayPoint.posY = std::get<1>(stateVars.pathPoints.front());
 
-        stateVars.wayPoint =
-            Pose(std::get<0>(mapIdxToPos(stateVars.pathPoints.front())),
-                 std::get<1>(mapIdxToPos(stateVars.pathPoints.front())));
         stateVars.pathPoints.erase(
             stateVars.pathPoints
                 .begin()); // Remove the element after making it a waypoint
@@ -153,9 +152,9 @@ void robotState::update(tf::TransformListener &tfListener) {
           setState(State::THINK);
         } else {
           ROS_INFO("Reached waypoint. On to the next");
-          stateVars.wayPoint =
-              Pose(std::get<0>(mapIdxToPos(stateVars.pathPoints.front())),
-                   std::get<1>(mapIdxToPos(stateVars.pathPoints.front())));
+          stateVars.wayPoint.posX = std::get<0>(stateVars.pathPoints.front());
+          stateVars.wayPoint.posY = std::get<1>(stateVars.pathPoints.front());
+
           stateVars.pathPoints.erase(
               stateVars.pathPoints
                   .begin()); // Remove the element after making it a waypoint
@@ -463,18 +462,6 @@ void robotState::updateVisitedPos() {
   }
 }
 
-std::tuple<float, float> robotState::mapIdxToPos(std::tuple<int, int> gridIdx) {
-  float resolution = stateVars.map.info.resolution;
-
-  float originX = stateVars.map.info.origin.position.x;
-  float originY = stateVars.map.info.origin.position.y;
-
-  float posX = (std::get<0>(gridIdx) * resolution) + originX;
-  float posY = (std::get<1>(gridIdx) * resolution) + originY;
-
-  return std::make_tuple(posX, posY);
-}
-
 bool checkInVec(std::tuple<float, float> testPoint,
                 std::vector<std::tuple<float, float>> checkPoints) {
   int cnt = std::count(checkPoints.begin(), checkPoints.end(), testPoint);
@@ -516,7 +503,10 @@ bool robotState::setFrontierGoal(
       int y = distY(gen);
 
       int idx = y * stateVars.map.info.width + x;
-      std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
+      std::tuple<float, float> goal =
+          mapIdxToPos(std::make_tuple(x, y), stateVars.map.info.resolution,
+                      stateVars.map.info.origin.position.x,
+                      stateVars.map.info.origin.position.y);
 
       if (stateVars.map.data[idx] == -1 && checkInVec(goal, excludedPoints)) {
         stateVars.goalIdx = std::make_tuple(x, y);

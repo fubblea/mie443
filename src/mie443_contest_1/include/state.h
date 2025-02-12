@@ -152,7 +152,6 @@ private:
   int scoreSideKnown(bool checkLeft, float yawOffset, int searchWidth,
                      int searchDepth);
 
-  std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx);
   bool setFrontierGoal(std::vector<std::tuple<float, float>> excludedPoints);
   bool moveTilWaypoint(float vel = MAX_LIN_VEL);
 };

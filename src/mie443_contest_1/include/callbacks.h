@@ -69,7 +69,7 @@ public:
   int excludeAttempts = 0;
 
   // Variables for path following
-  std::vector<std::tuple<int, int>> pathPoints;
+  std::vector<std::tuple<float, float>> pathPoints;
   Pose wayPoint;
 
   State oldState;
