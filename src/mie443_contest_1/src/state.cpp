@@ -120,7 +120,7 @@ void robotState::update(tf::TransformListener &tfListener) {
 
     if (setFrontierGoal(stateVars.excludedPoints)) {
       stateVars.pathPoints =
-          findPath(stateVars.inflatedMap,
+          findPath(stateVars.map,
                    idxToRowMajor(stateVars.gridIdx, stateVars.map.info.width),
                    idxToRowMajor(stateVars.goalIdx, stateVars.map.info.width));
 

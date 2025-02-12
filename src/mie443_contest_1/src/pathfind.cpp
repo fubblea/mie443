@@ -3,6 +3,7 @@
 #include "ros/console.h"
 #include <algorithm>
 #include <limits>
+#include <queue>
 #include <tuple>
 
 std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx,
@@ -24,8 +25,63 @@ std::tuple<int, int> rowMajorToIdx(int rowMajorIdx, int gridWidth) {
   return std::make_tuple(x, y);
 }
 
+std::vector<int> calcObstDistCost(const nav_msgs::OccupancyGrid &grid) {
+  ROS_INFO("Calculating obstacle distance costs");
+  const int dx[4] = {
+      0, 0,
+      -1, // Left
+      1   // Right
+  };
+  const int dy[4] = {-1, // Up
+                     1,  // Down
+                     0, 0};
+
+  int width = grid.info.width;
+  int height = grid.info.height;
+  int totalCells = width * height;
+
+  // Distance to obstacles
+  std::vector<int> dist(totalCells, std::numeric_limits<int>::max());
+
+  // Queue for indices of all detected obstacles
+  std::queue<int> obst;
+
+  // For all obstacles, set the distance to 0 and push to queue
+  for (int idx = 0; idx < totalCells; idx++) {
+    if (grid.data[idx] != 0) {
+      dist[idx] = 0;
+      obst.push(idx);
+    }
+  }
+
+  while (!obst.empty()) {
+    int cur = obst.front();
+    obst.pop();
+
+    std::tuple<int, int> xyIdx = rowMajorToIdx(cur, width);
+    for (int i = 0; i < 4; i++) {
+      int nx = std::get<0>(xyIdx) + dx[i];
+      int ny = std::get<1>(xyIdx) + dy[i];
+
+      // If out of bounds, skip
+      if (nx < 0 || nx >= width || ny < 0 || ny >= height) {
+        continue;
+      }
+
+      int nIdx = idxToRowMajor(std::make_tuple(nx, ny), width);
+      if (dist[nIdx] > dist[cur] + 1) {
+        dist[nIdx] = dist[cur] + 1;
+        obst.push(nIdx);
+      }
+    }
+  }
+
+  return dist;
+}
+
 nav_msgs::OccupancyGrid inflateObstacles(const nav_msgs::OccupancyGrid &grid,
                                          int padding) {
+  ROS_INFO("Adding padding to obstacles on map");
   nav_msgs::OccupancyGrid inflated = grid;
   int width = grid.info.width;
   int height = grid.info.height;
@@ -34,16 +90,14 @@ nav_msgs::OccupancyGrid inflateObstacles(const nav_msgs::OccupancyGrid &grid,
     for (int x = 0; x < width; x++) {
       int idx = idxToRowMajor(std::make_tuple(x, y), width);
 
-      if (grid.data[idx] < CELL_OCCUPANCY_THRESH && grid.data[idx] > 0) {
-        for (int dy = -padding; dy <= padding; dy++) {
-          for (int dx = -padding; dx <= padding; dx++) {
-            int nx = x + dx;
-            int ny = y + dy;
+      for (int dy = -padding; dy <= padding; dy++) {
+        for (int dx = -padding; dx <= padding; dx++) {
+          int nx = x + dx;
+          int ny = y + dy;
 
-            if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-              int nIdx = idxToRowMajor(std::make_tuple(nx, ny), width);
-              inflated.data[nIdx] = 100;
-            }
+          if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+            int nIdx = idxToRowMajor(std::make_tuple(nx, ny), width);
+            inflated.data[nIdx] = 100;
           }
         }
       }
@@ -72,13 +126,18 @@ findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
 
   if (startIdx < 0 || startIdx >= totalCells || goalIdx < 0 ||
       goalIdx >= totalCells) {
-    ROS_ERROR("The goal or start index is not valid");
+    ROS_ERROR("The goal or start index is not valid: startIdx: %i, goalIdx: "
+              "%i, totalCells: %i",
+              startIdx, goalIdx, totalCells);
     return path;
   }
 
   // Vector of all the cells. Setting the distances to inf until calculated.
   std::vector<int> cellDist(totalCells, std::numeric_limits<int>::max());
   cellDist[startIdx] = 0;
+
+  // Vector of obstacle distance costs
+  std::vector<int> obstDist = calcObstDistCost(grid);
 
   // Vector of the parent cell indices. Setting to -1 until calculated.
   std::vector<int> prevCellIdx(totalCells, -1);
@@ -117,7 +176,12 @@ findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
       int nIdx = idxToRowMajor(std::make_tuple(nx, ny), width);
 
       // Check if the cell is valid
-      if (grid.data[nIdx] > CELL_OCCUPANCY_THRESH && grid.data[nIdx] >= 0) {
+      if (grid.data[nIdx] != 0) {
+        continue;
+      }
+
+      // Skip if cell is too close to obstacle
+      if (obstDist[nIdx] < OBSTACLE_PADDING) {
         continue;
       }
 

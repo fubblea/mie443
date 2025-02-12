@@ -57,5 +57,5 @@ void StateVars::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
 
 void StateVars::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg) {
   map = *msg;
-  inflatedMap = inflateObstacles(map, OBSTACLE_PADDING);
+  // inflatedMap = inflateObstacles(map, OBSTACLE_PADDING);
 }

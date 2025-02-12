@@ -18,7 +18,7 @@ findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx);
 
 nav_msgs::OccupancyGrid inflateObstacles(const nav_msgs::OccupancyGrid &grid,
                                          int padding);
-
+std::vector<int> calcObstDistCost(const nav_msgs::OccupancyGrid &grid);
 std::tuple<float, float> mapIdxToPos(std::tuple<int, int> gridIdx,
                                      float resolution, float originX,
                                      float originY);
