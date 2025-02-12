@@ -40,7 +40,7 @@ const float VISITED_BOX = 1; // Size of the box [m]
 
 // Wall following params
 const float WALL_FOLLOW_TIME = 0;
-const int FRONT_DETECT_RANGE = 30; // In samples
+const int FRONT_DETECT_RANGE = 50; // In samples
 const int SIDE_DETECT_RANGE = 5;   // Positive values are left side. In samples
 const float WALL_FOLLOW_DIST = 0.5;
 const float CONTROLLER_KP = 5;
