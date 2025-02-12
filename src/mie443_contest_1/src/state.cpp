@@ -152,9 +152,10 @@ void robotState::update(tf::TransformListener &tfListener) {
           ROS_INFO("There are no more waypoints. The goal has been reached");
           setState(State::THINK);
         } else {
-          ROS_INFO("Reached waypoint. On to the next");
           stateVars.wayPoint.posX = std::get<0>(stateVars.pathPoints.front());
           stateVars.wayPoint.posY = std::get<1>(stateVars.pathPoints.front());
+          ROS_INFO("Reached waypoint. On to the next: (%f, %f)",
+                   stateVars.wayPoint.posX, stateVars.wayPoint.posY);
 
           stateVars.pathPoints.erase(
               stateVars.pathPoints

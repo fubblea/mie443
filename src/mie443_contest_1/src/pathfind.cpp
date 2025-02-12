@@ -133,7 +133,7 @@ findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
     ROS_INFO("Added waypoint: (%f, %f)", std::get<0>(waypointPos),
              std::get<1>(waypointPos));
 
-    path.push_back(rowMajorToIdx(cellIdx, width));
+    path.push_back(waypointPos);
   }
 
   std::reverse(path.begin(),
