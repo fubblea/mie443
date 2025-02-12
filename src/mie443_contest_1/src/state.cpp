@@ -1,6 +1,8 @@
 #include "state.h"
 #include "callbacks.h"
 #include "contest1.h"
+#include "pathfind.h"
+#include "ros/console.h"
 #include <tuple>
 
 std::random_device rd;  // obtain a random number from hardware
@@ -9,7 +11,6 @@ std::mt19937 gen(rd()); // seed the generator
 // =================== STATE MACHINE START =============================
 
 void robotState::update(tf::TransformListener &tfListener) {
-  float distToGoal;
   switch (currState) {
 
   // Program start
@@ -88,60 +89,53 @@ void robotState::update(tf::TransformListener &tfListener) {
 
   // Reorient the bot towards the goal
   case State::REORIENT_GOAL:
-    ROS_INFO("Reorienting towards frontier goal: (%f, %f)", stateVars.goal.posX,
-             stateVars.goal.posY);
+    ROS_INFO("Reorienting towards waypoint: (%f, %f)", stateVars.wayPoint.posX,
+             stateVars.wayPoint.posY);
     ROS_INFO("Ref point: (%f, %f)", stateHist.back().mapPose.posX,
              stateHist.back().mapPose.posY);
 
     // Find vector angle from current pos to goal
     if (doTurn(
-            RAD2DEG(atan2(stateVars.goal.posY - stateHist.back().mapPose.posY,
-                          stateVars.goal.posX - stateHist.back().mapPose.posX) -
-                    DEG2RAD(stateHist.back().mapPose.yaw)),
+            RAD2DEG(
+                atan2(stateVars.wayPoint.posY - stateHist.back().mapPose.posY,
+                      stateVars.wayPoint.posX - stateHist.back().mapPose.posX) -
+                DEG2RAD(stateHist.back().mapPose.yaw)),
             stateHist.back().mapPose.yaw, true)) {
+      setState(State::IM_SPEED);
+    }
 
-      distToGoal =
-          sqrt(powf((stateVars.goal.posX - stateHist.back().mapPose.posX), 2) +
-               powf((stateVars.goal.posY - stateHist.back().mapPose.posY), 2));
+    break;
 
-      ROS_INFO("Goal dist: %f", distToGoal);
-      ROS_INFO("Wall dist: %f", stateVars.wallDist);
+  // Spinning around
+  case State::SPIN:
+    if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
+      setState(State::THINK);
+    }
+    break;
 
-      if ((stateVars.wallDist < distToGoal) &&
-          (stateVars.excludeAttempts < MAX_EXCLUSIONS) &&
-          distToGoal > MIN_WALL_DIST) {
-        ROS_WARN("Excluding frontier point: (%f, %f)", stateVars.goal.posX,
-                 stateVars.goal.posY);
-        stateVars.excludedPoints.push_back(
-            std::make_tuple(stateVars.goal.posX, stateVars.goal.posY));
-        stateVars.excludeAttempts++;
+  // Think about what to do
+  case State::THINK:
+    ROS_INFO("Contemplating life");
 
-        setState(State::THINK);
-      } else if (stateVars.wallDist > distToGoal &&
-                 stateVars.excludeAttempts < MAX_EXCLUSIONS) {
-        ROS_INFO("Wall is not in the way. Let's ago");
-        stateVars.excludeAttempts = 0;
-        setState(State::IM_SPEED);
-      } else {
-        ROS_WARN("Can't find a good goal. Making space");
-        stateVars.excludeAttempts = 0;
+    if (setFrontierGoal(stateVars.excludedPoints)) {
+      stateVars.pathPoints =
+          findPath(stateVars.map,
+                   idxToRowMajor(stateVars.gridIdx, stateVars.map.info.width),
+                   idxToRowMajor(stateVars.goalIdx, stateVars.map.info.width));
+
+      // If the path is empty, there was no valid path find. Check around and
+      // make space
+      if (stateVars.pathPoints.empty()) {
         setState(State::CHECK_LEFT);
-      }
+      } else {
 
-      break;
+        stateVars.wayPoint =
+            Pose(std::get<0>(mapIdxToPos(stateVars.pathPoints.front())),
+                 std::get<1>(mapIdxToPos(stateVars.pathPoints.front())));
+        stateVars.pathPoints.erase(
+            stateVars.pathPoints
+                .begin()); // Remove the element after making it a waypoint
 
-    // Spinning around
-    case State::SPIN:
-      if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, false)) {
-        setState(State::THINK);
-      }
-      break;
-
-    // Think about what to do
-    case State::THINK:
-      ROS_INFO("Contemplating life");
-
-      if (setFrontierGoal(stateVars.excludedPoints)) {
         setState(State::REORIENT_GOAL);
       }
     }
@@ -150,11 +144,27 @@ void robotState::update(tf::TransformListener &tfListener) {
 
   // Speed to the wall
   case State::IM_SPEED:
-    ROS_INFO("Speed to the wall");
-    if (checkBumper() == BumperHit::NOTHING) {
+    ROS_INFO("Speed to the waypoint");
+    if (checkBumper() == BumperHit::NOTHING &&
+        stateVars.wallDist > MIN_WALL_DIST) {
+      if (moveTilWaypoint(MAX_LIN_VEL)) {
+        if (stateVars.pathPoints.empty()) {
+          ROS_INFO("There are no more waypoints. The goal has been reached");
+          setState(State::THINK);
+        } else {
+          ROS_INFO("Reached waypoint. On to the next");
+          stateVars.wayPoint =
+              Pose(std::get<0>(mapIdxToPos(stateVars.pathPoints.front())),
+                   std::get<1>(mapIdxToPos(stateVars.pathPoints.front())));
+          stateVars.pathPoints.erase(
+              stateVars.pathPoints
+                  .begin()); // Remove the element after making it a waypoint
 
-      if (moveToWall(MIN_WALL_DIST, MAX_LIN_VEL)) {
-        setState(State::IM_HIT);
+          ROS_INFO("Number of waypoints left: %i",
+                   static_cast<int>(stateVars.pathPoints.size()));
+
+          setState(State::REORIENT_GOAL);
+        }
       }
     } else {
       setState(State::IM_HIT);
@@ -509,6 +519,7 @@ bool robotState::setFrontierGoal(
       std::tuple<float, float> goal = mapIdxToPos(std::make_tuple(x, y));
 
       if (stateVars.map.data[idx] == -1 && checkInVec(goal, excludedPoints)) {
+        stateVars.goalIdx = std::make_tuple(x, y);
         stateVars.goal.posX = std::get<0>(goal);
         stateVars.goal.posY = std::get<1>(goal);
         ROS_INFO("Found possible frontier goal: (%f, %f). Idx: (%i, %i)",
@@ -526,4 +537,21 @@ bool robotState::setFrontierGoal(
 
   ROS_ERROR("Could not find frontier goal.");
   return false;
+}
+
+bool robotState::moveTilWaypoint(float vel) {
+  float waypointDist =
+      -sqrt(powf((stateVars.wayPoint.posX - stateVars.posX), 2) +
+            -powf((stateVars.wayPoint.posY - stateVars.posY), 2));
+
+  if (waypointDist < WAYPOINT_DIST_TOL) {
+    ROS_INFO("Still moving towards waypoint (%f, %f)", stateVars.wayPoint.posX,
+             stateVars.wayPoint.posY);
+    setVelCmd(0, vel);
+    return false;
+  } else { // Waypoint has been reached. Update to the next waypoint
+    ROS_INFO("Waypoint reached");
+    setVelCmd(0, 0);
+    return true;
+  }
 }

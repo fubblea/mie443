@@ -2,6 +2,7 @@
 #define CALLBACKS_H
 
 #include "contest1.h"
+#include <vector>
 
 /*
 Possible bumper hit states
@@ -63,8 +64,13 @@ public:
 
   // Variables for bigger brain strat
   Pose goal;
+  std::tuple<int, int> goalIdx;
   std::vector<std::tuple<float, float>> excludedPoints;
   int excludeAttempts = 0;
+
+  // Variables for path following
+  std::vector<std::tuple<int, int>> pathPoints;
+  Pose wayPoint;
 
   State oldState;
 

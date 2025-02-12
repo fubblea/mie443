@@ -58,6 +58,7 @@ const int MAX_EXCLUSIONS = 10;
 // Path mapping consts
 const int CELL_OCCUPANCY_THRESH = 1;
 const int NEIGHBOR_COST = 1;
+const float WAYPOINT_DIST_TOL = 0.1;
 
 // CLASS DEFS
 
@@ -82,6 +83,17 @@ public:
   float posX = 0; // X position relative to frame origin [m]
   float posY = 0; // Y position relative to frame origin [m]
   float yaw = 0;  // Yaw angle [deg]
+
+  Pose() {
+    posX = 0;
+    posY = 0;
+    yaw = 0;
+  }
+  Pose(float posX, float posY) {
+    posX = posX;
+    posY = posY;
+    yaw = 0;
+  }
 };
 
 // INTERNAL HEADER FILES
