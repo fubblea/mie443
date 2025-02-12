@@ -24,22 +24,39 @@ std::tuple<int, int> rowMajorToIdx(int rowMajorIdx, int gridWidth) {
   return std::make_tuple(x, y);
 }
 
-bool isGoodCell(const nav_msgs::OccupancyGrid &grid, int x, int y,
-                int padding) {
+nav_msgs::OccupancyGrid inflateObstacles(const nav_msgs::OccupancyGrid &grid,
+                                         int padding) {
+  nav_msgs::OccupancyGrid inflated = grid;
   int width = grid.info.width;
   int height = grid.info.height;
 
-  int minX = std::min(0, x - padding);
-  int minY = std::min(0, y - padding);
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      int idx = idxToRowMajor(std::make_tuple(x, y), width);
 
-  int maxX = std::max(width, x + padding);
-  int maxY = std::max(height, y + padding);
+      if (grid.data[idx] < CELL_OCCUPANCY_THRESH && grid.data[idx] > 0) {
+        for (int dy = -padding; dy <= padding; dy++) {
+          for (int dx = -padding; dx <= padding; dx++) {
+            int nx = x + dx;
+            int ny = y + dy;
 
-  return ((x < minX || x > maxX) && (y < minY || y > maxY));
+            if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+              int nIdx = idxToRowMajor(std::make_tuple(nx, ny), width);
+              inflated.data[nIdx] = 100;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return inflated;
 }
 
 std::vector<std::tuple<float, float>>
-findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
+findPath(const nav_msgs::OccupancyGrid &gridOg, int startIdx, int goalIdx) {
+  nav_msgs::OccupancyGrid grid = inflateObstacles(gridOg, OBSTACLE_PADDING);
+
   std::vector<std::tuple<float, float>> path;
   const int dx[4] = {
       0, 0,
@@ -101,8 +118,7 @@ findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
       int nIdx = idxToRowMajor(std::make_tuple(nx, ny), width);
 
       // Check if the cell is valid
-      if (grid.data[nIdx] > CELL_OCCUPANCY_THRESH && grid.data[nIdx] >= 0 &&
-          isGoodCell(grid, nx, ny, OBSTACLE_PADDING)) {
+      if (grid.data[nIdx] > CELL_OCCUPANCY_THRESH && grid.data[nIdx] >= 0) {
         continue;
       }
 
