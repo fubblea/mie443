@@ -196,7 +196,7 @@ void robotState::update(float secondsElapsed) {
       setVelCmd(MAX_ANG_VEL, 0);
     } else {
       ROS_INFO("All clear, send it");
-      setVelCmd(angleCmd, MAX_LIN_VEL);
+      setVelCmd(angleCmd, MAX_LIN_VEL / 1.5);
     }
 
     break;
