@@ -157,36 +157,35 @@ void robotState::update(float secondsElapsed) {
   // Wall following mode
   case State::WALL_FOLLOW:
     ROS_INFO("Following the wall");
-    
 
-   //changing state to check hit first
+    // changing state to check hit first
 
-  if(checkBumper() != BumperHit::NOTHING){
-    setState(State::IM_HIT);
+    if (checkBumper() != BumperHit::NOTHING) {
+      setState(State::IM_HIT);
+      break;
+    }
+    stateVars.frontWallDist = calcFrontWallDist();
+    stateVars.sideWallDist = calcSideWallDist();
+
+    ROS_INFO("Wall follow dists. Front: %f, Side: %f", stateVars.frontWallDist,
+             stateVars.sideWallDist);
+    float angleCmd = RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist));
+    // To reduce noise near corners, switching to slower speeds near walls
+    if (stateVars.frontWallDist < 0.6 ||
+        stateVars.sideWallDist <
+            MIN_WALL_DIST) { // Moves slower when approaching wall
+      ROS_INFO("Wall approaching, gotta go slow");
+      setVelCmd(angleCmd, SLOW_LIN_VEL);
+    } else if (stateVars.frontWallDist <
+               MIN_WALL_DIST) { // Wall in front, stop moving forward
+      ROS_INFO("Wall in front, stop moving forward");
+      setVelCmd(MAX_ANG_VEL, 0);
+    } else {
+      ROS_INFO("All clear, send it");
+      setVelCmd(angleCmd, MAX_LIN_VEL);
+    }
+
     break;
-  }
-  stateVars.frontWallDist = calcFrontWallDist();
-  stateVars.sideWallDist = calcSideWallDist();
-
-  ROS_INFO("Wall follow dists. Front: %f, Side: %f",
-            stateVars.frontWallDist, stateVars.sideWallDist);
-  // To reduce noise near corners, switching to slower speeds near walls
-  if(stateVars.frontWallDist < 0.6){
-    ROS_INFO("Wall approaching, gotta go slow");
-    setVelCmd(0, SLOW_LIN_VEL); //moves slower when approaching wall
-  }
-  if (stateVars.sideWallDist < MIN_WALL_DIST){
-    ROS_INFO("Tight corner gotta go slow");
-    setVelCmd(0, SLOW_LIN_VEL); //move slower when in tight spaces
-  }
-  if (stateVars.frontWallDist < MIN_WALL_DIST) {
-    setVelCmd(MAX_ANG_VEL, 0); //reducing speed in tight distances
-  } else {
-    float anglecmd = RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist));
-    setVelCmd(anglecmd,MAX_LIN_VEL);
-  }
-
-  break;
   }
 
   updateVisitedPos();
@@ -309,7 +308,8 @@ bool robotState::checkVisit(float dist) {
   for (const auto &pos : stateVars.visitedPos) {
     float recordedX = std::get<0>(pos);
     float recordedY = std::get<1>(pos);
-    ROS_INFO("checking against: (%f, %f)", std::get<0>(pos), std::get<1>(pos));
+    // ROS_INFO("checking against: (%f, %f)", std::get<0>(pos),
+    // std::get<1>(pos));
     if (recordedX >= boxXLB && recordedX <= boxYLB && recordedY >= boxYLB &&
         recordedY <= boxYUB) {
       ROS_INFO("Visited");

@@ -34,7 +34,7 @@ const int NUM_BUMPERS = 3; // Number of bumpers
 const float MIN_WALL_DIST =
     0.46; // Minimum wall distance that the lidar can detect in [m]
 const std::tuple<float, float> ANGLE_CONE =
-    std::make_tuple(-20, 20); // Angle cone for lidar detection[deg]
+    std::make_tuple(-25, 25); // Angle cone for lidar detection[deg]
 
 const float VISITED_BOX = 1; // Size of the box [m]
 
@@ -42,7 +42,7 @@ const float VISITED_BOX = 1; // Size of the box [m]
 const float WALL_FOLLOW_TIME = 300;
 const int FRONT_DETECT_RANGE = 50; // In samples
 const int SIDE_DETECT_RANGE = 7;   // Positive values are left side. In samples
-const float WALL_FOLLOW_DIST = 0.5;
+const float WALL_FOLLOW_DIST = MIN_WALL_DIST + 0.03;
 const float CONTROLLER_KP = 4;
 
 // INTERAL HEADER FILES
