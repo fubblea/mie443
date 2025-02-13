@@ -143,7 +143,13 @@ void robotState::update(float secondsElapsed) {
     ROS_INFO("I was hit at bumper %i. Backing away.",
              stateHist.back().bumperHit);
     if (backAway(0.1)) {
-      setState(State::CHECK_LEFT);
+      if (secondsElapsed > WALL_FOLLOW_TIME) {
+        if (doTurn(90, stateHist.back().yaw)) {
+          setState(State::WALL_FOLLOW);
+        }
+      } else {
+        setState(State::CHECK_LEFT);
+      }
     }
     break;
 
