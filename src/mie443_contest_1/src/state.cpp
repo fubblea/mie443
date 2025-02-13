@@ -170,6 +170,14 @@ void robotState::update(float secondsElapsed) {
     ROS_INFO("Wall follow dists. Front: %f, Side: %f", stateVars.frontWallDist,
              stateVars.sideWallDist);
     float angleCmd = RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist));
+    if (std::fabs(angleCmd) > MAX_ANG_VEL) {
+      if (angleCmd >= 0) {
+        angleCmd = MAX_ANG_VEL;
+      } else {
+        angleCmd = -MAX_ANG_VEL;
+      }
+    }
+
     // To reduce noise near corners, switching to slower speeds near walls
     if (stateVars.frontWallDist < 0.6 ||
         stateVars.sideWallDist <
@@ -406,9 +414,14 @@ float robotState::calcSideWallDist() {
 }
 
 float robotState::calcAngleControlCmd(float sideDist) {
-  float error = WALL_FOLLOW_DIST - sideDist;
-  float controlCmd = CONTROLLER_KP * error;
+  float error;
+  if (sideDist > 0) {
+    error = WALL_FOLLOW_DIST - sideDist;
 
+  } else {
+    error = MIN_WALL_DIST;
+  }
+  float controlCmd = CONTROLLER_KP * error;
   ROS_INFO("Wall follow error: %f. Control command: %f", error, controlCmd);
   return controlCmd;
 }

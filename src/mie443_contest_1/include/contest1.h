@@ -36,13 +36,13 @@ const float MIN_WALL_DIST =
 const std::tuple<float, float> ANGLE_CONE =
     std::make_tuple(-25, 25); // Angle cone for lidar detection[deg]
 
-const float VISITED_BOX = 1; // Size of the box [m]
+const float VISITED_BOX = 0.5; // Size of the box [m]
 
 // Wall following params
-const float WALL_FOLLOW_TIME = 300;
-const int FRONT_DETECT_RANGE = 50; // In samples
-const int SIDE_DETECT_RANGE = 7;   // Positive values are left side. In samples
-const float WALL_FOLLOW_DIST = MIN_WALL_DIST + 0.03;
+const float WALL_FOLLOW_TIME = 0;
+const int FRONT_DETECT_RANGE = 20; // In samples
+const int SIDE_DETECT_RANGE = 10;  // Positive values are left side. In samples
+const float WALL_FOLLOW_DIST = MIN_WALL_DIST + 0.1;
 const float CONTROLLER_KP = 4;
 
 // INTERAL HEADER FILES

@@ -46,6 +46,6 @@ int main(int argc, char **argv) {
   ROS_INFO("Map saved");
   system("mkdir -p gen_maps");
   system(
-      "rosrun map_server map_saver -f gen_maps/thurs_contest1_group7_trial1");
+      "rosrun map_server map_saver -f gen_maps/thurs_contest1_group7_trial2");
   return 0;
 }
