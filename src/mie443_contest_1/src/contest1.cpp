@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 480) {
     ros::spinOnce();
 
-    state.update();
+    state.update(secondsElapsed);
 
     vel.angular.z = DEG2RAD(state.getVelCmd().angular);
     vel.linear.x = state.getVelCmd().linear;
@@ -44,6 +44,6 @@ int main(int argc, char **argv) {
 
   ROS_ERROR("I'm outta time!!!!");
   ROS_INFO("Map saved");
-  system("rosrun map_server map_saver -f logs/");
+  system("rosrun map_server map_saver -f logs/lastMap");
   return 0;
 }

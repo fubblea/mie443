@@ -15,6 +15,7 @@ enum State {
   CHECK_RIGHT,
   CHECK_LEFT,
   REORIENT,
+  WALL_FOLLOW,
   END
 };
 
@@ -98,7 +99,7 @@ public:
 
   Runs every loop iteration.
   */
-  void update();
+  void update(float secondsElapsed);
 
 private:
   /*
@@ -143,6 +144,10 @@ private:
   Moves until the bumper is hit
   */
   bool moveTilBumped(float vel = MAX_LIN_VEL);
+
+  float calcFrontWallDist();
+  float calcSideWallDist();
+  float calcAngleControlCmd(float sideDist);
 };
 
 #endif // STATE_H

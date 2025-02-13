@@ -47,6 +47,7 @@ void StateVars::laserCallback(const sensor_msgs::LaserScan::ConstPtr &msg) {
   };
 
   wallAngle = RAD2DEG(msg->angle_min + minIdx * msg->angle_increment);
+  rawScanData = *msg;
 }
 
 void StateVars::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
