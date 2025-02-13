@@ -39,7 +39,7 @@ const std::tuple<float, float> ANGLE_CONE =
 const float VISITED_BOX = 0.5; // Size of the box [m]
 
 // Wall following params
-const float WALL_FOLLOW_TIME = 0;
+const float WALL_FOLLOW_TIME = 240;
 const int FRONT_DETECT_RANGE = 20; // In samples
 const int SIDE_DETECT_RANGE = 10;  // Positive values are left side. In samples
 const float WALL_FOLLOW_DIST = MIN_WALL_DIST + 0.1;
