@@ -145,8 +145,28 @@ private:
   */
   bool moveTilBumped(float vel = MAX_LIN_VEL);
 
+  /*
+  Uses the LIDAR to calculate the distance in front of the robot.
+
+  Uses a subset of the cone to prevent overlap with the side distance
+  calculation.
+  */
   float calcFrontWallDist();
+
+  /*
+  Uses the LIDAR to calculate the distance to the side of the robot.
+
+  Finds the perpendicular distance to the wall by taking the sine component of
+  the distance
+  */
   float calcSideWallDist();
+
+  /*
+  Calculates the angle command to keep the wall at the specified sideDist.
+
+  Uses a proportional controller that is applied on the error between the actual
+  distance vs the target.
+  */
   float calcAngleControlCmd(float sideDist);
 };
 

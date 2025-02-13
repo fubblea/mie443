@@ -44,6 +44,8 @@ int main(int argc, char **argv) {
 
   ROS_ERROR("I'm outta time!!!!");
   ROS_INFO("Map saved");
-  system("rosrun map_server map_saver -f logs/lastMap");
+  system("mkdir -p gen_map");
+  system(
+      "rosrun map_server map_saver -f gen_maps/thurs_contest1_group7_trial1");
   return 0;
 }
