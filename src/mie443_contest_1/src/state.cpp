@@ -157,40 +157,30 @@ void robotState::update(float secondsElapsed) {
   // Wall following mode
   case State::WALL_FOLLOW:
     ROS_INFO("Following the wall");
-    // Check distance in front
-    /*if (checkBumper() == BumperHit::NOTHING) {
-      stateVars.frontWallDist = calcFrontWallDist();
-      stateVars.sideWallDist = calcSideWallDist();
-
-      ROS_INFO("Wall follow dists. Front: %f, Side: %f",
-               stateVars.frontWallDist, stateVars.sideWallDist);
-
-      if (stateVars.frontWallDist < MIN_WALL_DIST) {
-        setVelCmd(MAX_ANG_VEL, 0);
-      } else {
-
-        setVelCmd(RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist)),
-                  MAX_LIN_VEL);
-      }
-
-    } else {
-      setState(State::IM_HIT);
-    }*/
+    
 
    //changing state to check hit first
 
-   if(checkBumper() != BumperHit::NOTHING){
+  if(checkBumper() != BumperHit::NOTHING){
     setState(State::IM_HIT);
     break;
-   }
+  }
   stateVars.frontWallDist = calcFrontWallDist();
   stateVars.sideWallDist = calcSideWallDist();
 
   ROS_INFO("Wall follow dists. Front: %f, Side: %f",
             stateVars.frontWallDist, stateVars.sideWallDist);
-
+  // To reduce noise near corners, switching to slower speeds near walls
+  if(stateVars.frontWallDist < 0.6){
+    ROS_INFO("Wall approaching, gotta go slow");
+    setVelCmd(0, SLOW_LIN_VEL); //moves slower when approaching wall
+  }
+  if (stateVars.sideWallDist < MIN_WALL_DIST){
+    ROS_INFO("Tight corner gotta go slow");
+    setVelCmd(0, SLOW_LIN_VEL); //move slower when in tight spaces
+  }
   if (stateVars.frontWallDist < MIN_WALL_DIST) {
-    setVelCmd(MAX_ANG_VEL, 0);
+    setVelCmd(MAX_ANG_VEL, 0); //reducing speed in tight distances
   } else {
     float anglecmd = RAD2DEG(calcAngleControlCmd(stateVars.sideWallDist));
     setVelCmd(anglecmd,MAX_LIN_VEL);
