@@ -191,7 +191,7 @@ findPath(const nav_msgs::OccupancyGrid &grid, int startIdx, int goalIdx) {
       if (newCost < cellDist[nIdx]) {
         cellDist[nIdx] = newCost;
         prevCellIdx[nIdx] = currentNode.idx;
-        nodeQueue.push(Node{nIdx, newCost});
+        nodeQueue.push(Node{nIdx, newCost}); // Add to node list to check later
       }
     }
   }
