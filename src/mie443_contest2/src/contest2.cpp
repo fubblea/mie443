@@ -52,6 +52,7 @@ int main(int argc, char **argv) {
   uint64_t secondsElapsed = 0;
 
   int boxIdx = 0;
+  int numBoxs = boxes.coords.size();
 
   // Execute strategy.
   while (ros::ok() && secondsElapsed <= 300) {
@@ -60,7 +61,6 @@ int main(int argc, char **argv) {
     ROS_INFO("Current pos: (%f, %f, %f)", robotPose.x, robotPose.y,
              robotPose.phi);
 
-    // TODO: Check max length so it does not segfault
     RobotPose navGoal =
         moveFacingBox(boxes.coords[boxIdx][0], boxes.coords[boxIdx][1],
                       boxes.coords[boxIdx][2]);
@@ -69,9 +69,12 @@ int main(int argc, char **argv) {
     Navigation::moveToGoal(navGoal.x, navGoal.y, navGoal.phi);
 
     boxIdx++;
+    if (boxIdx == numBoxs) {
+      boxIdx = 0;
+    }
 
-    // TODO: Make the robot wait a bit so that openCV can do its thing
     imagePipeline.getTemplateID(boxes, showView);
+
     ros::Duration(0.01).sleep();
   }
   return 0;

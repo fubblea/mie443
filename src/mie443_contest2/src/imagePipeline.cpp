@@ -1,3 +1,4 @@
+#include <ctime>
 #include <imagePipeline.h>
 
 #define IMAGE_TYPE sensor_msgs::image_encodings::BGR8
@@ -34,8 +35,8 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     std::cout << "img.rows:" << img.rows << std::endl;
     std::cout << "img.cols:" << img.cols << std::endl;
   } else {
-    /***YOUR CODE HERE***/
-    // Use: boxes.templates
+    // NOTE: This is temporary, remove when implementing
+    sleep(3);
 
     if (showView) {
       cv::imshow("view", img);
