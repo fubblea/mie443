@@ -8,5 +8,5 @@
 3. `roslaunch turtlebot_rviz_launchers view_navigation.launch`
   - Set the original pose estimate (has to be somewhat accurate)
 4. `rosrun mie443_contest2 contest2`
-  - Cry as your fps tanks
+  - If the view window is ruining the fps, run: `rosrun mie443_contest2 contest2 -hideView`
 
