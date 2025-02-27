@@ -9,6 +9,7 @@
                 "/opt/ros/kinetic/include/**",
                 "/usr/include/**",
                 "${workspaceFolder}/src/mie443_contest_1/include/**"
+                "${workspaceFolder}/src/mie443_contest2/include/**"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",
