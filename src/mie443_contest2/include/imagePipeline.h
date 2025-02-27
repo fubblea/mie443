@@ -16,5 +16,5 @@ private:
 public:
   ImagePipeline(ros::NodeHandle &n);
   void imageCallback(const sensor_msgs::ImageConstPtr &msg);
-  int getTemplateID(Boxes &boxes);
+  int getTemplateID(Boxes &boxes, bool showView = true);
 };

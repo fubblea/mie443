@@ -4,7 +4,17 @@
 #include <navigation.h>
 #include <robot_pose.h>
 
+bool cmdOptionExists(char **begin, char **end, const std::string &option) {
+  return std::find(begin, end, option) != end;
+}
+
 int main(int argc, char **argv) {
+  // Parse args
+  bool showView = true;
+  if (cmdOptionExists(argv, argv + argc, "-hideView")) {
+    showView = false;
+  }
+
   // Setup ROS.
   ros::init(argc, argv, "contest2");
   ros::NodeHandle n;
@@ -38,7 +48,8 @@ int main(int argc, char **argv) {
     /***YOUR CODE HERE***/
     // Use: boxes.coords
     // Use: robotPose.x, robotPose.y, robotPose.phi
-    imagePipeline.getTemplateID(boxes);
+
+    imagePipeline.getTemplateID(boxes, showView);
     ros::Duration(0.01).sleep();
   }
   return 0;
