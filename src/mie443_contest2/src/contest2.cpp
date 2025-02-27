@@ -54,26 +54,42 @@ int main(int argc, char **argv) {
   int boxIdx = 0;
   int numBoxs = boxes.coords.size();
 
+  bool firstSpin = true;
+
   // Execute strategy.
   while (ros::ok() && secondsElapsed <= 300) {
     ros::spinOnce();
 
     ROS_INFO("Current pos: (%f, %f, %f)", robotPose.x, robotPose.y,
              robotPose.phi);
+    ROS_INFO("Box target: (%f, %f, %f)", boxes.coords[boxIdx][0],
+             boxes.coords[boxIdx][1], boxes.coords[boxIdx][2]);
 
     RobotPose navGoal =
         moveFacingBox(boxes.coords[boxIdx][0], boxes.coords[boxIdx][1],
                       boxes.coords[boxIdx][2]);
 
-    // Navigate to box poses
-    Navigation::moveToGoal(navGoal.x, navGoal.y, navGoal.phi);
+    // Let the callbacks update once
+    if (firstSpin) {
+      if (robotPose.x != 0 || robotPose.y != 0 || robotPose.phi != 0) {
+        ROS_INFO("First spin done");
+        firstSpin = false;
+      } else {
+        ROS_INFO("Still waiting for first spin");
+      }
 
-    boxIdx++;
-    if (boxIdx == numBoxs) {
-      boxIdx = 0;
+    } else {
+      // Navigate to box poses
+      ROS_INFO("Nav goal: (%f, %f, %f)", navGoal.x, navGoal.y, navGoal.phi);
+      Navigation::moveToGoal(navGoal.x, navGoal.y, navGoal.phi);
+
+      boxIdx++;
+      if (boxIdx == numBoxs) {
+        boxIdx = 0;
+      }
+
+      imagePipeline.getTemplateID(boxes, showView);
     }
-
-    imagePipeline.getTemplateID(boxes, showView);
 
     ros::Duration(0.01).sleep();
   }
