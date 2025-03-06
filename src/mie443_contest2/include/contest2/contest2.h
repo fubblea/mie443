@@ -14,8 +14,8 @@
 
 // CONSTANTS
 // TODO: Check if this is valid
-const bool CONTEST_MODE = false; // 0 for test, 1 for contest
-//
+const bool CONTEST_MODE = false; // false for test, true for contest
+
 const float MAX_LIN_VEL = 0.25; // Maximum linear velocity in [m/s]
 const float SLOW_LIN_VEL = 0.1; // Slow linear velocity in [m/s]
 
