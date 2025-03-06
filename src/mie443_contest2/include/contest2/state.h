@@ -30,7 +30,7 @@ class RobotState {
 public:
   State currState = State::START;
   RobotPose currPose;
-  std::vector<RobotGoal> goalList; // (boxIdx, navGoal)
+  std::vector<RobotGoal> goalList;
   Boxes boxes;
   ImagePipeline imagePipeline;
 

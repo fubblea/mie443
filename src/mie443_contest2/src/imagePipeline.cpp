@@ -35,8 +35,24 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     std::cout << "img.rows:" << img.rows << std::endl;
     std::cout << "img.cols:" << img.cols << std::endl;
   } else {
-    // NOTE: This is temporary, remove when implementing
-    sleep(3);
+
+    // Find keypoints in scene (img) and compare to keypoint in templates
+    int minHessian = 400; // try changing it and see what it does?
+    Ptr<SURF> detector = SURF::create(minHessian);
+    std::vector<KeyPoint> keypoints_scene;
+    Mat descriptors_scene;
+    detector->detectAndCompute(img, noArray(), keypoints_scene,
+                               descriptors_scene);
+
+    Ptr<DescriptorMatcher> matcher =
+        DescriptorMatcher::create(DescriptorMatcher::FLANNBASED);
+    std::vector<std::vector<DMatch>> knn_matches;
+
+    // iterate
+    matcher->knnMatch(templates, descriptors_scene, knn_matches,
+                      2); // compare templates with scene.. iterate?
+
+    const float ratio_thresh = 0.75f;
 
     if (showView) {
       cv::imshow("view", img);

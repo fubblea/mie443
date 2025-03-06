@@ -23,6 +23,9 @@ void RobotState::updateState(bool showView) {
 
     this->goalList = genNavGoals();
     this->currState = State::GOTO_GOAL;
+
+    // add a fn to generate keypoints for each template that we can compare to
+
     break;
   }
 

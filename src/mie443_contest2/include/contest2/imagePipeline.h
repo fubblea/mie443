@@ -7,8 +7,20 @@
 #include <opencv2/core/core.hpp>
 #include <std_msgs/String.h>
 
+#include <iostream>
+#include "features2d.hpp"
+#include "opencv2/core.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/xfeatures2d.hpp"
+
 // INTERNAL HEADER FILES
 #include "contest2/boxes.h"
+
+using namespace cv;
+using namespace cv::xfeatures2d;
+using std::cout;
+using std::endl;
 
 class ImagePipeline {
 private:
