@@ -19,16 +19,16 @@ int main(int argc, char **argv) {
 
   // Robot state object + subscriber.
   RobotState robotState(n);
-  ros::Subscriber amclSub = n.subscribe(
+  ros::Subscriber amcl_sub = n.subscribe(
       "/amcl_pose", 1, &RobotPose::poseCallback, &robotState.currPose);
-
-  // Velocity subscriber
-  ros::Publisher vel_pub =
-      n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
 
   // LIDAR subscriber
   ros::Subscriber laser_sub =
       n.subscribe("scan", 10, &LidarScan::laserCallback, &robotState.lidarScan);
+
+  // Velocity publisher
+  ros::Publisher vel_pub =
+      n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
 
   // Initialize box coordinates and templates
   Boxes boxes;
