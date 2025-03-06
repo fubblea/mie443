@@ -39,7 +39,7 @@ public:
   RobotState(ros::NodeHandle n) : currPose(0, 0, 0), imagePipeline(n) {};
 
   // Other Functions
-  std::vector<RobotGoal> genNavGoals();
+  void genNavGoals(float angleOffset);
 
   // State Machine
   void updateState(bool showView);
