@@ -50,9 +50,11 @@ void RobotState::updateState(bool showView) {
 
     if (!moveSuccess) {
       ROS_ERROR("Navigation was not successful!");
+      this->lostCount++;
       setState(State::IM_LOST);
     } else {
       ROS_INFO("Navigating was successful");
+      this->lostCount = 0;
       setState(State::TAG_BOX);
     }
 
@@ -80,12 +82,14 @@ void RobotState::updateState(bool showView) {
     ROS_WARN("IM LOSTTTTTTT AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
 
     if (this->lostCount <= MAX_LOST_COUNT) {
-      ROS_WARN("Still lost, trying to get unlost.");
-      // TODO: Make this more robust
-      if (backAway(0.5)) {
-        setState(State::GOTO_GOAL);
+      ROS_WARN("Still lost, trying to get unlost. Lost count: %i",
+               this->lostCount);
+
+      if (doTurn(90, this->poseHist.back().phi, true)) {
+        if (moveToWall(MIN_WALL_DIST + 0.1, MAX_LIN_VEL)) {
+          setState(State::GOTO_GOAL);
+        }
       }
-      this->lostCount++;
     } else {
       ROS_ERROR("Can't get unlost, skipping goal");
       sendGoalToBack(&this->goalList, 0);

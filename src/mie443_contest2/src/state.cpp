@@ -90,3 +90,21 @@ bool RobotState::backAway(float desiredDist) {
     return true;
   }
 }
+
+bool RobotState::moveToWall(float targetDist, float speed) {
+  if (targetDist < MIN_WALL_DIST) {
+    targetDist = MIN_WALL_DIST;
+    ROS_WARN("Distance to obstacle is less than %fm. Setting Target "
+             "Distance to: %f",
+             targetDist, targetDist);
+  }
+  if (this->lidarScan.wallDist > targetDist) {
+    ROS_INFO("Moving to wall. Distance: %f", this->lidarScan.wallDist);
+    this->velCmd.setVelCmd(true, speed, 0);
+    return false;
+  } else {
+    ROS_INFO("I'm at the wall. Distance: %f", this->lidarScan.wallDist);
+    this->velCmd.setVelCmd(false, 0, 0);
+    return true;
+  }
+}

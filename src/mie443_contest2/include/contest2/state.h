@@ -80,6 +80,7 @@ public:
   // Movement Functions
   bool doTurn(float relativeTarget, float reference, bool quick);
   bool backAway(float desiredDist);
+  bool moveToWall(float targetDist, float speed);
 
   // Other Functions
   void genNavGoals(float angleOffset);
