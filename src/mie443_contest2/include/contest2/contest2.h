@@ -27,6 +27,8 @@ const float ANGLE_TOL = 3;    // Angle error tolerance in [deg]
 
 const float MIN_WALL_DIST =
     0.46; // Minimum wall distance that the lidar can detect in [m]
+const std::tuple<float, float> ANGLE_CONE =
+    std::make_tuple(-25, 25); // Angle cone for lidar detection[deg]
 
 const int NUM_BUMPERS = 3; // Number of bumpers
 
@@ -39,6 +41,7 @@ const int MAX_LOST_COUNT = 3;
 
 #include <contest2/boxes.h>
 #include <contest2/imagePipeline.h>
+#include <contest2/lidar.h>
 #include <contest2/navigation.h>
 #include <contest2/robot_pose.h>
 #include <contest2/state.h>

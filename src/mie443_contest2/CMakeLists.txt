@@ -24,6 +24,7 @@ include_directories(include
 add_executable(contest2 
     src/contest2.cpp
     src/boxes.cpp
+    src/lidar.cpp
     src/navigation.cpp
     src/robot_pose.cpp
     src/imagePipeline.cpp

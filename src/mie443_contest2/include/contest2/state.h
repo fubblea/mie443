@@ -3,6 +3,7 @@
 #include "contest2/boxes.h"
 #include "contest2/contest2.h"
 #include "contest2/imagePipeline.h"
+#include "contest2/lidar.h"
 #include "ros/console.h"
 #include "ros/node_handle.h"
 #include <contest2/robot_pose.h>
@@ -61,6 +62,7 @@ public:
   Boxes boxes;
   ImagePipeline imagePipeline;
   int lostCount = 0;
+  LidarScan lidarScan;
 
 private:
   std::vector<RobotPose> poseHist;

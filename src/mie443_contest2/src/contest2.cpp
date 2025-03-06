@@ -1,3 +1,4 @@
+#include "contest2/lidar.h"
 #include <cmath>
 #include <contest2/contest2.h>
 
@@ -24,6 +25,10 @@ int main(int argc, char **argv) {
   // Velocity subscriber
   ros::Publisher vel_pub =
       n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
+
+  // LIDAR subscriber
+  ros::Subscriber laser_sub =
+      n.subscribe("scan", 10, &LidarScan::laserCallback, &robotState.lidarScan);
 
   // Initialize box coordinates and templates
   Boxes boxes;
