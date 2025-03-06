@@ -1,7 +1,6 @@
-#ifndef STATE_H
-#define STATE_H
+#pragma once
 
-#include "contest1.h"
+#include "contest1/contest1.h"
 
 /*
 Possible robot states.
@@ -169,5 +168,3 @@ private:
   */
   float calcAngleControlCmd(float sideDist);
 };
-
-#endif // STATE_H

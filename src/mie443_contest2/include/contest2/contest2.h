@@ -3,11 +3,7 @@
 
 // EXTERNAL HEADER FILES
 
-#include <boxes.h>
 #include <chrono>
-#include <imagePipeline.h>
-#include <navigation.h>
-#include <robot_pose.h>
 
 #include <cmath>
 #include <stdio.h>
@@ -21,6 +17,12 @@
 const float BOX_FACING_OFFSET = 0.5;
 
 // INTERAL HEADER FILES
+
+#include <contest2/boxes.h>
+#include <contest2/imagePipeline.h>
+#include <contest2/navigation.h>
+#include <contest2/robot_pose.h>
+#include <contest2/state.h>
 
 // MACROS
 

@@ -1,4 +1,4 @@
-#include "contest1.h"
+#include "contest1/contest1.h"
 
 StateVars::StateVars() {
   posX = 0.0;

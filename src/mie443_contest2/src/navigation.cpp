@@ -1,6 +1,6 @@
 #include <actionlib/client/simple_action_client.h>
+#include <contest2/navigation.h>
 #include <move_base_msgs/MoveBaseAction.h>
-#include <navigation.h>
 #include <tf/transform_datatypes.h>
 
 bool Navigation::moveToGoal(float xGoal, float yGoal, float phiGoal) {

@@ -1,4 +1,4 @@
-#include "contest1.h"
+#include "contest1/contest1.h"
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "image_listener");

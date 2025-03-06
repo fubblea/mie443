@@ -1,6 +1,6 @@
-#include "state.h"
-#include "callbacks.h"
-#include "contest1.h"
+#include "contest1/state.h"
+#include "contest1/callbacks.h"
+#include "contest1/contest1.h"
 #include "ros/console.h"
 #include <cmath>
 #include <cstdlib>

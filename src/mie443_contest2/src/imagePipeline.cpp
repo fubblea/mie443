@@ -1,5 +1,5 @@
+#include <contest2/imagePipeline.h>
 #include <ctime>
-#include <imagePipeline.h>
 
 #define IMAGE_TYPE sensor_msgs::image_encodings::BGR8
 #define IMAGE_TOPIC                                                            \

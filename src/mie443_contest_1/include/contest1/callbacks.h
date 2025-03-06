@@ -1,7 +1,6 @@
-#ifndef CALLBACKS_H
-#define CALLBACKS_H
+#pragma once
 
-#include "contest1.h"
+#include "contest1/contest1.h"
 
 /*
 Possible bumper hit states
@@ -61,5 +60,3 @@ public:
   */
   void odomCallback(const nav_msgs::Odometry::ConstPtr &msg);
 };
-
-#endif // CALLBACKS_H

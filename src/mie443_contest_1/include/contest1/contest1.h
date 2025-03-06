@@ -1,5 +1,4 @@
-#ifndef CONTEST1_H
-#define CONTEST1_H
+#pragma once
 
 // EXTERNAL HEADER FILES
 
@@ -47,12 +46,10 @@ const float CONTROLLER_KP = 4;
 
 // INTERAL HEADER FILES
 
-#include <callbacks.h>
-#include <state.h>
+#include <contest1/callbacks.h>
+#include <contest1/state.h>
 
 // MACROS
 
 #define RAD2DEG(rad) ((rad) * 180. / M_PI) // Convert from radians to degrees
 #define DEG2RAD(deg) ((deg) * M_PI / 180.) // Convert from degrees to radians
-
-#endif // CONTEST1_H

@@ -1,4 +1,4 @@
-#include <boxes.h>
+#include <contest2/boxes.h>
 #include <ros/package.h>
 
 bool Boxes::load_coords() {

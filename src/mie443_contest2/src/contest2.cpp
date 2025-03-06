@@ -1,8 +1,6 @@
-#include "navigation.h"
-#include "robot_pose.h"
 #include "ros/console.h"
 #include <cmath>
-#include <contest2.h>
+#include <contest2/contest2.h>
 
 RobotPose moveFacingBox(float xBox, float yBox, float phiBox) {
   float xPos = xBox + BOX_FACING_OFFSET * std::cos(phiBox);
@@ -27,10 +25,12 @@ int main(int argc, char **argv) {
   // Setup ROS.
   ros::init(argc, argv, "contest2");
   ros::NodeHandle n;
-  // Robot pose object + subscriber.
-  RobotPose robotPose(0, 0, 0);
-  ros::Subscriber amclSub =
-      n.subscribe("/amcl_pose", 1, &RobotPose::poseCallback, &robotPose);
+
+  // Robot state object + subscriber.
+  RobotState robotState;
+  ros::Subscriber amclSub = n.subscribe(
+      "/amcl_pose", 1, &RobotPose::poseCallback, &robotState.currPose);
+
   // Initialize box coordinates and templates
   Boxes boxes;
   if (!boxes.load_coords() || !boxes.load_templates()) {
@@ -60,8 +60,8 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 300) {
     ros::spinOnce();
 
-    ROS_INFO("Current pos: (%f, %f, %f)", robotPose.x, robotPose.y,
-             robotPose.phi);
+    ROS_INFO("Current pos: (%f, %f, %f)", robotState.currPose.x,
+             robotState.currPose.y, robotState.currPose.phi);
     ROS_INFO("Box target: (%f, %f, %f)", boxes.coords[boxIdx][0],
              boxes.coords[boxIdx][1], boxes.coords[boxIdx][2]);
 
@@ -71,7 +71,8 @@ int main(int argc, char **argv) {
 
     // Let the callbacks update once
     if (firstSpin) {
-      if (robotPose.x != 0 || robotPose.y != 0 || robotPose.phi != 0) {
+      if (robotState.currPose.x != 0 || robotState.currPose.y != 0 ||
+          robotState.currPose.phi != 0) {
         ROS_INFO("First spin done");
         firstSpin = false;
       } else {
