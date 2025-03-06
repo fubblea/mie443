@@ -54,12 +54,13 @@ public:
 
 class RobotState {
 public:
-  State currState = State::START;
+  State currState;
   RobotPose currPose;
   RobotVelCmd velCmd;
-  std::vector<RobotGoal> goalList; // (boxIdx, navGoal)
+  std::vector<RobotGoal> goalList;
   Boxes boxes;
   ImagePipeline imagePipeline;
+  int lostCount = 0;
 
 private:
   std::vector<RobotPose> poseHist;
@@ -76,6 +77,7 @@ public:
 
   // Movement Functions
   bool doTurn(float relativeTarget, float reference, bool quick);
+  bool backAway(float desiredDist);
 
   // Other Functions
   void genNavGoals(float angleOffset);

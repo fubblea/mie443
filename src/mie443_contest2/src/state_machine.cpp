@@ -34,7 +34,6 @@ void RobotState::updateState(bool showView) {
     ROS_INFO("You spin me right round baby right round like a record baby "
              "right round right round");
     if (doTurn(MAX_SPIN_ANGLE, poseHist.back().phi, false)) {
-      this->velCmd.setCmdActive(false);
       setState(State::GOTO_GOAL);
     }
 
@@ -78,9 +77,21 @@ void RobotState::updateState(bool showView) {
   }
 
   case State::IM_LOST: {
-    // TODO: Random walk
-    sendGoalToBack(&this->goalList, 0);
-    setState(State::GOTO_GOAL);
+    ROS_WARN("IM LOSTTTTTTT AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+
+    if (this->lostCount <= MAX_LOST_COUNT) {
+      ROS_WARN("Still lost, trying to get unlost.");
+      // TODO: Make this more robust
+      if (backAway(0.5)) {
+        setState(State::GOTO_GOAL);
+      }
+      this->lostCount++;
+    } else {
+      ROS_ERROR("Can't get unlost, skipping goal");
+      sendGoalToBack(&this->goalList, 0);
+      setState(State::GOTO_GOAL);
+      this->lostCount = 0;
+    }
 
     break;
   }

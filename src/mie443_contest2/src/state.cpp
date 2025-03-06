@@ -68,8 +68,25 @@ bool RobotState::doTurn(float relativeTarget, float reference, bool quick) {
     }
     this->velCmd.setVelCmd(true, 0, turn_vel);
   } else {
+    this->velCmd.setVelCmd(false, 0, 0);
     isComplete = true;
   }
 
   return isComplete;
+}
+
+bool RobotState::backAway(float desiredDist) {
+  float current_x = this->poseHist.back().x;
+  float current_y = this->poseHist.back().y;
+
+  float distMoved = sqrt(powf((this->currPose.x - current_x), 2) +
+                         powf((this->currPose.y - current_y), 2));
+
+  if (distMoved < desiredDist) {
+    this->velCmd.setVelCmd(true, -SLOW_LIN_VEL, 0);
+    return false;
+  } else {
+    this->velCmd.setVelCmd(false, 0, 0);
+    return true;
+  }
 }

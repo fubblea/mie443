@@ -25,10 +25,15 @@ const float MAX_ANG_VEL = 25; // Maximum angular velocity in [deg/s]
 const float MIN_ANG_VEL = 5;  // Minimum angular velocity in [deg/s]
 const float ANGLE_TOL = 3;    // Angle error tolerance in [deg]
 
+const float MIN_WALL_DIST =
+    0.46; // Minimum wall distance that the lidar can detect in [m]
+
 const int NUM_BUMPERS = 3; // Number of bumpers
 
 const float BOX_FACING_OFFSET = 0.7;
 const float BOX_ANGLE_OFFSET = 30;
+
+const int MAX_LOST_COUNT = 3;
 
 // INTERAL HEADER FILES
 
