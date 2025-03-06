@@ -59,3 +59,43 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   }
   return template_id;
 }
+
+std::tuple<std::string, double, bool>
+ImageMatch(const std::vector<std::string> &template_names,
+           const std::vector<std::vector<cv::KeyPoint>> &template_keypoints,
+           const std::vector<cv::Mat> &template_descriptors,
+           const std::vector<cv::KeyPoint> &image_keypoints,
+           const cv::Mat &image_descriptors, double &best_match_percentage) {
+
+  std::string matched_tag = "None";
+  best_match_percentage = 0.0;
+
+  if (image_descriptors.empty()) {
+    ROS_INFO("No descriptors in scanned image");
+    return std::make_tuple("None", 0.0, false);
+  }
+  cv::FlannBasedMatcher flann(cv::makePtr<cv::flann::KDTreeIndexParams>(5));
+
+  for (size_t i = 0; i < template_names.size(); i++) {
+    if (template_descriptors[i].empty())
+      continue;
+
+    std::vector<cv::DMatch> matches;
+    flann.match(template_descriptors[i], image_descriptors, matches);
+
+    double good_matches = 0;
+    for (const auto &m : matches) {
+      if (m.distance < 0.3 * matches.back().distance) {
+        good_matches++;
+      }
+    }
+
+    double percentMatch = (good_matches / template_descriptors[i].rows) * 100;
+
+    if (percentMatch > best_match_percentage) {
+      best_match_percentage = percentMatch;
+      matched_tag = template_names[i];
+    }
+  }
+  return std::make_tuple(matched_tag, best_match_percentage, true);
+}
