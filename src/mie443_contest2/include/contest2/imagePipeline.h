@@ -34,4 +34,10 @@ public:
   std::tuple<std::vector<cv::KeyPoint>, Mat>
   ImagePipeline::getFeatures(cv::Mat image);
   int getTemplateID(Boxes &boxes, bool showView = true);
+  std::tuple<std::string, double, bool>
+  ImageMatch(const std::vector<std::string> &template_names,
+             const std::vector<std::vector<cv::KeyPoint>> &template_keypoints,
+             const std::vector<cv::Mat> &template_descriptors,
+             const std::vector<cv::KeyPoint> &image_keypoints,
+             const cv::Mat &image_descriptors, double &best_match_percentage);
 };
