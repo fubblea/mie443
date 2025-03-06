@@ -1,15 +1,5 @@
-#include "ros/console.h"
 #include <cmath>
 #include <contest2/contest2.h>
-
-RobotPose moveFacingBox(float xBox, float yBox, float phiBox) {
-  float xPos = xBox + BOX_FACING_OFFSET * std::cos(phiBox);
-  float yPos = yBox + BOX_FACING_OFFSET * std::sin(phiBox);
-  float phiPos = phiBox + DEG2RAD(180);
-
-  RobotPose newPose(xPos, yPos, phiPos);
-  return newPose;
-}
 
 bool cmdOptionExists(char **begin, char **end, const std::string &option) {
   return std::find(begin, end, option) != end;
@@ -27,7 +17,7 @@ int main(int argc, char **argv) {
   ros::NodeHandle n;
 
   // Robot state object + subscriber.
-  RobotState robotState;
+  RobotState robotState(n);
   ros::Subscriber amclSub = n.subscribe(
       "/amcl_pose", 1, &RobotPose::poseCallback, &robotState.currPose);
 
@@ -43,54 +33,18 @@ int main(int argc, char **argv) {
               << " y: " << boxes.coords[i][1] << " z: " << boxes.coords[i][2]
               << std::endl;
   }
-  // Initialize image objectand subscriber.
-  ImagePipeline imagePipeline(n);
+  robotState.boxes = boxes;
 
   // contest count down timer
   std::chrono::time_point<std::chrono::system_clock> start;
   start = std::chrono::system_clock::now();
   uint64_t secondsElapsed = 0;
 
-  int boxIdx = 0;
-  int numBoxs = boxes.coords.size();
-
-  bool firstSpin = true;
-
   // Execute strategy.
   while (ros::ok() && secondsElapsed <= 300) {
     ros::spinOnce();
 
-    ROS_INFO("Current pos: (%f, %f, %f)", robotState.currPose.x,
-             robotState.currPose.y, robotState.currPose.phi);
-    ROS_INFO("Box target: (%f, %f, %f)", boxes.coords[boxIdx][0],
-             boxes.coords[boxIdx][1], boxes.coords[boxIdx][2]);
-
-    RobotPose navGoal =
-        moveFacingBox(boxes.coords[boxIdx][0], boxes.coords[boxIdx][1],
-                      boxes.coords[boxIdx][2]);
-
-    // Let the callbacks update once
-    if (firstSpin) {
-      if (robotState.currPose.x != 0 || robotState.currPose.y != 0 ||
-          robotState.currPose.phi != 0) {
-        ROS_INFO("First spin done");
-        firstSpin = false;
-      } else {
-        ROS_INFO("Still waiting for first spin");
-      }
-
-    } else {
-      // Navigate to box poses
-      ROS_INFO("Nav goal: (%f, %f, %f)", navGoal.x, navGoal.y, navGoal.phi);
-      Navigation::moveToGoal(navGoal.x, navGoal.y, navGoal.phi);
-
-      boxIdx++;
-      if (boxIdx == numBoxs) {
-        boxIdx = 0;
-      }
-
-      imagePipeline.getTemplateID(boxes, showView);
-    }
+    robotState.updateState(showView);
 
     ros::Duration(0.01).sleep();
   }
