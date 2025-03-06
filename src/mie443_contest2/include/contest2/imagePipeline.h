@@ -7,12 +7,12 @@
 #include <opencv2/core/core.hpp>
 #include <std_msgs/String.h>
 
-#include <iostream>
 #include "features2d.hpp"
 #include "opencv2/core.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/xfeatures2d.hpp"
+#include <iostream>
 
 // INTERNAL HEADER FILES
 #include "contest2/boxes.h"
@@ -31,5 +31,7 @@ private:
 public:
   ImagePipeline(ros::NodeHandle &n);
   void imageCallback(const sensor_msgs::ImageConstPtr &msg);
+  std::tuple<std::vector<cv::KeyPoint>, Mat>
+  ImagePipeline::getFeatures(cv::Mat image);
   int getTemplateID(Boxes &boxes, bool showView = true);
 };

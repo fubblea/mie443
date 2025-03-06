@@ -1,3 +1,4 @@
+#include "imagePipeline.h"
 #include <contest2/imagePipeline.h>
 #include <ctime>
 
@@ -25,6 +26,18 @@ void ImagePipeline::imageCallback(const sensor_msgs::ImageConstPtr &msg) {
   }
 }
 
+std::tuple<std::vector<cv::KeyPoint>, Mat>
+ImagePipeline::getFeatures(cv::Mat image) {
+  int minHessian = 400; // try changing it and see what it does?
+  Ptr<SURF> detector = SURF::create(minHessian);
+  std::vector<KeyPoint> keypoints_image;
+  Mat descriptors_image;
+  detector->detectAndCompute(image, noArray(), keypoints_image,
+                             descriptors_image);
+
+  return std::make_tuple(keypoints_image, descriptors_image);
+}
+
 int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
   if (!isValid) {
@@ -37,22 +50,7 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   } else {
 
     // Find keypoints in scene (img) and compare to keypoint in templates
-    int minHessian = 400; // try changing it and see what it does?
-    Ptr<SURF> detector = SURF::create(minHessian);
-    std::vector<KeyPoint> keypoints_scene;
-    Mat descriptors_scene;
-    detector->detectAndCompute(img, noArray(), keypoints_scene,
-                               descriptors_scene);
-
-    Ptr<DescriptorMatcher> matcher =
-        DescriptorMatcher::create(DescriptorMatcher::FLANNBASED);
-    std::vector<std::vector<DMatch>> knn_matches;
-
-    // iterate
-    matcher->knnMatch(templates, descriptors_scene, knn_matches,
-                      2); // compare templates with scene.. iterate?
-
-    const float ratio_thresh = 0.75f;
+    sleep(3);
 
     if (showView) {
       cv::imshow("view", img);
