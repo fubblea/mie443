@@ -1,9 +1,17 @@
 #include <contest2/boxes.h>
+#include <contest2/contest2.h>
 #include <ros/package.h>
 
 bool Boxes::load_coords() {
-  std::string filePath = ros::package::getPath("mie443_contest2") +
-                         std::string("/boxes_database/gazebo_coords.xml");
+  std::string filePath;
+  if (CONTEST_MODE) {
+    filePath = ros::package::getPath("mie443_contest2") +
+               std::string("/boxes_database/myhal_scene.xml");
+  } else {
+    filePath = ros::package::getPath("mie443_contest2") +
+               std::string("/boxes_database/gazebo_coords.xml");
+  }
+
   //  std::string("/boxes_database/myhal_scene.xml");
   cv::FileStorage fs(filePath, cv::FileStorage::READ);
   if (fs.isOpened()) {

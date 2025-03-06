@@ -14,7 +14,10 @@
 
 // CONSTANTS
 
-const float BOX_FACING_OFFSET = 0.5;
+// TODO: Check if this is valid
+const bool CONTEST_MODE = true; // 0 for test, 1 for contest
+
+const float BOX_FACING_OFFSET = 0.7;
 const float BOX_ANGLE_OFFSET = 30;
 
 // INTERAL HEADER FILES

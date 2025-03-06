@@ -26,7 +26,7 @@ void RobotState::updateState(bool showView) {
     genNavGoals(BOX_ANGLE_OFFSET);
     genNavGoals(-BOX_ANGLE_OFFSET);
 
-    this->currState = State::SPIN;
+    this->currState = State::GOTO_GOAL;
     break;
   }
 
