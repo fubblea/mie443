@@ -41,7 +41,11 @@ void RobotState::updateState(bool showView) {
 
     this->currState = State::GOTO_GOAL;
 
-    // add a fn to generate keypoints for each template that we can compare to
+    Mat template1 = imread("C:/home/thursday2023/mie443/src/mie443_contest2/"
+                           "boxes_database/template1.jpg");
+    std::vector<cv::KeyPoint> keypoints_1;
+    cv::Mat descriptors_1;
+    ImagePipeline::getFeatures(template1);
 
     break;
   }
