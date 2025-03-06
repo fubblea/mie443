@@ -43,3 +43,33 @@ float normalizeAngle(float angle) {
 
   return angle;
 }
+
+bool RobotState::doTurn(float relativeTarget, float reference, bool quick) {
+  bool isComplete = false;
+
+  // Current angle is relative to the start of the state
+  float targetBearing = normalizeAngle(RAD2DEG(reference) + relativeTarget);
+  float error = normalizeAngle(RAD2DEG(this->currPose.phi) - targetBearing);
+
+  ROS_INFO("Turning to %f deg. Delta: %f (%f) deg", targetBearing, error,
+           RAD2DEG(this->currPose.phi));
+  if (std::fabs(error) > ANGLE_TOL) {
+    float turn_speed = MAX_ANG_VEL;
+    // Slow down turning if we are close to the target
+    if (std::fabs(error) <= (ANGLE_TOL * 2)) {
+      turn_speed = MIN_ANG_VEL;
+    }
+
+    float turn_vel;
+    if (quick) {
+      turn_vel = (error < 0) ? turn_speed : -turn_speed;
+    } else {
+      turn_vel = (relativeTarget > 0) ? turn_speed : -turn_speed;
+    }
+    this->velCmd.setVelCmd(true, 0, turn_vel);
+  } else {
+    isComplete = true;
+  }
+
+  return isComplete;
+}

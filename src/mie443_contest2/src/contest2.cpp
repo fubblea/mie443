@@ -21,6 +21,10 @@ int main(int argc, char **argv) {
   ros::Subscriber amclSub = n.subscribe(
       "/amcl_pose", 1, &RobotPose::poseCallback, &robotState.currPose);
 
+  // Velocity subscriber
+  ros::Publisher vel_pub =
+      n.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
+
   // Initialize box coordinates and templates
   Boxes boxes;
   if (!boxes.load_coords() || !boxes.load_templates()) {
@@ -35,10 +39,15 @@ int main(int argc, char **argv) {
   }
   robotState.boxes = boxes;
 
+  geometry_msgs::Twist vel;
+
   // contest count down timer
   std::chrono::time_point<std::chrono::system_clock> start;
   start = std::chrono::system_clock::now();
   uint64_t secondsElapsed = 0;
+
+  robotState.setState(State::START);
+  ros::Rate loop_rate(20); // Processing frequency [Hz]
 
   // Execute strategy.
   while (ros::ok() && secondsElapsed <= 300) {
@@ -46,7 +55,13 @@ int main(int argc, char **argv) {
 
     robotState.updateState(showView);
 
-    ros::Duration(0.01).sleep();
+    if (robotState.velCmd.cmdActive) {
+      vel.angular.z = DEG2RAD(robotState.velCmd.angVel);
+      vel.linear.x = robotState.velCmd.linVel;
+      vel_pub.publish(vel);
+    }
+
+    loop_rate.sleep();
   }
   return 0;
 }
