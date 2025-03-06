@@ -15,7 +15,7 @@
 // CONSTANTS
 
 const float BOX_FACING_OFFSET = 0.5;
-const float BOX_ANGLE_OFFSET = 20;
+const float BOX_ANGLE_OFFSET = 30;
 
 // INTERAL HEADER FILES
 

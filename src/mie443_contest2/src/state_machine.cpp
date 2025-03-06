@@ -1,3 +1,4 @@
+#include "contest2/contest2.h"
 #include "contest2/navigation.h"
 #include "ros/console.h"
 #include <algorithm>
@@ -21,8 +22,25 @@ void RobotState::updateState(bool showView) {
   case State::START: {
     ROS_INFO("Initialization. Generating navigation goals");
 
-    this->goalList = genNavGoals();
+    genNavGoals(0);
+    genNavGoals(BOX_ANGLE_OFFSET);
+    genNavGoals(-BOX_ANGLE_OFFSET);
+
+    this->currState = State::SPIN;
+    break;
+  }
+
+  case State::SPIN: {
+    ROS_INFO("First half-spin");
+    Navigation::moveToGoal(this->currPose.x, this->currPose.y,
+                           this->currPose.phi + DEG2RAD(180));
+
+    ROS_INFO("Second half-spin");
+    Navigation::moveToGoal(this->currPose.x, this->currPose.y,
+                           this->currPose.phi);
+
     this->currState = State::GOTO_GOAL;
+
     break;
   }
 
@@ -64,6 +82,7 @@ void RobotState::updateState(bool showView) {
 
   case State::IM_LOST: {
     // TODO: Random walk
+    sendGoalToBack(&this->goalList, 0);
     this->currState = State::GOTO_GOAL;
 
     break;
