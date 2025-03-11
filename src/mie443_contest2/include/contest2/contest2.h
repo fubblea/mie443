@@ -12,6 +12,8 @@
 
 #include <chrono>
 
+#include <ros/package.h>
+
 // CONSTANTS
 // TODO: Check if this is valid
 const bool CONTEST_MODE = true; // false for test, true for contest
@@ -36,6 +38,20 @@ const float BOX_FACING_OFFSET = 0.7;
 const float BOX_ANGLE_OFFSET = 30;
 
 const int MAX_LOST_COUNT = 3;
+
+// const std::vector<std::string> TEMPLATE_FILES = {
+//     "mie443/src/mie443_contest2/boxes_database/template1.jpg",
+//   "mie443/src/mie443_contest2/boxes_database/template2.jpg",
+//"mie443/src/mie443_contest2/boxes_database/template3.jpg"}; // load template
+//  files
+
+const std::vector<std::string> TEMPLATE_FILES = {
+    ros::package::getPath("mie443_contest2") +
+        std::string("/boxes_database/template1.jpg"),
+    ros::package::getPath("mie443_contest2") +
+        std::string("/boxes_database/template2.jpg"),
+    ros::package::getPath("mie443_contest2") +
+        std::string("/boxes_database/template3.jpg")};
 
 // INTERAL HEADER FILES
 

@@ -1,9 +1,19 @@
 #include "contest2/contest2.h"
+#include "contest2/imagePipeline.h"
 #include "contest2/navigation.h"
 #include "ros/console.h"
 #include <algorithm>
 #include <contest2/state.h>
+#include <unordered_map>
 #include <vector>
+
+std::unordered_map<int, std::vector<float>>
+    identifiedTags; // initialize hashmap to store detected images
+
+// these initialize stuff for memorize template
+std::vector<std::string> template_names;
+std::vector<std::vector<cv::KeyPoint>> template_keypoints;
+std::vector<cv::Mat> template_descriptors;
 
 void sendGoalToBack(std::vector<RobotGoal> *goalList, int goalIdx) {
   if (!goalList || goalIdx >= goalList->size()) {
@@ -34,8 +44,15 @@ void RobotState::updateState(bool showView) {
     ROS_INFO("You spin me right round baby right round like a record baby "
              "right round right round");
     if (doTurn(MAX_SPIN_ANGLE, poseHist.back().phi, false)) {
+      ROS_INFO("finding my first goal");
       setState(State::GOTO_GOAL);
     }
+
+    ROS_INFO("Gonna memorize the templates now");
+    ROS_INFO("template 1: %s", TEMPLATE_FILES[1]);
+    this->imagePipeline.memorizeTemplates(TEMPLATE_FILES, template_names,
+                                          template_keypoints,
+                                          template_descriptors);
 
     break;
   }
@@ -62,14 +79,28 @@ void RobotState::updateState(bool showView) {
   }
 
   case State::TAG_BOX: {
-    this->goalList[0].boxIdGuess =
-        this->imagePipeline.getTemplateID(this->boxes, showView);
+
+    this->goalList[0].boxIdGuess = this->imagePipeline.getTemplateID(
+        this->boxes, showView, template_names, template_keypoints,
+        template_descriptors);
 
     ROS_INFO("Guess for box at (%f, %f, %f) is %i",
              this->boxes.coords[this->goalList[0].boxIdx][0],
              this->boxes.coords[this->goalList[0].boxIdx][1],
              this->boxes.coords[this->goalList[0].boxIdx][2],
              this->goalList[0].boxIdGuess);
+    std::vector<float> box_location = {
+        this->boxes.coords[this->goalList[0].boxIdx][0],
+        this->boxes.coords[this->goalList[0].boxIdx][1],
+        this->boxes.coords[this->goalList[0].boxIdx][2]};
+
+    if (this->goalList[0].boxIdGuess != -1) { // checking if we get an image tag
+      identifiedTags[this->goalList[0].boxIdGuess] =
+          box_location; // add image tag to the dictionary
+      ROS_INFO("Location matched");
+    } else {
+      ROS_INFO("No match found");
+    }
 
     sendGoalToBack(&this->goalList, 0);
 
