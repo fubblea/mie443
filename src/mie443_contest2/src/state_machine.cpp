@@ -5,10 +5,13 @@
 #include <algorithm>
 #include <contest2/state.h>
 #include <vector>
+#include <unordered_map>
 
-std::unordered_map<std::string, std::vector<float>>
+std::unordered_map<int, std::vector<float>>
     identifiedTags; // initialize hashmap to store detected images
-std::vector<std::string> template_names;
+
+//these initialize stuff for memorize template
+std::vector<std::string> template_names; 
 std::vector<std::vector<cv::KeyPoint>> template_keypoints;
 std::vector<cv::Mat> template_descriptors;
 
@@ -44,7 +47,7 @@ void RobotState::updateState(bool showView) {
       setState(State::GOTO_GOAL);
     }
 
-    this->imagePipeline.memorizeTemplates(TEMPLATE_FILES);
+    this->imagePipeline.memorizeTemplates(TEMPLATE_FILES, template_names, template_keypoints, template_descriptors);
 
     break;
   }
@@ -73,8 +76,8 @@ void RobotState::updateState(bool showView) {
   case State::TAG_BOX: {
 
     this->goalList[0].boxIdGuess =
-        this->imagePipeline.getTemplateID(this->boxes, showView);
-
+        this->imagePipeline.getTemplateID(this->boxes, showView, template_names, template_keypoints, template_descriptors);
+    
     ROS_INFO("Guess for box at (%f, %f, %f) is %i",
              this->boxes.coords[this->goalList[0].boxIdx][0],
              this->boxes.coords[this->goalList[0].boxIdx][1],
@@ -85,8 +88,8 @@ void RobotState::updateState(bool showView) {
         this->boxes.coords[this->goalList[0].boxIdx][1],
         this->boxes.coords[this->goalList[0].boxIdx][2]};
 
-    if (match_found) {
-      identifiedTags[matched_image] = box_location;
+    if (this->goalList[0].boxIdGuess != -1) { //checking if we get an image tag
+      identifiedTags[this->goalList[0].boxIdGuess] = box_location; //add image tag to the dictionary
       ROS_INFO("Location matched");
     } else {
       ROS_INFO("No match found");
