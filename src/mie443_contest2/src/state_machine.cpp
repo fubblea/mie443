@@ -26,20 +26,16 @@ void RobotState::updateState(bool showView) {
     genNavGoals(BOX_ANGLE_OFFSET);
     genNavGoals(-BOX_ANGLE_OFFSET);
 
-    this->currState = State::SPIN;
+    setState(State::SPIN);
     break;
   }
 
   case State::SPIN: {
-    ROS_INFO("First half-spin");
-    Navigation::moveToGoal(this->currPose.x, this->currPose.y,
-                           this->currPose.phi + DEG2RAD(180));
-
-    ROS_INFO("Second half-spin");
-    Navigation::moveToGoal(this->currPose.x, this->currPose.y,
-                           this->currPose.phi);
-
-    this->currState = State::GOTO_GOAL;
+    ROS_INFO("You spin me right round baby right round like a record baby "
+             "right round right round");
+    if (doTurn(MAX_SPIN_ANGLE, poseHist.back().phi, false)) {
+      setState(State::GOTO_GOAL);
+    }
 
     Mat template1 = imread("C:/home/thursday2023/mie443/src/mie443_contest2/"
                            "boxes_database/template1.jpg");
@@ -60,10 +56,12 @@ void RobotState::updateState(bool showView) {
 
     if (!moveSuccess) {
       ROS_ERROR("Navigation was not successful!");
-      this->currState = State::IM_LOST;
+      this->lostCount++;
+      setState(State::IM_LOST);
     } else {
       ROS_INFO("Navigating was successful");
-      this->currState = State::TAG_BOX;
+      this->lostCount = 0;
+      setState(State::TAG_BOX);
     }
 
     break;
@@ -81,22 +79,36 @@ void RobotState::updateState(bool showView) {
 
     sendGoalToBack(&this->goalList, 0);
 
-    this->currState = State::GOTO_GOAL;
+    setState(State::GOTO_GOAL);
 
     break;
   }
 
   case State::IM_LOST: {
-    // TODO: Random walk
-    sendGoalToBack(&this->goalList, 0);
-    this->currState = State::GOTO_GOAL;
+    ROS_WARN("IM LOSTTTTTTT AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+
+    if (this->lostCount <= MAX_LOST_COUNT) {
+      ROS_WARN("Still lost, trying to get unlost. Lost count: %i",
+               this->lostCount);
+
+      if (doTurn(90, this->poseHist.back().phi, true)) {
+        if (moveToWall(MIN_WALL_DIST + 0.1, MAX_LIN_VEL)) {
+          setState(State::GOTO_GOAL);
+        }
+      }
+    } else {
+      ROS_ERROR("Can't get unlost, skipping goal");
+      sendGoalToBack(&this->goalList, 0);
+      setState(State::GOTO_GOAL);
+      this->lostCount = 0;
+    }
 
     break;
   }
 
   default: {
     ROS_ERROR("Undefined state: %i", this->currState);
-    this->currState = State::IM_LOST;
+    setState(State::IM_LOST);
     break;
   }
   }

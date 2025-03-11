@@ -43,3 +43,68 @@ float normalizeAngle(float angle) {
 
   return angle;
 }
+
+bool RobotState::doTurn(float relativeTarget, float reference, bool quick) {
+  bool isComplete = false;
+
+  // Current angle is relative to the start of the state
+  float targetBearing = normalizeAngle(RAD2DEG(reference) + relativeTarget);
+  float error = normalizeAngle(RAD2DEG(this->currPose.phi) - targetBearing);
+
+  ROS_INFO("Turning to %f deg. Delta: %f (%f) deg", targetBearing, error,
+           RAD2DEG(this->currPose.phi));
+  if (std::fabs(error) > ANGLE_TOL) {
+    float turn_speed = MAX_ANG_VEL;
+    // Slow down turning if we are close to the target
+    if (std::fabs(error) <= (ANGLE_TOL * 2)) {
+      turn_speed = MIN_ANG_VEL;
+    }
+
+    float turn_vel;
+    if (quick) {
+      turn_vel = (error < 0) ? turn_speed : -turn_speed;
+    } else {
+      turn_vel = (relativeTarget > 0) ? turn_speed : -turn_speed;
+    }
+    this->velCmd.setVelCmd(true, 0, turn_vel);
+  } else {
+    this->velCmd.setVelCmd(false, 0, 0);
+    isComplete = true;
+  }
+
+  return isComplete;
+}
+
+bool RobotState::backAway(float desiredDist) {
+  float current_x = this->poseHist.back().x;
+  float current_y = this->poseHist.back().y;
+
+  float distMoved = sqrt(powf((this->currPose.x - current_x), 2) +
+                         powf((this->currPose.y - current_y), 2));
+
+  if (distMoved < desiredDist) {
+    this->velCmd.setVelCmd(true, -SLOW_LIN_VEL, 0);
+    return false;
+  } else {
+    this->velCmd.setVelCmd(false, 0, 0);
+    return true;
+  }
+}
+
+bool RobotState::moveToWall(float targetDist, float speed) {
+  if (targetDist < MIN_WALL_DIST) {
+    targetDist = MIN_WALL_DIST;
+    ROS_WARN("Distance to obstacle is less than %fm. Setting Target "
+             "Distance to: %f",
+             targetDist, targetDist);
+  }
+  if (this->lidarScan.wallDist > targetDist) {
+    ROS_INFO("Moving to wall. Distance: %f", this->lidarScan.wallDist);
+    this->velCmd.setVelCmd(true, speed, 0);
+    return false;
+  } else {
+    ROS_INFO("I'm at the wall. Distance: %f", this->lidarScan.wallDist);
+    this->velCmd.setVelCmd(false, 0, 0);
+    return true;
+  }
+}
