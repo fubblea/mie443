@@ -144,7 +144,7 @@ ImagePipeline::memorizeTemplates(
     cv::Mat template_pic =
         cv::imread(template_files[i],
                    cv::IMREAD_GRAYSCALE); // read template image in grayscale
-    ROS_INFO("Template path: %s", template_files[i]);
+    ROS_INFO("Template path: %s", template_files[i].c_str());
     if (template_pic.empty()) {
       ROS_WARN("You done goofed. Check file path");
     }
