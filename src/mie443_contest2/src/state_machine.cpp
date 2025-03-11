@@ -7,9 +7,6 @@
 #include <unordered_map>
 #include <vector>
 
-std::unordered_map<int, std::vector<float>>
-    identifiedTags; // initialize hashmap to store detected images
-
 void sendGoalToBack(std::vector<RobotGoal> *goalList, int goalIdx) {
   if (!goalList || goalIdx >= goalList->size()) {
     ROS_ERROR("sendGoalToBack(): Invalid arguments");
@@ -88,7 +85,7 @@ void RobotState::updateState(bool showView) {
         this->boxes.coords[this->goalList[0].boxIdx][2]};
 
     if (this->goalList[0].boxIdGuess != -1) { // checking if we get an image tag
-      identifiedTags[this->goalList[0].boxIdGuess] =
+      this->identifiedTags[this->goalList[0].boxIdGuess] =
           box_location; // add image tag to the dictionary
       ROS_INFO("Location matched");
     } else {

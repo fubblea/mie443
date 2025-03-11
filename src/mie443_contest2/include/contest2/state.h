@@ -8,6 +8,8 @@
 #include "ros/node_handle.h"
 #include <contest2/robot_pose.h>
 #include <cstdlib>
+#include <string>
+#include <unordered_map>
 #include <vector>
 
 enum State {
@@ -80,6 +82,8 @@ public:
   ImagePipeline imagePipeline;
   int lostCount = 0;
   LidarScan lidarScan;
+  std::unordered_map<int, std::vector<float>>
+      identifiedTags; // initialize hashmap to store detected images
 
 private:
   std::vector<RobotPose> poseHist;
@@ -101,6 +105,7 @@ public:
 
   // Other Functions
   void genNavGoals(float angleOffset);
+  std::string printState();
 
   // State Machine
   void updateState(bool showView);
