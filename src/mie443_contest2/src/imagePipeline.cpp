@@ -29,19 +29,27 @@ void ImagePipeline::imageCallback(const sensor_msgs::ImageConstPtr &msg) {
 std::tuple<std::vector<cv::KeyPoint>, Mat>
 ImagePipeline::getFeatures(cv::Mat image) {
   int minHessian = 400; // try changing it and see what it does?
-  Ptr<cv::xfeatures2d::SURF> detector = cv::xfeatures2d::SURF::create(minHessian);
+  Ptr<cv::xfeatures2d::SURF> detector =
+      cv::xfeatures2d::SURF::create(minHessian);
+  ROS_INFO("Detecting features");
   std::vector<KeyPoint> keypoints_image;
+  ROS_INFO("Initializing keypoints");
   Mat descriptors_image;
+  ROS_INFO("Initializing descriptors");
   detector->detectAndCompute(image, noArray(), keypoints_image,
                              descriptors_image);
+  ROS_INFO("Detected keypoints and descriptors");
 
   return std::make_tuple(keypoints_image, descriptors_image);
 }
 
-int ImagePipeline::getTemplateID(Boxes &boxes, bool showView, std::vector<std::string> template_names, std::vector<std::vector<cv::KeyPoint>> template_keypoints,
-std::vector<cv::Mat> template_descriptors) {
+int ImagePipeline::getTemplateID(
+    Boxes &boxes, bool showView, std::vector<std::string> template_names,
+    std::vector<std::vector<cv::KeyPoint>> template_keypoints,
+    std::vector<cv::Mat> template_descriptors) {
   int template_id = -1;
   if (!isValid) {
+    ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
   } else if (img.empty() || img.rows <= 0 || img.cols <= 0) {
     std::cout << "ERROR: VALID IMAGE, BUT STILL A PROBLEM EXISTS!" << std::endl;
@@ -53,8 +61,9 @@ std::vector<cv::Mat> template_descriptors) {
     // Find keypoints in scene (img) and compare to keypoint in templates
     std::vector<cv::KeyPoint> scannedKeypoints;
     cv::Mat scannedDescriptors;
-    std::tie(scannedKeypoints, scannedDescriptors) = ImagePipeline::getFeatures(
-        img); // feature extraction on scanned image
+    ROS_INFO("Getting image...");
+    std::tie(scannedKeypoints, scannedDescriptors) =
+        ImagePipeline::getFeatures(img); // feature extraction on scanned image
 
     // initialize image match parameters
     double best_match = 0.0;
@@ -65,7 +74,7 @@ std::vector<cv::Mat> template_descriptors) {
         ImagePipeline::imageMatch(template_names, template_keypoints,
                                   template_descriptors, scannedKeypoints,
                                   scannedDescriptors, best_match);
-    
+
     if (showView) {
       cv::imshow("view", img);
     }
@@ -99,7 +108,7 @@ std::tuple<std::string, double, bool> ImagePipeline::imageMatch(
 
     double good_matches = 0;
     for (const auto &m : matches) {
-      if (m.distance < 0.3 * matches.back().distance) { //lowe's ratio test
+      if (m.distance < 0.3 * matches.back().distance) { // lowe's ratio test
         good_matches++;
       }
     }
@@ -114,10 +123,13 @@ std::tuple<std::string, double, bool> ImagePipeline::imageMatch(
   return std::make_tuple(matched_tag, best_match_percentage, true);
 }
 
-std::tuple<std::vector<std::string>, std::vector<std::vector<cv::KeyPoint>>, std::vector<cv::Mat>, bool>
-ImagePipeline::memorizeTemplates(std::vector<std::string> template_files, std::vector<std::string> template_names,
-  std::vector<std::vector<cv::KeyPoint>> template_keypoints,
-  std::vector<cv::Mat> template_descriptors) { 
+std::tuple<std::vector<std::string>, std::vector<std::vector<cv::KeyPoint>>,
+           std::vector<cv::Mat>, bool>
+ImagePipeline::memorizeTemplates(
+    std::vector<std::string> template_files,
+    std::vector<std::string> template_names,
+    std::vector<std::vector<cv::KeyPoint>> template_keypoints,
+    std::vector<cv::Mat> template_descriptors) {
 
   /*for (const auto &file : template_files) {
     ROS_INFO("Reading template image");
@@ -127,13 +139,15 @@ ImagePipeline::memorizeTemplates(std::vector<std::string> template_files, std::v
       ROS_WARN("You done goofed. Check file path");
     }*/
 
-   for (int i =0; i < 3; i++){
+  for (int i = 0; i < 3; i++) {
     ROS_INFO("Reading template image");
-    cv::Mat template_pic = cv::imread(
-        template_files[i], cv::IMREAD_GRAYSCALE); // read template image in grayscale
-        if (template_pic.empty()) {
+    cv::Mat template_pic =
+        cv::imread(template_files[i],
+                   cv::IMREAD_GRAYSCALE); // read template image in grayscale
+    ROS_INFO("Template path: %s", template_files[i]);
+    if (template_pic.empty()) {
       ROS_WARN("You done goofed. Check file path");
-   }
+    }
 
     std::vector<cv::KeyPoint> localKeypoints;
     cv::Mat localDescriptors;
@@ -146,5 +160,6 @@ ImagePipeline::memorizeTemplates(std::vector<std::string> template_files, std::v
     template_descriptors.push_back(localDescriptors);
     ROS_INFO("Memorized this one. On to the next");
   }
-  return std::make_tuple(template_names, template_keypoints, template_descriptors, true);
+  return std::make_tuple(template_names, template_keypoints,
+                         template_descriptors, true);
 }
