@@ -23,7 +23,7 @@ const float MAX_SPIN_ANGLE = 355; // Maximum spin angle in [deg]
 
 const float MAX_ANG_VEL = 25; // Maximum angular velocity in [deg/s]
 const float MIN_ANG_VEL = 5;  // Minimum angular velocity in [deg/s]
-const float ANGLE_TOL = 3;    // Angle error tolerance in [deg]
+const float ANGLE_TOL = 10;   // Angle error tolerance in [deg]
 
 const float MIN_WALL_DIST =
     0.46; // Minimum wall distance that the lidar can detect in [m]
