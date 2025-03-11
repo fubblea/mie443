@@ -7,7 +7,12 @@
 RobotPose getBoxNavGoal(float xBox, float yBox, float phiBox,
                         float angleOffset) {
 
-  float theta = phiBox + DEG2RAD(angleOffset);
+  float theta;
+  if (CONTEST_MODE) {
+    theta = DEG2RAD(phiBox) + DEG2RAD(angleOffset);
+  } else {
+    theta = phiBox + DEG2RAD(angleOffset);
+  }
 
   float xPos = xBox + BOX_FACING_OFFSET * std::cos(theta);
   float yPos = yBox + BOX_FACING_OFFSET * std::sin(theta);

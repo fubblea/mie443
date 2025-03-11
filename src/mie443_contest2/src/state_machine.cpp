@@ -81,6 +81,9 @@ void RobotState::updateState(bool showView) {
   case State::IM_LOST: {
     ROS_WARN("IM LOSTTTTTTT AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
 
+    setState(State::GOTO_GOAL);
+    break;
+
     if (this->lostCount <= MAX_LOST_COUNT) {
       ROS_WARN("Still lost, trying to get unlost. Lost count: %i",
                this->lostCount);

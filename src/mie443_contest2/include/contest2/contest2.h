@@ -14,16 +14,16 @@
 
 // CONSTANTS
 // TODO: Check if this is valid
-const bool CONTEST_MODE = false; // false for test, true for contest
+const bool CONTEST_MODE = true; // false for test, true for contest
 
 const float MAX_LIN_VEL = 0.25; // Maximum linear velocity in [m/s]
 const float SLOW_LIN_VEL = 0.1; // Slow linear velocity in [m/s]
 
-const float MAX_SPIN_ANGLE = 355; // Maximum spin angle in [deg]
+const float MAX_SPIN_ANGLE = 340; // Maximum spin angle in [deg]
 
 const float MAX_ANG_VEL = 25; // Maximum angular velocity in [deg/s]
 const float MIN_ANG_VEL = 5;  // Minimum angular velocity in [deg/s]
-const float ANGLE_TOL = 3;    // Angle error tolerance in [deg]
+const float ANGLE_TOL = 5;    // Angle error tolerance in [deg]
 
 const float MIN_WALL_DIST =
     0.46; // Minimum wall distance that the lidar can detect in [m]
