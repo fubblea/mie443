@@ -1,4 +1,5 @@
 #include "contest2/imagePipeline.h"
+#include "ros/console.h"
 #include <contest2/imagePipeline.h>
 #include <ctime>
 
@@ -74,6 +75,9 @@ int ImagePipeline::getTemplateID(
                                   template_descriptors, scannedKeypoints,
                                   scannedDescriptors, best_match_per);
 
+    ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
+             template_id, best_match_per, match_found);
+
     if (showView) {
       cv::imshow("view", img);
     }
@@ -94,13 +98,17 @@ std::tuple<int, double, bool> ImagePipeline::imageMatch(
 
   if (image_descriptors.empty()) {
     ROS_INFO("No descriptors in scanned image");
-    return std::make_tuple(-1, 0.0, false);
+    return std::make_tuple(matched_id, 0.0, matched_id != -1);
   }
   cv::FlannBasedMatcher flann(cv::makePtr<cv::flann::KDTreeIndexParams>(5));
 
+  ROS_INFO("Template names size: %zu", template_names.size());
+
   for (size_t i = 0; i < template_names.size(); i++) {
-    if (template_descriptors[i].empty())
+    if (template_descriptors[i].empty()) {
+      ROS_WARN("Template descriptors are empty, skipping...");
       continue;
+    }
 
     std::vector<cv::DMatch> matches;
     flann.match(template_descriptors[i], image_descriptors, matches);
@@ -119,7 +127,7 @@ std::tuple<int, double, bool> ImagePipeline::imageMatch(
       matched_id = i;
     }
   }
-  return std::make_tuple(matched_id, best_match_percentage, true);
+  return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
 }
 
 std::tuple<std::vector<std::string>, std::vector<std::vector<cv::KeyPoint>>,
