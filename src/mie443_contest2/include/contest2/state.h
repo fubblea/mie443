@@ -30,10 +30,21 @@ public:
       : pose(pose.x, pose.y, pose.phi), boxIdx(boxIdx) {};
 };
 
+/**
+ * @class RobotVelCmd
+ * @brief A struct representing a robot velocity command, comprising of a linear
+ * and angular velocity
+ *
+ */
 class RobotVelCmd {
 public:
+  // If true, the robot is in manual command mode
   bool cmdActive = false;
+
+  // Linear velocity command
   float linVel;
+
+  // Angular velocity command
   float angVel;
 
 public:
@@ -53,6 +64,12 @@ public:
   }
 };
 
+/**
+ * @class RobotState
+ * @brief A class representing the current state of the robot and the state
+ * variables
+ *
+ */
 class RobotState {
 public:
   State currState;

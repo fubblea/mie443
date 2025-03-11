@@ -45,6 +45,7 @@ const int MAX_LOST_COUNT = 3;
 //"mie443/src/mie443_contest2/boxes_database/template3.jpg"}; // load template
 //  files
 
+// Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {
     ros::package::getPath("mie443_contest2") +
         std::string("/boxes_database/template1.jpg"),
