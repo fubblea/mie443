@@ -27,6 +27,13 @@ public:
   int template_name;
   std::vector<cv::KeyPoint> template_keypoints;
   cv::Mat template_descriptors;
+
+public:
+  MemorizedTemplate(int template_name,
+                    std::vector<cv::KeyPoint> template_keypoints,
+                    cv::Mat template_descriptors)
+      : template_name(template_name), template_keypoints(template_keypoints),
+        template_descriptors(template_descriptors) {};
 };
 
 class ImagePipeline {

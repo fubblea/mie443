@@ -130,7 +130,7 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
 
 void ImagePipeline::memorizeTemplates() {
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < TEMPLATE_FILES.size(); i++) {
     ROS_INFO("Reading template image");
     cv::Mat template_pic =
         cv::imread(TEMPLATE_FILES[i],
@@ -146,9 +146,11 @@ void ImagePipeline::memorizeTemplates() {
     std::tie(localKeypoints, localDescriptors) =
         ImagePipeline::getFeatures(template_pic);
     ROS_INFO("Feature detection completed");
-    this->memorizedTemplates[i].template_name = i;
-    this->memorizedTemplates[i].template_keypoints = localKeypoints;
-    this->memorizedTemplates[i].template_descriptors = localDescriptors;
+
+    MemorizedTemplate newMemorization =
+        MemorizedTemplate(i, localKeypoints, localDescriptors);
+
+    this->memorizedTemplates.push_back(newMemorization);
     ROS_INFO("Memorized this one. On to the next");
   }
 }
