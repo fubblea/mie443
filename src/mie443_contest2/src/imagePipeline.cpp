@@ -50,7 +50,20 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   } else {
 
     // Find keypoints in scene (img) and compare to keypoint in templates
-    sleep(3);
+    std::vector<cv::KeyPoint> scannedKeypoints;
+    cv::Mat scannedDescriptors;
+    std::tie(scannedKeypoints, scannedDescriptors) = image_pipeline.getFeatures(
+        scanned_image); // feature extraction on scanned image
+
+    // initialize image match parameters
+    double best_match = 0.0;
+    std::string matched_image;
+    bool match_found;
+
+    std::tie(matched_image, best_match, match_found) =
+        image_pipeline.imageMatch(template_names, template_keypoints,
+                                  template_descriptors, scannedKeypoints,
+                                  scannedDescriptors, best_match);
 
     if (showView) {
       cv::imshow("view", img);
@@ -98,4 +111,32 @@ std::tuple<std::string, double, bool> ImagePipeline::ImageMatch(
     }
   }
   return std::make_tuple(matched_tag, best_match_percentage, true);
+}
+
+void ImagePipeline::memorizeTemplates(std::vector<std::string> template_files) {
+  /*Mat template1 = imread("C:/home/thursday2023/mie443/src/mie443_contest2/"
+                         "boxes_database/template1.jpg");
+  std::vector<cv::KeyPoint> keypoints_1;
+  cv::Mat descriptors_1;
+  ImagePipeline::getFeatures(template1);*/
+
+  for (const auto &file : template_files) {
+    ROS_INFO("Reading template image");
+    cv::Mat template_pic = cv::imread(
+        file, cv::IMREAD_GRAYSCALE()) // read template image in grayscale
+        if (template_pic.empty()) {
+      ROS_WARN("You done goofed. Check file path");
+    }
+
+    std::vector<cv::KeyPoint> localKeypoints;
+    cv::Mat localDescriptors;
+    ROS_INFO("Starting feature detection");
+    std::tie(localKeypoints, localDescriptors) =
+        image_pipeline.getFeatures(template_pic);
+    ROS_INFO("Feature detection completed");
+    template_names.push_back(file);
+    template_keypoints.push_back(localKeypoints);
+    template_descriptors.push_back(localDescriptors);
+    ROS_INFO("Memorized this one. On to the next");
+  }
 }

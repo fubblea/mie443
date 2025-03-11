@@ -37,6 +37,12 @@ const float BOX_ANGLE_OFFSET = 30;
 
 const int MAX_LOST_COUNT = 3;
 
+const std::vector<std::string> TEMPLATE_FILES = {
+    "mie443/src/mie443_contest2/boxes_database/template1.jpg",
+    "mie443/src/mie443_contest2/boxes_database/template2.jpg",
+    "mie443/src/mie443_contest2/boxes_database/template3.jpg"}; // load template
+                                                                // files
+
 // INTERAL HEADER FILES
 
 #include <contest2/boxes.h>
