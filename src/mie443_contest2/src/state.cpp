@@ -56,7 +56,7 @@ bool RobotState::doTurn(float relativeTarget, float reference, bool quick) {
   if (std::fabs(error) > ANGLE_TOL) {
     float turn_speed = MAX_ANG_VEL;
     // Slow down turning if we are close to the target
-    if (std::fabs(error) <= (ANGLE_TOL * 2)) {
+    if (std::fabs(error) <= (ANGLE_TOL * 5)) {
       turn_speed = MIN_ANG_VEL;
     }
 
