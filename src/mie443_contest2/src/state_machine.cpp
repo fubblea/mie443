@@ -37,7 +37,7 @@ void RobotState::updateState(bool showView) {
     genNavGoals(-BOX_ANGLE_OFFSET);
 
     ROS_INFO("Gonna memorize the templates now");
-    ROS_INFO("template 1: %s", TEMPLATE_FILES[0]);
+    ROS_INFO("template 1: %s", TEMPLATE_FILES[0].c_str());
     this->imagePipeline.memorizeTemplates(TEMPLATE_FILES, template_names,
                                           template_keypoints,
                                           template_descriptors);
@@ -89,6 +89,7 @@ void RobotState::updateState(bool showView) {
              this->boxes.coords[this->goalList[0].boxIdx][1],
              this->boxes.coords[this->goalList[0].boxIdx][2],
              this->goalList[0].boxIdGuess);
+
     std::vector<float> box_location = {
         this->boxes.coords[this->goalList[0].boxIdx][0],
         this->boxes.coords[this->goalList[0].boxIdx][1],

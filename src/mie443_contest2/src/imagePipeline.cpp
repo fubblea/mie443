@@ -66,14 +66,13 @@ int ImagePipeline::getTemplateID(
         ImagePipeline::getFeatures(img); // feature extraction on scanned image
 
     // initialize image match parameters
-    double best_match = 0.0;
-    std::string matched_image;
+    double best_match_per = 0.0;
     bool match_found;
 
-    std::tie(matched_image, best_match, match_found) =
+    std::tie(template_id, best_match_per, match_found) =
         ImagePipeline::imageMatch(template_names, template_keypoints,
                                   template_descriptors, scannedKeypoints,
-                                  scannedDescriptors, best_match);
+                                  scannedDescriptors, best_match_per);
 
     if (showView) {
       cv::imshow("view", img);
@@ -83,19 +82,19 @@ int ImagePipeline::getTemplateID(
   return template_id;
 }
 
-std::tuple<std::string, double, bool> ImagePipeline::imageMatch(
+std::tuple<int, double, bool> ImagePipeline::imageMatch(
     const std::vector<std::string> &template_names,
     const std::vector<std::vector<cv::KeyPoint>> &template_keypoints,
     const std::vector<cv::Mat> &template_descriptors,
     const std::vector<cv::KeyPoint> &image_keypoints,
     const cv::Mat &image_descriptors, double &best_match_percentage) {
 
-  std::string matched_tag = "None";
+  int matched_id = -1;
   best_match_percentage = 0.0;
 
   if (image_descriptors.empty()) {
     ROS_INFO("No descriptors in scanned image");
-    return std::make_tuple("None", 0.0, false);
+    return std::make_tuple(-1, 0.0, false);
   }
   cv::FlannBasedMatcher flann(cv::makePtr<cv::flann::KDTreeIndexParams>(5));
 
@@ -117,10 +116,10 @@ std::tuple<std::string, double, bool> ImagePipeline::imageMatch(
 
     if (percentMatch > best_match_percentage) {
       best_match_percentage = percentMatch;
-      matched_tag = template_names[i];
+      matched_id = i;
     }
   }
-  return std::make_tuple(matched_tag, best_match_percentage, true);
+  return std::make_tuple(matched_id, best_match_percentage, true);
 }
 
 std::tuple<std::vector<std::string>, std::vector<std::vector<cv::KeyPoint>>,
