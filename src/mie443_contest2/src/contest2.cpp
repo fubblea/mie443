@@ -1,4 +1,4 @@
-#include "contest2/lidar.h"
+#include "contest2/state.h"
 #include <cmath>
 #include <contest2/contest2.h>
 
@@ -65,6 +65,8 @@ int main(int argc, char **argv) {
       vel.linear.x = robotState.velCmd.linVel;
       vel_pub.publish(vel);
     }
+
+    robotState.saveTagsToFile();
 
     loop_rate.sleep();
   }

@@ -24,7 +24,7 @@ enum State {
 class RobotGoal {
 public:
   int boxIdx;
-  int boxIdGuess;
+  std::vector<int> boxIdGuesses;
   RobotPose pose;
 
 public:
@@ -105,7 +105,7 @@ public:
 
   // Other Functions
   void genNavGoals(float angleOffset);
-  std::string printState();
+  void saveTagsToFile();
 
   // State Machine
   void updateState(bool showView);

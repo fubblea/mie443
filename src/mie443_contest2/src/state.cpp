@@ -2,6 +2,8 @@
 #include "contest2/contest2.h"
 #include "contest2/robot_pose.h"
 #include "ros/console.h"
+#include <fstream>
+#include <ostream>
 #include <vector>
 
 RobotPose getBoxNavGoal(float xBox, float yBox, float phiBox,
@@ -112,4 +114,51 @@ bool RobotState::moveToWall(float targetDist, float speed) {
     this->velCmd.setVelCmd(false, 0, 0);
     return true;
   }
+}
+
+int findMode(const std::vector<int> &nums) {
+  // Return 0 if the vector is empty (or handle error as needed)
+  if (nums.empty()) {
+    return 0;
+  }
+
+  // Map to store frequency of each number
+  std::unordered_map<int, int> frequency;
+  for (int num : nums) {
+    frequency[num]++;
+  }
+
+  // Find the mode by checking which number has the highest frequency
+  int mode = nums[0];
+  int maxCount = 0;
+  for (const auto &entry : frequency) {
+    if (entry.second > maxCount) {
+      maxCount = entry.second;
+      mode = entry.first;
+    }
+  }
+
+  return mode;
+}
+
+void RobotState::saveTagsToFile() {
+  system("mkdir -p detected_tags");
+  std::ofstream myfile("detected_tags/box_guesses.txt");
+
+  for (RobotGoal goal : this->goalList) {
+    myfile << "Box at (" << goal.pose.x << ", " << goal.pose.y << ", "
+           << goal.pose.phi << ") - Guesses: (";
+
+    for (const int &value : goal.boxIdGuesses) {
+      myfile << value << ", ";
+    }
+
+    int bestGuess = findMode(goal.boxIdGuesses);
+    myfile << ") Best guess: " << bestGuess;
+
+    // TODO: Get the template name
+    myfile << std::endl;
+  }
+
+  myfile.close();
 }
