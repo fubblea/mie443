@@ -90,6 +90,7 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
 
   int matched_id = -1;
   best_match_percentage = 0.0;
+  ROS_INFO("%i descriptor rows in scanned image", image_descriptors.rows);
 
   if (image_descriptors.empty()) {
     ROS_INFO("No descriptors in scanned image");
@@ -100,6 +101,8 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
   ROS_INFO("Memorized templates size: %zu", this->memorizedTemplates.size());
 
   for (size_t i = 0; i < this->memorizedTemplates.size(); i++) {
+    ROS_INFO("%i descriptor rows in template image",
+             this->memorizedTemplates[i].template_descriptors.rows);
     if (this->memorizedTemplates[i].template_descriptors.empty()) {
       ROS_WARN("Template descriptors are empty, skipping...");
       continue;
@@ -111,15 +114,16 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
 
     double good_matches = 0;
     for (const auto &m : matches) {
-      if (m.distance < 0.3 * matches.back().distance) { // lowe's ratio test
+      if (m.distance < 0.65 * matches.back().distance) { // lowe's ratio test
         good_matches++;
       }
     }
+    ROS_INFO("%f good matches found", good_matches);
 
     double percentMatch =
         (good_matches / this->memorizedTemplates[i].template_descriptors.rows) *
         100;
-
+    ROS_INFO("%f percent matched", percentMatch);
     if (percentMatch > best_match_percentage) {
       best_match_percentage = percentMatch;
       matched_id = i;
