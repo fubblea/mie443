@@ -11,7 +11,7 @@ std::unordered_map<int, std::vector<float>>
     identifiedTags; // initialize hashmap to store detected images
 
 // these initialize stuff for memorize template
-std::vector<std::string> template_names;
+std::vector<int> template_names;
 std::vector<std::vector<cv::KeyPoint>> template_keypoints;
 std::vector<cv::Mat> template_descriptors;
 
@@ -38,8 +38,7 @@ void RobotState::updateState(bool showView) {
 
     ROS_INFO("Gonna memorize the templates now");
     ROS_INFO("template 1: %s", TEMPLATE_FILES[0].c_str());
-    this->imagePipeline.memorizeTemplates(TEMPLATE_FILES, template_names,
-                                          template_keypoints,
+    this->imagePipeline.memorizeTemplates(&template_names, template_keypoints,
                                           template_descriptors);
 
     setState(State::SPIN);
@@ -81,7 +80,7 @@ void RobotState::updateState(bool showView) {
   case State::TAG_BOX: {
 
     this->goalList[0].boxIdGuess = this->imagePipeline.getTemplateID(
-        this->boxes, showView, template_names, template_keypoints,
+        this->boxes, showView, &template_names, template_keypoints,
         template_descriptors);
 
     ROS_INFO("Guess for box at (%f, %f, %f) is %i",

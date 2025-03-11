@@ -1,4 +1,5 @@
 #include "contest2/imagePipeline.h"
+#include "contest2/contest2.h"
 #include "ros/console.h"
 #include <contest2/imagePipeline.h>
 #include <ctime>
@@ -45,7 +46,7 @@ ImagePipeline::getFeatures(cv::Mat image) {
 }
 
 int ImagePipeline::getTemplateID(
-    Boxes &boxes, bool showView, std::vector<std::string> template_names,
+    Boxes &boxes, bool showView, std::vector<int> *template_names,
     std::vector<std::vector<cv::KeyPoint>> template_keypoints,
     std::vector<cv::Mat> template_descriptors) {
   int template_id = -1;
@@ -87,11 +88,11 @@ int ImagePipeline::getTemplateID(
 }
 
 std::tuple<int, double, bool> ImagePipeline::imageMatch(
-    const std::vector<std::string> &template_names,
-    const std::vector<std::vector<cv::KeyPoint>> &template_keypoints,
-    const std::vector<cv::Mat> &template_descriptors,
-    const std::vector<cv::KeyPoint> &image_keypoints,
-    const cv::Mat &image_descriptors, double &best_match_percentage) {
+    std::vector<int> *template_names,
+    std::vector<std::vector<cv::KeyPoint>> &template_keypoints,
+    std::vector<cv::Mat> &template_descriptors,
+    std::vector<cv::KeyPoint> &image_keypoints, cv::Mat &image_descriptors,
+    double &best_match_percentage) {
 
   int matched_id = -1;
   best_match_percentage = 0.0;
@@ -102,9 +103,9 @@ std::tuple<int, double, bool> ImagePipeline::imageMatch(
   }
   cv::FlannBasedMatcher flann(cv::makePtr<cv::flann::KDTreeIndexParams>(5));
 
-  ROS_INFO("Template names size: %zu", template_names.size());
+  ROS_INFO("Template names size: %zu", template_names->size());
 
-  for (size_t i = 0; i < template_names.size(); i++) {
+  for (size_t i = 0; i < template_names->size(); i++) {
     if (template_descriptors[i].empty()) {
       ROS_WARN("Template descriptors are empty, skipping...");
       continue;
@@ -130,28 +131,18 @@ std::tuple<int, double, bool> ImagePipeline::imageMatch(
   return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
 }
 
-std::tuple<std::vector<std::string>, std::vector<std::vector<cv::KeyPoint>>,
-           std::vector<cv::Mat>, bool>
+std::tuple<std::vector<std::vector<cv::KeyPoint>>, std::vector<cv::Mat>, bool>
 ImagePipeline::memorizeTemplates(
-    std::vector<std::string> template_files,
-    std::vector<std::string> template_names,
+    std::vector<int> *template_names,
     std::vector<std::vector<cv::KeyPoint>> template_keypoints,
     std::vector<cv::Mat> template_descriptors) {
-
-  /*for (const auto &file : template_files) {
-    ROS_INFO("Reading template image");
-    cv::Mat template_pic = cv::imread(
-        file, cv::IMREAD_GRAYSCALE); // read template image in grayscale
-        if (template_pic.empty()) {
-      ROS_WARN("You done goofed. Check file path");
-    }*/
 
   for (int i = 0; i < 3; i++) {
     ROS_INFO("Reading template image");
     cv::Mat template_pic =
-        cv::imread(template_files[i],
+        cv::imread(TEMPLATE_FILES[i],
                    cv::IMREAD_GRAYSCALE); // read template image in grayscale
-    ROS_INFO("Template path: %s", template_files[i].c_str());
+    ROS_INFO("Template path: %s", TEMPLATE_FILES[i].c_str());
     if (template_pic.empty()) {
       ROS_WARN("You done goofed. Check file path");
     }
@@ -162,11 +153,10 @@ ImagePipeline::memorizeTemplates(
     std::tie(localKeypoints, localDescriptors) =
         ImagePipeline::getFeatures(template_pic);
     ROS_INFO("Feature detection completed");
-    template_names.push_back(template_files[i]);
+    template_names->push_back(i);
     template_keypoints.push_back(localKeypoints);
     template_descriptors.push_back(localDescriptors);
     ROS_INFO("Memorized this one. On to the next");
   }
-  return std::make_tuple(template_names, template_keypoints,
-                         template_descriptors, true);
+  return std::make_tuple(template_keypoints, template_descriptors, true);
 }
