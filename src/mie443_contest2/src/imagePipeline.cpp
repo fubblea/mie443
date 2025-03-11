@@ -45,10 +45,7 @@ ImagePipeline::getFeatures(cv::Mat image) {
   return std::make_tuple(keypoints_image, descriptors_image);
 }
 
-int ImagePipeline::getTemplateID(
-    Boxes &boxes, bool showView, std::vector<int> *template_names,
-    std::vector<std::vector<cv::KeyPoint>> template_keypoints,
-    std::vector<cv::Mat> template_descriptors) {
+int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
   if (!isValid) {
     ROS_INFO("image not valid");
@@ -72,9 +69,8 @@ int ImagePipeline::getTemplateID(
     bool match_found;
 
     std::tie(template_id, best_match_per, match_found) =
-        ImagePipeline::imageMatch(template_names, template_keypoints,
-                                  template_descriptors, scannedKeypoints,
-                                  scannedDescriptors, best_match_per);
+        ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
+                                  best_match_per);
 
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
              template_id, best_match_per, match_found);
@@ -87,12 +83,10 @@ int ImagePipeline::getTemplateID(
   return template_id;
 }
 
-std::tuple<int, double, bool> ImagePipeline::imageMatch(
-    std::vector<int> *template_names,
-    std::vector<std::vector<cv::KeyPoint>> &template_keypoints,
-    std::vector<cv::Mat> &template_descriptors,
-    std::vector<cv::KeyPoint> &image_keypoints, cv::Mat &image_descriptors,
-    double &best_match_percentage) {
+std::tuple<int, double, bool>
+ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
+                          cv::Mat &image_descriptors,
+                          double &best_match_percentage) {
 
   int matched_id = -1;
   best_match_percentage = 0.0;
@@ -103,16 +97,17 @@ std::tuple<int, double, bool> ImagePipeline::imageMatch(
   }
   cv::FlannBasedMatcher flann(cv::makePtr<cv::flann::KDTreeIndexParams>(5));
 
-  ROS_INFO("Template names size: %zu", template_names->size());
+  ROS_INFO("Memorized templates size: %zu", this->memorizedTemplates.size());
 
-  for (size_t i = 0; i < template_names->size(); i++) {
-    if (template_descriptors[i].empty()) {
+  for (size_t i = 0; i < this->memorizedTemplates.size(); i++) {
+    if (this->memorizedTemplates[i].template_descriptors.empty()) {
       ROS_WARN("Template descriptors are empty, skipping...");
       continue;
     }
 
     std::vector<cv::DMatch> matches;
-    flann.match(template_descriptors[i], image_descriptors, matches);
+    flann.match(this->memorizedTemplates[i].template_descriptors,
+                image_descriptors, matches);
 
     double good_matches = 0;
     for (const auto &m : matches) {
@@ -121,7 +116,9 @@ std::tuple<int, double, bool> ImagePipeline::imageMatch(
       }
     }
 
-    double percentMatch = (good_matches / template_descriptors[i].rows) * 100;
+    double percentMatch =
+        (good_matches / this->memorizedTemplates[i].template_descriptors.rows) *
+        100;
 
     if (percentMatch > best_match_percentage) {
       best_match_percentage = percentMatch;
@@ -131,11 +128,7 @@ std::tuple<int, double, bool> ImagePipeline::imageMatch(
   return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
 }
 
-std::tuple<std::vector<std::vector<cv::KeyPoint>>, std::vector<cv::Mat>, bool>
-ImagePipeline::memorizeTemplates(
-    std::vector<int> *template_names,
-    std::vector<std::vector<cv::KeyPoint>> template_keypoints,
-    std::vector<cv::Mat> template_descriptors) {
+void ImagePipeline::memorizeTemplates() {
 
   for (int i = 0; i < 3; i++) {
     ROS_INFO("Reading template image");
@@ -153,10 +146,9 @@ ImagePipeline::memorizeTemplates(
     std::tie(localKeypoints, localDescriptors) =
         ImagePipeline::getFeatures(template_pic);
     ROS_INFO("Feature detection completed");
-    template_names->push_back(i);
-    template_keypoints.push_back(localKeypoints);
-    template_descriptors.push_back(localDescriptors);
+    this->memorizedTemplates[i].template_name = i;
+    this->memorizedTemplates[i].template_keypoints = localKeypoints;
+    this->memorizedTemplates[i].template_descriptors = localDescriptors;
     ROS_INFO("Memorized this one. On to the next");
   }
-  return std::make_tuple(template_keypoints, template_descriptors, true);
 }

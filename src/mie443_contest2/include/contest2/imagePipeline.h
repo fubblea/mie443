@@ -24,7 +24,7 @@ using std::endl;
 
 class MemorizedTemplate {
 public:
-  int template_names;
+  int template_name;
   std::vector<cv::KeyPoint> template_keypoints;
   cv::Mat template_descriptors;
 };
