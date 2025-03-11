@@ -36,6 +36,12 @@ void RobotState::updateState(bool showView) {
     genNavGoals(BOX_ANGLE_OFFSET);
     genNavGoals(-BOX_ANGLE_OFFSET);
 
+    ROS_INFO("Gonna memorize the templates now");
+    ROS_INFO("template 1: %s", TEMPLATE_FILES[0]);
+    this->imagePipeline.memorizeTemplates(TEMPLATE_FILES, template_names,
+                                          template_keypoints,
+                                          template_descriptors);
+
     setState(State::SPIN);
     break;
   }
@@ -47,12 +53,6 @@ void RobotState::updateState(bool showView) {
       ROS_INFO("finding my first goal");
       setState(State::GOTO_GOAL);
     }
-
-    ROS_INFO("Gonna memorize the templates now");
-    ROS_INFO("template 1: %s", TEMPLATE_FILES[1]);
-    this->imagePipeline.memorizeTemplates(TEMPLATE_FILES, template_names,
-                                          template_keypoints,
-                                          template_descriptors);
 
     break;
   }
