@@ -146,19 +146,22 @@ void RobotState::saveTagsToFile() {
   std::ofstream myfile("detected_tags/box_guesses.txt");
 
   for (RobotGoal goal : this->goalList) {
-    myfile << "Box at (" << goal.pose.x << ", " << goal.pose.y << ", "
-           << goal.pose.phi << ") - Guesses: (";
 
-    for (const int &value : goal.boxIdGuesses) {
-      myfile << value << ", ";
+    if (goal.boxIdGuesses.size() > 0) {
+      myfile << "Box at (" << goal.pose.x << ", " << goal.pose.y << ", "
+             << goal.pose.phi << ") - Guesses: (";
+
+      for (const int &value : goal.boxIdGuesses) {
+        myfile << value << ", ";
+      }
+
+      int bestGuess = findMode(goal.boxIdGuesses);
+      myfile << ") Best guess: " << bestGuess;
+
+      // TODO: Get the template name
+      myfile << std::endl;
     }
-
-    int bestGuess = findMode(goal.boxIdGuesses);
-    myfile << ") Best guess: " << bestGuess;
-
-    // TODO: Get the template name
-    myfile << std::endl;
-  }
+    }
 
   myfile.close();
 }
