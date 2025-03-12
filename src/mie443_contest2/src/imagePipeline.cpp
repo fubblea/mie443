@@ -84,7 +84,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
         cv::Point2f srcPoints[4] = {approx[2], approx[3], approx[1], approx[0]};
 
-        float width = 300, height = 400;
+        float width = 2480, height = 3508;
         cv::Point2f dstPoints[4] = {
             {0, 0}, {width, 0}, {width, height}, {0, height}};
 

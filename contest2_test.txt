@@ -1,0 +1,1263 @@
+Box coordinates: 
+0 x: 0.818 y: 1.09 z: -73.94
+Box coordinates: 
+1 x: 2.76 y: 1.65 z: -167.01
+Box coordinates: 
+2 x: 2.31 y: 2.71 z: -161.08
+Box coordinates: 
+3 x: 1.27 y: 3.53 z: -128.42
+Box coordinates: 
+4 x: -0.04 y: 4.3 z: -74.93
+[0m[ INFO] [1741737246.633712599]: Initialization. Generating navigation goals[0m
+[0m[ INFO] [1741737246.633852742]: Generated nav goal: (1.011651, 0.417319, 1.851096) for box 0[0m
+[0m[ INFO] [1741737246.633874804]: Generated nav goal: (2.077914, 1.492653, 0.226718) for box 1[0m
+[0m[ INFO] [1741737246.633892492]: Generated nav goal: (1.647819, 2.483027, 0.330216) for box 2[0m
+[0m[ INFO] [1741737246.633924343]: Generated nav goal: (0.835005, 2.981566, 0.900241) for box 3[0m
+[0m[ INFO] [1741737246.633953510]: Generated nav goal: (0.141999, 3.624074, 1.833817) for box 4[0m
+[0m[ INFO] [1741737246.633971395]: Generated nav goal: (1.322047, 0.604267, 2.374695) for box 0[0m
+[0m[ INFO] [1741737246.633986950]: Generated nav goal: (2.247969, 1.172690, 0.750317) for box 1[0m
+[0m[ INFO] [1741737246.634006955]: Generated nav goal: (1.850021, 2.182345, 0.853815) for box 2[0m
+[0m[ INFO] [1741737246.634038926]: Generated nav goal: (1.167500, 2.837545, 1.423840) for box 3[0m
+[0m[ INFO] [1741737246.634107766]: Generated nav goal: (0.455579, 3.805631, 2.357416) for box 4[0m
+[0m[ INFO] [1741737246.634171132]: Generated nav goal: (0.649366, 0.410616, 1.327497) for box 0[0m
+[0m[ INFO] [1741737246.634258663]: Generated nav goal: (2.090622, 1.854777, -0.296880) for box 1[0m
+[0m[ INFO] [1741737246.634323437]: Generated nav goal: (1.623048, 2.844526, -0.193383) for box 2[0m
+[0m[ INFO] [1741737246.634389801]: Generated nav goal: (0.619067, 3.272540, 0.376642) for box 3[0m
+[0m[ INFO] [1741737246.634460765]: Generated nav goal: (-0.220347, 3.623631, 1.310219) for box 4[0m
+[0m[ INFO] [1741737246.634525172]: Gonna memorize the templates now[0m
+[0m[ INFO] [1741737246.634590024]: template 1: /home/thursday2023/mie443/src/mie443_contest2/boxes_database/template1.jpg[0m
+[0m[ INFO] [1741737246.634654800]: Reading template image[0m
+[0m[ INFO] [1741737246.637665840]: Template path: /home/thursday2023/mie443/src/mie443_contest2/boxes_database/template1.jpg[0m
+[0m[ INFO] [1741737246.637770692]: Starting feature detection[0m
+[0m[ INFO] [1741737246.637873061]: Detecting features[0m
+[0m[ INFO] [1741737246.637902363]: Initializing keypoints[0m
+[0m[ INFO] [1741737246.637973605]: Initializing descriptors[0m
+[ INFO:0] Initialize OpenCL runtime...
+[0m[ INFO] [1741737246.832394983]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737246.832528677]: Feature detection completed[0m
+[0m[ INFO] [1741737246.832652976]: Memorized this one. On to the next[0m
+[0m[ INFO] [1741737246.832674831]: Reading template image[0m
+[0m[ INFO] [1741737246.838771396]: Template path: /home/thursday2023/mie443/src/mie443_contest2/boxes_database/template2.jpg[0m
+[0m[ INFO] [1741737246.838821488]: Starting feature detection[0m
+[0m[ INFO] [1741737246.838864772]: Detecting features[0m
+[0m[ INFO] [1741737246.838886049]: Initializing keypoints[0m
+[0m[ INFO] [1741737246.838915609]: Initializing descriptors[0m
+[0m[ INFO] [1741737247.054172994]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737247.054393035]: Feature detection completed[0m
+[0m[ INFO] [1741737247.054622329]: Memorized this one. On to the next[0m
+[0m[ INFO] [1741737247.054660288]: Reading template image[0m
+[0m[ INFO] [1741737247.065511004]: Template path: /home/thursday2023/mie443/src/mie443_contest2/boxes_database/template3.jpg[0m
+[0m[ INFO] [1741737247.065567750]: Starting feature detection[0m
+[0m[ INFO] [1741737247.065609643]: Detecting features[0m
+[0m[ INFO] [1741737247.065643988]: Initializing keypoints[0m
+[0m[ INFO] [1741737247.065663755]: Initializing descriptors[0m
+[0m[ INFO] [1741737247.341428703]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737247.341567020]: Feature detection completed[0m
+[0m[ INFO] [1741737247.341892050]: Memorized this one. On to the next[0m
+[0m[ INFO] [1741737247.347724820]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.347792290]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.347814465]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.395757852]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.395826174]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.395849317]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.445060193]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.445182398]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.445233692]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.496430537]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.496839404]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.497082023]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.544149916]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.544207242]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.544222195]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.594737245]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.594797867]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.594818200]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.644704947]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.644766516]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.644785872]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.695545337]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.695597130]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.695612342]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.745027513]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.745084523]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.745100743]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.794745555]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.794826825]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.794912593]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.844997471]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.845063551]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.845086091]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.894363308]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.894421564]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.894438310]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.945288953]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.945347047]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.945363744]: Manual motor command is active![0m
+[0m[ INFO] [1741737247.994738377]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737247.994811569]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737247.994831101]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.044726393]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.044794362]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.044897443]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.095742472]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.095806127]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.095827318]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.144766778]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.144826557]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.144845689]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.194726618]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.194805392]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.194831767]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.244915325]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.244990770]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.245012641]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.295208831]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.295278582]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.295304003]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.344335313]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.344391107]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.344418174]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.394751762]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.394820884]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.394836703]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.445001033]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.445127546]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.445174241]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.494185303]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.494240184]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.494255737]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.545314302]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.545416888]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.545443341]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.595153527]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.595206517]: Turning to -20.000000 deg. Delta: 121.471153 (101.471155) deg[0m
+[33m[ WARN] [1741737248.595220849]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.644631047]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.644746150]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.644770415]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.694501971]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.694585898]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.694605809]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.745611118]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.745780296]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.745828114]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.794046221]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.794105924]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.794121344]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.844825750]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.844893082]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.844915259]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.894654710]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.894726286]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.894752348]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.944167988]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.944219715]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.944234200]: Manual motor command is active![0m
+[0m[ INFO] [1741737248.994956554]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737248.995022770]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737248.995046684]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.044229534]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.044284719]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.044301943]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.094457752]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.094520849]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.094540219]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.144461447]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.144528809]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.144549917]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.195362652]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.195429066]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.195451100]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.244005604]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.244055681]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.244070902]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.294155339]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.294212261]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.294228486]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.344873856]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.344940542]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.344962374]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.397331782]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.397397478]: Turning to -20.000000 deg. Delta: 134.534470 (114.534465) deg[0m
+[33m[ WARN] [1741737249.397414941]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.445303493]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.445402625]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.445455647]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.493968708]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.494026505]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.494044082]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.545547184]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.545662235]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.545685751]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.594177193]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.594241180]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.594258608]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.644707317]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.644764618]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.644781731]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.695223737]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.695292447]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.695319757]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.744677600]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.744734061]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.744751523]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.794497338]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.794616388]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.794697458]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.844119477]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.844179165]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.844194118]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.895562918]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.895625320]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.895645990]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.943922521]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.943972477]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.943986848]: Manual motor command is active![0m
+[0m[ INFO] [1741737249.994771086]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737249.994824513]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737249.994887252]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.044399905]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.044454563]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737250.044471697]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.095232305]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.095285564]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737250.095376518]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.144944281]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.145003907]: Turning to -20.000000 deg. Delta: 146.898666 (126.898672) deg[0m
+[33m[ WARN] [1741737250.145025026]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.194203645]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.194267338]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.194300111]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.245687961]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.245747718]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.245766130]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.294047849]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.294103054]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.294118964]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.344934690]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.345005374]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.345033575]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.394089231]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.394141598]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.394166699]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.444783653]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.444858785]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.444882043]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.494667319]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.494760377]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.494814355]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.545533086]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.545587190]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.545601652]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.595194728]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.595253712]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.595274229]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.644125103]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.644176313]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.644190690]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.695423456]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.695507931]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.695547529]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.745058195]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.745125748]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.745149069]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.794702513]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.795636537]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.795663918]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.844561232]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.844621937]: Turning to -20.000000 deg. Delta: 159.471100 (139.471097) deg[0m
+[33m[ WARN] [1741737250.844659360]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.894559682]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.894629117]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737250.894649333]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.945957780]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.946027003]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737250.946051145]: Manual motor command is active![0m
+[0m[ INFO] [1741737250.994355151]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737250.994408991]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737250.994423501]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.045383838]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.045455599]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.045480115]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.094330498]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.094391065]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.094409945]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.144615418]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.144678300]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.144707339]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.194145353]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.194204960]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.194223687]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.246044714]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.246098033]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.246114010]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.294178957]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.294244459]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.294266498]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.344658577]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.344715086]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.344731822]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.396389566]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.396499355]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.396562393]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.444160660]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.444212109]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.444231673]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.495281935]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.495525447]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.495547406]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.544194041]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.544244105]: Turning to -20.000000 deg. Delta: 172.168961 (152.168965) deg[0m
+[33m[ WARN] [1741737251.544271481]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.596056690]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.596169985]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.596229278]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.644858357]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.644923473]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.644944712]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.694482084]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.694536752]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.694552050]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.745070909]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.745294420]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.745344185]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.794557626]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.794618868]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.794636604]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.846376529]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.846458180]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.846485605]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.894438200]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.894498374]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.894516424]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.946425040]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.946501673]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.946528909]: Manual motor command is active![0m
+[0m[ INFO] [1741737251.994298046]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737251.994356518]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737251.994373547]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.046675836]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.046775646]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737252.046799407]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.095213145]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.095290157]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737252.095305613]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.144232892]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.144286959]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737252.144459896]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.194289253]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.194343939]: Turning to -20.000000 deg. Delta: -174.644730 (165.355273) deg[0m
+[33m[ WARN] [1741737252.194359405]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.244333939]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.244384478]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.244399457]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.295291377]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.295431673]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.295466846]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.345008050]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.345071794]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.345090842]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.394964783]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.395019840]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.395037600]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.444047563]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.444103298]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.444119626]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.494539314]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.494610714]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.494635976]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.544061439]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.544118333]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.544133707]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.594157604]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.594211746]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.594227508]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.644519173]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.644608773]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.644632078]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.693865968]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.693916580]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.693932012]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.744838017]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.744913535]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.744938076]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.793943437]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.793993308]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.794009060]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.844358517]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.844695952]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.844843569]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.894702071]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.894838697]: Turning to -20.000000 deg. Delta: -162.544174 (177.455828) deg[0m
+[33m[ WARN] [1741737252.894945739]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.944645878]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.944720990]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737252.944930133]: Manual motor command is active![0m
+[0m[ INFO] [1741737252.994961687]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737252.995030956]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737252.995071494]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.043927586]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.043984083]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.043999241]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.095329671]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.095403729]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.095428102]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.144245913]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.144305031]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.144322583]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.195922728]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.196002025]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.196027664]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.244803789]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.244912233]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.244939839]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.295727915]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.295845460]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.295871359]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.347452238]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.347526442]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.347553336]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.394301650]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.394355015]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.394370263]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.445163015]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.445251682]: Turning to -20.000000 deg. Delta: -150.404449 (-170.404450) deg[0m
+[33m[ WARN] [1741737253.445279760]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.494368060]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.494426864]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.494446679]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.544809420]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.544982253]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.545036176]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.593933676]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.593990933]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.594005890]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.644597717]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.644693255]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.644715692]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.694528601]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.694589717]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.694610581]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.744600216]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.744652966]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.744668379]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.794561491]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.794624813]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.794647007]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.844318382]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.844385954]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.844404854]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.895318080]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.895400897]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.895421005]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.943829566]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.943879419]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.943894182]: Manual motor command is active![0m
+[0m[ INFO] [1741737253.995055613]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737253.995147506]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737253.995180926]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.044810053]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.044885620]: Turning to -20.000000 deg. Delta: -138.034256 (-158.034253) deg[0m
+[33m[ WARN] [1741737254.044912047]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.095183659]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.095251138]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.095270555]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.146969526]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.147080244]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.147154926]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.194045149]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.194100026]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.194182210]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.245526491]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.245674241]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.245714408]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.294403695]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.294469521]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.294487976]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.345349624]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.345435042]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.345462714]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.394522954]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.394597949]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.394617278]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.444655274]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.444709957]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.444725917]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.495727581]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.495792327]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.495817290]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.544352756]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.544407249]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.544422716]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.595349444]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.595502071]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.595599230]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.644079161]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.644133460]: Turning to -20.000000 deg. Delta: -125.825676 (-145.825673) deg[0m
+[33m[ WARN] [1741737254.644148767]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.694587235]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.694647707]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737254.694666329]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.744381276]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.744453804]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737254.744477488]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.795462357]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.795527619]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737254.795550558]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.844449034]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.844509737]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737254.844528990]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.894391105]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.894548120]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737254.894564299]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.945085530]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.945151474]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737254.945173965]: Manual motor command is active![0m
+[0m[ INFO] [1741737254.994038915]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737254.994089644]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737254.994110868]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.044809452]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.044876594]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737255.044899724]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.094061701]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.094131375]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737255.094148606]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.145683112]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.145761349]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737255.145799647]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.193877851]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.193930610]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737255.193946141]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.244186128]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.244244506]: Turning to -20.000000 deg. Delta: -113.716606 (-133.716608) deg[0m
+[33m[ WARN] [1741737255.244262993]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.294655021]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.294726657]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.294776739]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.344198243]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.344252840]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.344268560]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.394810299]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.394938900]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.394975389]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.444043168]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.444095456]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.444110408]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.495317302]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.495414703]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.495435244]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.544101691]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.544158787]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.544189103]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.594286942]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.594407650]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.594467921]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.645536926]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.645617714]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.645646845]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.694790504]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.694937476]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.694978530]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.744173928]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.744475244]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.744657255]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.794034789]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.794089469]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.794106138]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.845248974]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.845333893]: Turning to -20.000000 deg. Delta: -101.345467 (-121.345469) deg[0m
+[33m[ WARN] [1741737255.845379038]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.894277188]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.894334718]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737255.894362006]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.944393666]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.944455943]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737255.944475871]: Manual motor command is active![0m
+[0m[ INFO] [1741737255.994568581]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737255.994633926]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737255.994654443]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.044159781]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.044219187]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.044235285]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.095046637]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.095116282]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.095141999]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.144369049]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.144424373]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.144441068]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.198309503]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.198389500]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.198418818]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.244500276]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.244564217]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.244662529]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.295373991]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.295445426]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.295493588]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.344685697]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.344752291]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.344795098]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.394243852]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.394307122]: Turning to -20.000000 deg. Delta: -89.764671 (-109.764671) deg[0m
+[33m[ WARN] [1741737256.394324500]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.444341200]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.444401052]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.444419371]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.495191707]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.495244812]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.495260537]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.545213762]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.545296998]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.545375651]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.594544299]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.594612171]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.594637810]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.645394687]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.645542410]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.645599202]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.693992621]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.694052486]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.694077833]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.744807816]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.744875076]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.744896805]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.794784527]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.794919039]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.794952662]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.844377493]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.844431088]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.844446777]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.894911178]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.894978732]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.895026840]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.944194580]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.944309047]: Turning to -20.000000 deg. Delta: -78.270363 (-98.270364) deg[0m
+[33m[ WARN] [1741737256.944326258]: Manual motor command is active![0m
+[0m[ INFO] [1741737256.994733662]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737256.994798717]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737256.994885452]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.044150397]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.044211614]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.044227361]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.095143868]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.095194361]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.095210312]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.143974237]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.144022381]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.144037461]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.195219333]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.195269150]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.195284611]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.245066554]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.245134683]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.245158122]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.294803668]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.294879901]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.294907116]: Manual motor command is active![0m
+[33m[ WARN] [1741737257.345277575]: Could not find valid LIDAR value.[0m
+[0m[ INFO] [1741737257.345377958]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.345442701]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.345483505]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.394755410]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.394827714]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.394906966]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.445071587]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.445167166]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.445209693]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.494054150]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.494118293]: Turning to -20.000000 deg. Delta: -66.761772 (-86.761776) deg[0m
+[33m[ WARN] [1741737257.494135782]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.545284943]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.545472012]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.545519758]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.594052742]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.594119286]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.594233954]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.645073233]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.645173867]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.645194983]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.694747357]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.694809925]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.694833513]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.744082265]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.744137406]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.744152686]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.794925256]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.794986719]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.795014793]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.844084398]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.844139093]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.844155694]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.895744173]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.895810435]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.895828973]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.944710900]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.944784205]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.944820774]: Manual motor command is active![0m
+[0m[ INFO] [1741737257.996792783]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737257.996863654]: Turning to -20.000000 deg. Delta: -54.555271 (-74.555271) deg[0m
+[33m[ WARN] [1741737257.996888336]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.044136918]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.044191628]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.044207955]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.094604659]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.094674270]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.094697311]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.145082592]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.145151519]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.145177377]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.194195352]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.194245850]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.194269443]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.245131366]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.245207019]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.245234989]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.294557247]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.294687942]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.294709841]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.344227294]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.344285332]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.344303516]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.394209541]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.394280076]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.394309319]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.444985140]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.445071372]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.445106333]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.494388393]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.494456684]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.494495330]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.543936900]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.543989522]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.544004356]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.601197852]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.601253730]: Turning to -20.000000 deg. Delta: -43.851128 (-63.851129) deg[0m
+[33m[ WARN] [1741737258.601271255]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.643941551]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.643992157]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.644007456]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.695120531]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.695169919]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.695196955]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.744060426]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.744111302]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.744126607]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.794250683]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.794305541]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.794321640]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.844283550]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.844338581]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.844355766]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.894514516]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.894569022]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.894584056]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.943992364]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.944043797]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.944058851]: Manual motor command is active![0m
+[0m[ INFO] [1741737258.994144519]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737258.994199569]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737258.994214852]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.044046497]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.044100487]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737259.044116078]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.094079435]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.094132587]: Turning to -20.000000 deg. Delta: -32.171753 (-52.171751) deg[0m
+[33m[ WARN] [1741737259.094153430]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.144053033]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.144106386]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.144125902]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.194019822]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.194075510]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.194091750]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.244585697]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.244638868]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.244654322]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.294123270]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.294177127]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.294192217]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.344099982]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.344155301]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.344207624]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.394754306]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.394821678]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.394881825]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.444514910]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.444571533]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.444588966]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.494517886]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.494623067]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.494700135]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.544762681]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.544833447]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.544857384]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.594241034]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.594296249]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.594311548]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.644180914]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.644235603]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.644353030]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.694149986]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.694210002]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.694231791]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.744798946]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.744867439]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.744892227]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.793954446]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.794004533]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.794019235]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.845366540]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.845450137]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.845507484]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.893893658]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.893944668]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.893959539]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.946138623]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.946256063]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.946312684]: Manual motor command is active![0m
+[0m[ INFO] [1741737259.995132673]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737259.995201670]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737259.995241476]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.045439002]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.045564125]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.045592937]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.094943589]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.095011555]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.095036583]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.144836153]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.144917450]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.144965011]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.195082300]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.195152876]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.195175857]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.243992655]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.244046235]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.244061112]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.294984082]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.295047303]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.295068295]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.344545903]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.344692706]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.344736239]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.395057658]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.395114815]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.395133256]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.444190216]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.444257717]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.444274165]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.494442893]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.494497236]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.494512510]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.545437037]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.545548406]: Turning to -20.000000 deg. Delta: -20.632830 (-40.632830) deg[0m
+[33m[ WARN] [1741737260.545578008]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.594032970]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.594090593]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.594105550]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.645643362]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.645721505]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.646246211]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.694274061]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.694339799]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.694359544]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.745852446]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.745957172]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.745995937]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.795014053]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.795096186]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.795142227]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.845665865]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.845756621]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.845804106]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.894187748]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.894259418]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.894284468]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.943989237]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.944041672]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.944056761]: Manual motor command is active![0m
+[0m[ INFO] [1741737260.994720513]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737260.994787804]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737260.994833640]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.044650969]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.044779675]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.044802586]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.094706761]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.094778263]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.094802964]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.144346732]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.144404027]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.144422761]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.194097657]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.194152385]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.194168025]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.245768469]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.245835464]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.245858637]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.295048237]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.295097746]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.295113615]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.345386229]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.345458463]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.345509386]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.394658606]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.394719298]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.394766466]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.445482605]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.445556225]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.445582137]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.494005095]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.494056429]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.494080996]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.545722018]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.545831708]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.545879280]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.594205531]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.594265974]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.594281728]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.646263421]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.646328771]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.646346520]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.693834822]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.693885381]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.693901186]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.744272713]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.744331417]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.744352625]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.793934882]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.793987107]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.794001919]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.844078437]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.844130595]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.844149368]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.894777073]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.894895684]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.894925247]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.944116629]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.944176675]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.944191307]: Manual motor command is active![0m
+[0m[ INFO] [1741737261.995801095]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737261.995896357]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737261.995923025]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.045205307]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.045303222]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.045340205]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.094377319]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.094437085]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.094455088]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.145092861]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.145186688]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.145221093]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.195645565]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.195709596]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.195731292]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.245360094]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.245430618]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.245454700]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.294467011]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.294521745]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.294540371]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.344989887]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.345058761]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.345081867]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.394899148]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.394962521]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.395062355]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.444906905]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.444978562]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.445001951]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.495176388]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.495242844]: Turning to -20.000000 deg. Delta: -9.274016 (-29.274017) deg[0m
+[33m[ WARN] [1741737262.495296762]: Manual motor command is active![0m
+[0m[ INFO] [1741737262.544241827]: You spin me right round baby right round like a record baby right round right round[0m
+[0m[ INFO] [1741737262.544294839]: Turning to -20.000000 deg. Delta: 2.160885 (-17.839115) deg[0m
+[33m[ WARN] [1741737262.544343269]: Manual motor command deactivated[0m
+[0m[ INFO] [1741737262.544359374]: finding my first goal[0m
+[0m[ INFO] [1741737262.595333606]: Navigating to goal: (1.011651, 0.417319, 1.851096)[0m
+[0m[ INFO] [1741737262.832266005]: Sending goal location (1.011651, 0.417319, 1.851096)...[0m
+[0m[ INFO] [1741737273.433905281]: You have reached the destination[0m
+[0m[ INFO] [1741737273.482820593]: Navigating was successful[0m
+[0m[ INFO] [1741737273.485530307]: Getting image...[0m
+[0m[ INFO] [1741737273.485583495]: Detecting features[0m
+[0m[ INFO] [1741737273.485597724]: Initializing keypoints[0m
+[0m[ INFO] [1741737273.485627181]: Initializing descriptors[0m
+[0m[ INFO] [1741737273.589592895]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737273.589725076]: 455 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737273.589886556]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737273.589918501]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737273.606788370]: 0.000000 good matches found[0m
+[0m[ INFO] [1741737273.606904734]: 0.000000 percent matched[0m
+[0m[ INFO] [1741737273.606952552]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737273.622405089]: 6.000000 good matches found[0m
+[0m[ INFO] [1741737273.622448494]: 0.738007 percent matched[0m
+[0m[ INFO] [1741737273.622467441]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737273.642708478]: 17.000000 good matches found[0m
+[0m[ INFO] [1741737273.642749554]: 1.666667 percent matched[0m
+[0m[ INFO] [1741737273.642802894]: Image match results: id: 2, best_match_per: 1.666667, match_found: 1[0m
+[0m[ INFO] [1741737273.916208557]: Guess for box at (0.818000, 1.090000, -73.940002) is 2[0m
+[0m[ INFO] [1741737273.916292395]: Location matched[0m
+[0m[ INFO] [1741737273.916310470]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737273.922487961]: Navigating to goal: (2.077914, 1.492653, 0.226718)[0m
+[0m[ INFO] [1741737274.155256588]: Sending goal location (2.077914, 1.492653, 0.226718)...[0m
+[0m[ INFO] [1741737281.356719396]: You have reached the destination[0m
+[0m[ INFO] [1741737281.464692207]: Navigating was successful[0m
+[0m[ INFO] [1741737281.466633556]: Getting image...[0m
+[0m[ INFO] [1741737281.466693431]: Detecting features[0m
+[0m[ INFO] [1741737281.466725119]: Initializing keypoints[0m
+[0m[ INFO] [1741737281.466762951]: Initializing descriptors[0m
+[0m[ INFO] [1741737281.586419013]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737281.586523212]: 551 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737281.586560528]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737281.586585706]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737281.604378884]: 9.000000 good matches found[0m
+[0m[ INFO] [1741737281.604512680]: 1.331361 percent matched[0m
+[0m[ INFO] [1741737281.604596250]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737281.626030621]: 1.000000 good matches found[0m
+[0m[ INFO] [1741737281.626087551]: 0.123001 percent matched[0m
+[0m[ INFO] [1741737281.626120954]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737281.651965659]: 17.000000 good matches found[0m
+[0m[ INFO] [1741737281.652012713]: 1.666667 percent matched[0m
+[0m[ INFO] [1741737281.652041060]: Image match results: id: 2, best_match_per: 1.666667, match_found: 1[0m
+[0m[ INFO] [1741737281.664319174]: Guess for box at (2.760000, 1.650000, -167.009995) is 2[0m
+[0m[ INFO] [1741737281.664371140]: Location matched[0m
+[0m[ INFO] [1741737281.664389276]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737281.667652002]: Navigating to goal: (1.647819, 2.483027, 0.330216)[0m
+[0m[ INFO] [1741737281.879690463]: Sending goal location (1.647819, 2.483027, 0.330216)...[0m
+[0m[ INFO] [1741737296.080972949]: You have reached the destination[0m
+[0m[ INFO] [1741737296.188093014]: Navigating was successful[0m
+[0m[ INFO] [1741737296.189940367]: Getting image...[0m
+[0m[ INFO] [1741737296.190007317]: Detecting features[0m
+[0m[ INFO] [1741737296.190046546]: Initializing keypoints[0m
+[0m[ INFO] [1741737296.190064529]: Initializing descriptors[0m
+[0m[ INFO] [1741737296.316273740]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737296.316486091]: 608 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737296.316614774]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737296.316651684]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737296.334017907]: 2.000000 good matches found[0m
+[0m[ INFO] [1741737296.334063388]: 0.295858 percent matched[0m
+[0m[ INFO] [1741737296.334081423]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737296.350199017]: 5.000000 good matches found[0m
+[0m[ INFO] [1741737296.350241227]: 0.615006 percent matched[0m
+[0m[ INFO] [1741737296.350258578]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737296.372549376]: 27.000000 good matches found[0m
+[0m[ INFO] [1741737296.372590542]: 2.647059 percent matched[0m
+[0m[ INFO] [1741737296.372620160]: Image match results: id: 2, best_match_per: 2.647059, match_found: 1[0m
+[0m[ INFO] [1741737296.384932403]: Guess for box at (2.310000, 2.710000, -161.080002) is 2[0m
+[0m[ INFO] [1741737296.384993432]: Location matched[0m
+[0m[ INFO] [1741737296.385013612]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737296.388219233]: Navigating to goal: (0.835005, 2.981566, 0.900241)[0m
+[0m[ INFO] [1741737296.709963786]: Sending goal location (0.835005, 2.981566, 0.900241)...[0m
+[0m[ INFO] [1741737304.911282022]: You have reached the destination[0m
+[0m[ INFO] [1741737305.018799927]: Navigating was successful[0m
+[0m[ INFO] [1741737305.020215284]: Getting image...[0m
+[0m[ INFO] [1741737305.020259474]: Detecting features[0m
+[0m[ INFO] [1741737305.020301111]: Initializing keypoints[0m
+[0m[ INFO] [1741737305.020315783]: Initializing descriptors[0m
+[0m[ INFO] [1741737305.248418647]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737305.248507192]: 693 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737305.248537248]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737305.248550013]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737305.265896399]: 16.000000 good matches found[0m
+[0m[ INFO] [1741737305.265938363]: 2.366864 percent matched[0m
+[0m[ INFO] [1741737305.265963024]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737305.282933368]: 16.000000 good matches found[0m
+[0m[ INFO] [1741737305.283037469]: 1.968020 percent matched[0m
+[0m[ INFO] [1741737305.283097065]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737305.304729083]: 0.000000 good matches found[0m
+[0m[ INFO] [1741737305.304830682]: 0.000000 percent matched[0m
+[0m[ INFO] [1741737305.304868509]: Image match results: id: 0, best_match_per: 2.366864, match_found: 1[0m
+[0m[ INFO] [1741737305.317442016]: Guess for box at (1.270000, 3.530000, -128.419998) is 0[0m
+[0m[ INFO] [1741737305.317533574]: Location matched[0m
+[0m[ INFO] [1741737305.317559346]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737305.324004576]: Navigating to goal: (0.141999, 3.624074, 1.833817)[0m
+[0m[ INFO] [1741737305.628214746]: Sending goal location (0.141999, 3.624074, 1.833817)...[0m
+[0m[ INFO] [1741737312.429682004]: You have reached the destination[0m
+[0m[ INFO] [1741737312.485253621]: Navigating was successful[0m
+[0m[ INFO] [1741737312.487197122]: Getting image...[0m
+[0m[ INFO] [1741737312.487268916]: Detecting features[0m
+[0m[ INFO] [1741737312.487322019]: Initializing keypoints[0m
+[0m[ INFO] [1741737312.487362046]: Initializing descriptors[0m
+[0m[ INFO] [1741737312.595823760]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737312.595918324]: 388 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737312.595968404]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737312.596007105]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737312.613331156]: 4.000000 good matches found[0m
+[0m[ INFO] [1741737312.613492775]: 0.591716 percent matched[0m
+[0m[ INFO] [1741737312.613523576]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737312.633056122]: 2.000000 good matches found[0m
+[0m[ INFO] [1741737312.633103188]: 0.246002 percent matched[0m
+[0m[ INFO] [1741737312.633122810]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737312.659358994]: 22.000000 good matches found[0m
+[0m[ INFO] [1741737312.659399463]: 2.156863 percent matched[0m
+[0m[ INFO] [1741737312.659428183]: Image match results: id: 2, best_match_per: 2.156863, match_found: 1[0m
+[0m[ INFO] [1741737312.672441830]: Guess for box at (-0.040000, 4.300000, -74.930000) is 2[0m
+[0m[ INFO] [1741737312.672541702]: Location matched[0m
+[0m[ INFO] [1741737312.672595132]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737312.681170583]: Navigating to goal: (1.322047, 0.604267, 2.374695)[0m
+[0m[ INFO] [1741737312.841615998]: Sending goal location (1.322047, 0.604267, 2.374695)...[0m
+[0m[ INFO] [1741737326.245232178]: You have reached the destination[0m
+[0m[ INFO] [1741737326.283421827]: Navigating was successful[0m
+[0m[ INFO] [1741737326.285230389]: Getting image...[0m
+[0m[ INFO] [1741737326.285349464]: Detecting features[0m
+[0m[ INFO] [1741737326.285420485]: Initializing keypoints[0m
+[0m[ INFO] [1741737326.285479576]: Initializing descriptors[0m
+[0m[ INFO] [1741737326.368738821]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737326.368812379]: 352 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737326.368842276]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737326.368854801]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737326.381366286]: 5.000000 good matches found[0m
+[0m[ INFO] [1741737326.381414941]: 0.739645 percent matched[0m
+[0m[ INFO] [1741737326.381434775]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737326.397226137]: 2.000000 good matches found[0m
+[0m[ INFO] [1741737326.397266565]: 0.246002 percent matched[0m
+[0m[ INFO] [1741737326.397284734]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737326.417129518]: 8.000000 good matches found[0m
+[0m[ INFO] [1741737326.417173054]: 0.784314 percent matched[0m
+[0m[ INFO] [1741737326.417203752]: Image match results: id: 2, best_match_per: 0.784314, match_found: 1[0m
+[0m[ INFO] [1741737326.429788170]: Guess for box at (0.818000, 1.090000, -73.940002) is 2[0m
+[0m[ INFO] [1741737326.429841128]: Location matched[0m
+[0m[ INFO] [1741737326.429863132]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737326.432428834]: Navigating to goal: (2.247969, 1.172690, 0.750317)[0m
+[0m[ INFO] [1741737326.670675157]: Sending goal location (2.247969, 1.172690, 0.750317)...[0m
+[0m[ INFO] [1741737334.671656912]: You have reached the destination[0m
+[0m[ INFO] [1741737334.686469693]: Navigating was successful[0m
+[0m[ INFO] [1741737334.687826283]: Getting image...[0m
+[0m[ INFO] [1741737334.687868057]: Detecting features[0m
+[0m[ INFO] [1741737334.687894411]: Initializing keypoints[0m
+[0m[ INFO] [1741737334.687908134]: Initializing descriptors[0m
+[0m[ INFO] [1741737334.786359839]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737334.786509020]: 509 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737334.786540768]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737334.786553153]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737334.800572322]: 6.000000 good matches found[0m
+[0m[ INFO] [1741737334.800614236]: 0.887574 percent matched[0m
+[0m[ INFO] [1741737334.800631926]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737334.815353814]: 2.000000 good matches found[0m
+[0m[ INFO] [1741737334.815397366]: 0.246002 percent matched[0m
+[0m[ INFO] [1741737334.815422694]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737334.834316742]: 41.000000 good matches found[0m
+[0m[ INFO] [1741737334.834357199]: 4.019608 percent matched[0m
+[0m[ INFO] [1741737334.834385636]: Image match results: id: 2, best_match_per: 4.019608, match_found: 1[0m
+[0m[ INFO] [1741737334.846404424]: Guess for box at (2.760000, 1.650000, -167.009995) is 2[0m
+[0m[ INFO] [1741737334.846462520]: Location matched[0m
+[0m[ INFO] [1741737334.846498024]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737334.852888157]: Navigating to goal: (1.850021, 2.182345, 0.853815)[0m
+[0m[ INFO] [1741737335.086666299]: Sending goal location (1.850021, 2.182345, 0.853815)...[0m
+[0m[ INFO] [1741737349.088124192]: You have reached the destination[0m
+[0m[ INFO] [1741737349.198802417]: Navigating was successful[0m
+[0m[ INFO] [1741737349.200133397]: Getting image...[0m
+[0m[ INFO] [1741737349.200169973]: Detecting features[0m
+[0m[ INFO] [1741737349.200198042]: Initializing keypoints[0m
+[0m[ INFO] [1741737349.200212700]: Initializing descriptors[0m
+[0m[ INFO] [1741737349.325225146]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737349.325470888]: 612 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737349.325667155]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737349.325691331]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737349.341521031]: 5.000000 good matches found[0m
+[0m[ INFO] [1741737349.341568283]: 0.739645 percent matched[0m
+[0m[ INFO] [1741737349.341589337]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737349.360511333]: 7.000000 good matches found[0m
+[0m[ INFO] [1741737349.360555840]: 0.861009 percent matched[0m
+[0m[ INFO] [1741737349.360574683]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737349.379531077]: 23.000000 good matches found[0m
+[0m[ INFO] [1741737349.379569588]: 2.254902 percent matched[0m
+[0m[ INFO] [1741737349.379608472]: Image match results: id: 2, best_match_per: 2.254902, match_found: 1[0m
+[0m[ INFO] [1741737349.392434466]: Guess for box at (2.310000, 2.710000, -161.080002) is 2[0m
+[0m[ INFO] [1741737349.392485577]: Location matched[0m
+[0m[ INFO] [1741737349.392502771]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737349.394941387]: Navigating to goal: (1.167500, 2.837545, 1.423840)[0m
+[0m[ INFO] [1741737349.719255673]: Sending goal location (1.167500, 2.837545, 1.423840)...[0m
+[0m[ INFO] [1741737356.920741823]: You have reached the destination[0m
+[0m[ INFO] [1741737357.038043835]: Navigating was successful[0m
+[0m[ INFO] [1741737357.039482031]: Getting image...[0m
+[0m[ INFO] [1741737357.039527025]: Detecting features[0m
+[0m[ INFO] [1741737357.039541887]: Initializing keypoints[0m
+[0m[ INFO] [1741737357.039562124]: Initializing descriptors[0m
+[0m[ INFO] [1741737357.169854339]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737357.169932667]: 611 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737357.169973572]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737357.169996968]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737357.184397470]: 1.000000 good matches found[0m
+[0m[ INFO] [1741737357.184447416]: 0.147929 percent matched[0m
+[0m[ INFO] [1741737357.184469699]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737357.201110045]: 11.000000 good matches found[0m
+[0m[ INFO] [1741737357.201155359]: 1.353014 percent matched[0m
+[0m[ INFO] [1741737357.201249829]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737357.220282629]: 40.000000 good matches found[0m
+[0m[ INFO] [1741737357.220329060]: 3.921569 percent matched[0m
+[0m[ INFO] [1741737357.220360150]: Image match results: id: 2, best_match_per: 3.921569, match_found: 1[0m
+[0m[ INFO] [1741737357.233202697]: Guess for box at (1.270000, 3.530000, -128.419998) is 2[0m
+[0m[ INFO] [1741737357.233251955]: Location matched[0m
+[0m[ INFO] [1741737357.233281144]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737357.236047860]: Navigating to goal: (0.455579, 3.805631, 2.357416)[0m
+[0m[ INFO] [1741737357.438649324]: Sending goal location (0.455579, 3.805631, 2.357416)...[0m
+[0m[ INFO] [1741737364.439892003]: You have reached the destination[0m
+[0m[ INFO] [1741737364.484581412]: Navigating was successful[0m
+[0m[ INFO] [1741737364.486892582]: Getting image...[0m
+[0m[ INFO] [1741737364.486957675]: Detecting features[0m
+[0m[ INFO] [1741737364.486987883]: Initializing keypoints[0m
+[0m[ INFO] [1741737364.487016615]: Initializing descriptors[0m
+[0m[ INFO] [1741737364.606075671]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737364.606152295]: 393 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737364.606236031]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737364.606259575]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737364.622929332]: 1.000000 good matches found[0m
+[0m[ INFO] [1741737364.622975065]: 0.147929 percent matched[0m
+[0m[ INFO] [1741737364.622993162]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737364.638926355]: 3.000000 good matches found[0m
+[0m[ INFO] [1741737364.638970152]: 0.369004 percent matched[0m
+[0m[ INFO] [1741737364.638988586]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737364.659772419]: 15.000000 good matches found[0m
+[0m[ INFO] [1741737364.659828567]: 1.470588 percent matched[0m
+[0m[ INFO] [1741737364.659861786]: Image match results: id: 2, best_match_per: 1.470588, match_found: 1[0m
+[0m[ INFO] [1741737364.672204608]: Guess for box at (-0.040000, 4.300000, -74.930000) is 2[0m
+[0m[ INFO] [1741737364.672251982]: Location matched[0m
+[0m[ INFO] [1741737364.672268101]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737364.678708962]: Navigating to goal: (0.649366, 0.410616, 1.327497)[0m
+[0m[ INFO] [1741737364.954739564]: Sending goal location (0.649366, 0.410616, 1.327497)...[0m
+[0m[ INFO] [1741737380.356077219]: You have reached the destination[0m
+[0m[ INFO] [1741737380.466268571]: Navigating was successful[0m
+[0m[ INFO] [1741737380.467717256]: Getting image...[0m
+[0m[ INFO] [1741737380.467764488]: Detecting features[0m
+[0m[ INFO] [1741737380.467786088]: Initializing keypoints[0m
+[0m[ INFO] [1741737380.467809388]: Initializing descriptors[0m
+[0m[ INFO] [1741737380.583133282]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737380.583210720]: 532 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737380.583252197]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737380.583274349]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737380.598251765]: 32.000000 good matches found[0m
+[0m[ INFO] [1741737380.598294800]: 4.733728 percent matched[0m
+[0m[ INFO] [1741737380.598311965]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737380.615256049]: 1.000000 good matches found[0m
+[0m[ INFO] [1741737380.615321067]: 0.123001 percent matched[0m
+[0m[ INFO] [1741737380.615346299]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737380.635742364]: 134.000000 good matches found[0m
+[0m[ INFO] [1741737380.635786626]: 13.137255 percent matched[0m
+[0m[ INFO] [1741737380.635815762]: Image match results: id: 2, best_match_per: 13.137255, match_found: 1[0m
+[0m[ INFO] [1741737380.649772889]: Guess for box at (0.818000, 1.090000, -73.940002) is 2[0m
+[0m[ INFO] [1741737380.649829159]: Location matched[0m
+[0m[ INFO] [1741737380.649845544]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737380.654334729]: Navigating to goal: (2.090622, 1.854777, -0.296880)[0m
+[0m[ INFO] [1741737380.887049854]: Sending goal location (2.090622, 1.854777, -0.296880)...[0m
+[0m[ INFO] [1741737391.088703457]: You have reached the destination[0m
+[0m[ INFO] [1741737391.098526301]: Navigating was successful[0m
+[0m[ INFO] [1741737391.100143827]: Getting image...[0m
+[0m[ INFO] [1741737391.100198245]: Detecting features[0m
+[0m[ INFO] [1741737391.100226936]: Initializing keypoints[0m
+[0m[ INFO] [1741737391.100306472]: Initializing descriptors[0m
+[0m[ INFO] [1741737391.263409480]: Detected keypoints and descriptors[0m
+[0m[ INFO] [1741737391.263481750]: 517 descriptor rows in scanned image[0m
+[0m[ INFO] [1741737391.263520358]: Memorized templates size: 3[0m
+[0m[ INFO] [1741737391.263535586]: 676 descriptor rows in template image[0m
+[0m[ INFO] [1741737391.281693517]: 0.000000 good matches found[0m
+[0m[ INFO] [1741737391.281740373]: 0.000000 percent matched[0m
+[0m[ INFO] [1741737391.281759098]: 813 descriptor rows in template image[0m
+[0m[ INFO] [1741737391.298509395]: 3.000000 good matches found[0m
+[0m[ INFO] [1741737391.298554204]: 0.369004 percent matched[0m
+[0m[ INFO] [1741737391.298572547]: 1020 descriptor rows in template image[0m
+[0m[ INFO] [1741737391.322883525]: 98.000000 good matches found[0m
+[0m[ INFO] [1741737391.322927973]: 9.607843 percent matched[0m
+[0m[ INFO] [1741737391.322959049]: Image match results: id: 2, best_match_per: 9.607843, match_found: 1[0m
+[0m[ INFO] [1741737391.337483387]: Guess for box at (2.760000, 1.650000, -167.009995) is 2[0m
+[0m[ INFO] [1741737391.337562649]: Location matched[0m
+[0m[ INFO] [1741737391.337585643]: Sending goal 0 to back of the goalList[0m
+[0m[ INFO] [1741737391.340890675]: Navigating to goal: (1.623048, 2.844526, -0.193383)[0m
+[0m[ INFO] [1741737391.607650543]: Sending goal location (1.623048, 2.844526, -0.193383)...[0m
