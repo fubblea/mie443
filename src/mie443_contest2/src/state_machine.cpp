@@ -4,7 +4,6 @@
 #include "ros/console.h"
 #include <algorithm>
 #include <contest2/state.h>
-#include <unordered_map>
 #include <vector>
 
 void sendGoalToBack(std::vector<RobotGoal> *goalList, int goalIdx) {
@@ -70,27 +69,15 @@ void RobotState::updateState(bool showView) {
 
   case State::TAG_BOX: {
 
-    this->goalList[0].boxIdGuess =
-        this->imagePipeline.getTemplateID(this->boxes, showView);
+    int currGuess = this->imagePipeline.getTemplateID(this->boxes, showView);
 
-    ROS_INFO("Guess for box at (%f, %f, %f) is %i",
+    this->goalList[0].boxIdGuesses.push_back(currGuess);
+
+    ROS_INFO("Guess for box at (%f, %f, %f) is %i. Match found?: %i",
              this->boxes.coords[this->goalList[0].boxIdx][0],
              this->boxes.coords[this->goalList[0].boxIdx][1],
-             this->boxes.coords[this->goalList[0].boxIdx][2],
-             this->goalList[0].boxIdGuess);
-
-    std::vector<float> box_location = {
-        this->boxes.coords[this->goalList[0].boxIdx][0],
-        this->boxes.coords[this->goalList[0].boxIdx][1],
-        this->boxes.coords[this->goalList[0].boxIdx][2]};
-
-    if (this->goalList[0].boxIdGuess != -1) { // checking if we get an image tag
-      this->identifiedTags[this->goalList[0].boxIdGuess] =
-          box_location; // add image tag to the dictionary
-      ROS_INFO("Location matched");
-    } else {
-      ROS_INFO("No match found");
-    }
+             this->boxes.coords[this->goalList[0].boxIdx][2], currGuess,
+             currGuess != -1);
 
     sendGoalToBack(&this->goalList, 0);
 
