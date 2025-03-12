@@ -98,8 +98,8 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
 int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
-  ROS_INFO("Cropping Image...");
-  img = extractROI(img);
+  /*ROS_INFO("Cropping Image...");
+  img = extractROI(img);*/
   if (!isValid) {
     ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
@@ -120,11 +120,11 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     // initialize image match parameters
     double best_match_per = 0.0;
     bool match_found;
-
-    std::tie(template_id, best_match_per, match_found) =
-        ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
-                                  best_match_per);
-
+    if (scannedDescriptors.rows > 100) {
+      std::tie(template_id, best_match_per, match_found) =
+          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
+                                    best_match_per);
+    }
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
              template_id, best_match_per, match_found);
 
