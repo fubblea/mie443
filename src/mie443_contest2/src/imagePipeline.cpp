@@ -99,6 +99,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
 int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
+  ROS_INFO("Cropping Image...");
   img = extractROI(img);
   if (!isValid) {
     ROS_INFO("image not valid");
@@ -167,7 +168,8 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
 
     double good_matches = 0;
     for (const auto &m : matches) {
-      if (m.distance < 0.65 * matches.back().distance) { // lowe's ratio test
+      if (m.distance <
+          MATCH_COMPARE_TRESH * matches.back().distance) { // lowe's ratio test
         good_matches++;
       }
     }
