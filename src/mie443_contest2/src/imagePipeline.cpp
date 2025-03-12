@@ -30,9 +30,8 @@ void ImagePipeline::imageCallback(const sensor_msgs::ImageConstPtr &msg) {
 
 std::tuple<std::vector<cv::KeyPoint>, Mat>
 ImagePipeline::getFeatures(cv::Mat image) {
-  int minHessian = 400; // try changing it and see what it does?
   Ptr<cv::xfeatures2d::SURF> detector =
-      cv::xfeatures2d::SURF::create(minHessian);
+      cv::xfeatures2d::SURF::create(MIN_HESSIAN);
   ROS_INFO("Detecting features");
   std::vector<KeyPoint> keypoints_image;
   ROS_INFO("Initializing keypoints");
