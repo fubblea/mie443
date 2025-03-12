@@ -39,6 +39,7 @@ const float BOX_ANGLE_OFFSET = 30;
 
 const int MAX_LOST_COUNT = 3;
 
+const int MIN_HESSIAN = 1000;
 const float MATCH_COMPARE_TRESH = 0.8;
 
 // const std::vector<std::string> TEMPLATE_FILES = {
