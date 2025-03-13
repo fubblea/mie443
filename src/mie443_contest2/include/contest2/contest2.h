@@ -47,11 +47,11 @@ const float MATCH_COMPARE_THRESH = 0.75;
 // Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {
     ros::package::getPath("mie443_contest2") +
-        std::string("/boxes_database/template1.jpg"),
+        std::string("/boxes_database/cinnamon_toast_crunch.jpg"),
     ros::package::getPath("mie443_contest2") +
-        std::string("/boxes_database/template2.jpg"),
+        std::string("/boxes_database/raisin_bran.jpg"),
     ros::package::getPath("mie443_contest2") +
-        std::string("/boxes_database/template3.jpg")};
+        std::string("/boxes_database/rice_krispies.jpg")};
 
 // INTERAL HEADER FILES
 

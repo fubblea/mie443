@@ -145,6 +145,15 @@ int findMode(const std::vector<int> &nums) {
   return mode;
 }
 
+std::string getFileName(int boxGuess) {
+  if (boxGuess == -1) {
+    return "Blank";
+  } else {
+    boost::filesystem::path p(TEMPLATE_FILES[boxGuess]);
+    return p.stem().string();
+  }
+}
+
 void RobotState::saveTagsToFile() {
   system("mkdir -p detected_tags");
   std::ofstream myfile("detected_tags/box_guesses.txt");
@@ -162,27 +171,20 @@ void RobotState::saveTagsToFile() {
 
   // Write to file
   for (int boxIdx = 0; boxIdx < this->boxes.coords.size(); boxIdx++) {
-    // List all guesses
+    // Print box location
     myfile << "Box at (" << boxes.coords[boxIdx][0] << ", "
-           << boxes.coords[boxIdx][1] << ", " << boxes.coords[boxIdx][2]
-           << ") - Guesses: (";
-    for (const int &value : boxGuesses[boxIdx]) {
-      myfile << value << ", ";
-    }
+           << boxes.coords[boxIdx][1] << ", " << boxes.coords[boxIdx][2] << ")";
 
     // Find best guess
     int bestGuess = findMode(boxGuesses[boxIdx]);
-    myfile << ") Best guess: " << bestGuess;
+    myfile << " - Best guess: " << getFileName(bestGuess);
 
-    // Get the template name
-    std::string templateName;
-    if (bestGuess == -1) {
-      templateName = "Blank";
-    } else {
-      boost::filesystem::path p(TEMPLATE_FILES[bestGuess]);
-      templateName = p.filename().string();
+    // List all guesses
+    myfile << " - All guesses: (";
+    for (const int &value : boxGuesses[boxIdx]) {
+      myfile << getFileName(value) << ", ";
     }
-    myfile << " (" << templateName << ")";
+    myfile << ")";
 
     // End line
     myfile << std::endl;
