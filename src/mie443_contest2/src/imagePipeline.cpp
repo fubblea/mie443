@@ -48,7 +48,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
   int height = inputImg.rows;
   int width = inputImg.cols;
 
-  int cropX = width / 4;
+  int cropX = width / 6;
   int cropY = width / 3;
   int cropWidth = width / 2;
   int cropHeight = height - cropY;
