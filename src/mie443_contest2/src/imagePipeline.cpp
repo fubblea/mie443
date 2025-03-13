@@ -45,8 +45,23 @@ ImagePipeline::getFeatures(cv::Mat image) {
 }
 
 cv::Mat extractROI(const cv::Mat &inputImg) {
+  int height = inputImg.rows;
+  int width = inputImg.cols;
+
+  int cropX = width / 4;
+  int cropY = width / 3;
+  int cropWidth = width / 2;
+  int cropHeight = height - cropY;
+
+  cv::Rect roi(cropX, cropY, cropWidth, cropHeight);
+
+  cv::Mat croppedImg = inputImg(roi).clone();
+
+  ROS_INFO("Cropped to bottom middle");
+
   cv::Mat gray, blurred, thresh;
-  cv::cvtColor(inputImg, gray, cv::COLOR_BGR2GRAY);
+
+  cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
   cv::GaussianBlur(gray, blurred, cv::Size(5, 5), 0);
   cv::threshold(blurred, thresh, 200, 255, cv::THRESH_BINARY);
 
@@ -71,35 +86,18 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
     }
 
     if (!bestContour.empty()) {
-      std::vector<cv::Point> approx;
-      cv::approxPolyDP(bestContour, approx,
-                       0.02 * cv::arcLength(bestContour, true), true);
-
-      if (approx.size() == 4) {
-        std::sort(approx.begin(), approx.end(),
-                  [](const cv::Point &a, const cv::Point &b) {
-                    return a.x + a.y < b.x + b.y;
-                  });
-
-        cv::Point2f srcPoints[4] = {approx[2], approx[3], approx[1], approx[0]};
-
-        float width = 2480, height = 3508;
-        cv::Point2f dstPoints[4] = {
-            {0, 0}, {width, 0}, {width, height}, {0, height}};
-
-        cv::Mat matrix = cv::getPerspectiveTransform(srcPoints, dstPoints);
-        cv::warpPerspective(inputImg, output, matrix, cv::Size(width, height));
-      }
+      cv::Rect box = cv::boundingRect(bestContour);
+      return croppedImg(box).clone();
     }
   }
-
-  return output;
+  return cv::Mat();
 }
+
+// return output;
 
 int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
-  /*ROS_INFO("Cropping Image...");
-  img = extractROI(img);*/
+
   if (!isValid) {
     ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
@@ -109,6 +107,9 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     std::cout << "img.rows:" << img.rows << std::endl;
     std::cout << "img.cols:" << img.cols << std::endl;
   } else {
+
+    ROS_INFO("Cropping Image...");
+    img = extractROI(img);
 
     // Find keypoints in scene (img) and compare to keypoint in templates
     std::vector<cv::KeyPoint> scannedKeypoints;
