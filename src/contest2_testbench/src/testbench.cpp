@@ -39,16 +39,9 @@ void ackCallback(const diagnostic_msgs::KeyValue::ConstPtr &msg) {
   // Convert the value (sent as string) back to a float/double
   double val = std::stod(msg->value);
   ROS_INFO_STREAM("Received tuple ack: (" << msg->key << ", " << val << ")");
-
-  if (val != -1) {
-    ROS_INFO("Valid read, saving");
-    ack_vector.push_back(
-        ImageAck(msg->key, val, currImageClass, currImageClass == msg->key));
-    ack_received = true;
-  } else {
-    ROS_WARN("Invalid read, not saving");
-    ack_received = false;
-  }
+  ack_vector.push_back(
+      ImageAck(msg->key, val, currImageClass, currImageClass == msg->key));
+  ack_received = true;
 }
 
 int main(int argc, char **argv) {
