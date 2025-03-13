@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
       // Convert the image to a ROS image message (using cv_bridge)
       std_msgs::Header header;
       header.stamp = ros::Time::now();
-      header.frame_id = "camera_frame";
+      header.frame_id = image_files[idx];
       sensor_msgs::ImageConstPtr msg =
           cv_bridge::CvImage(header, IMAGE_TYPE, img).toImageMsg();
 

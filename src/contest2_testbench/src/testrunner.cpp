@@ -7,6 +7,24 @@
 #include <contest2_testbench/testrunner.h>
 #include <string>
 
+#define IMAGE_TOPIC "camera/rgb/image_raw"
+
+std::string lastImageId;
+bool updateSync = false;
+
+void syncCallback(const sensor_msgs::ImageConstPtr &msg) {
+  std::string currImageId = msg->header.frame_id;
+
+  if (currImageId != lastImageId) {
+    ROS_INFO("Got a new image: %s. Updating sync", currImageId.c_str());
+    lastImageId = currImageId;
+    updateSync = true;
+  } else {
+    ROS_INFO("Still the same image: %s", currImageId.c_str());
+    updateSync = false;
+  }
+}
+
 int main(int argc, char **argv) {
   ros::init(argc, argv, "testrunner_node");
   ros::NodeHandle nh;
@@ -17,6 +35,9 @@ int main(int argc, char **argv) {
   // Set up publisher for acknowledgment on "image_ack" topic
   ros::Publisher ack_pub;
   ack_pub = nh.advertise<diagnostic_msgs::KeyValue>("image_ack", 1);
+
+  image_transport::ImageTransport it(nh);
+  image_transport::Subscriber sub = it.subscribe(IMAGE_TOPIC, 1, &syncCallback);
 
   // Initialize box coordinates and templates
   Boxes boxes;
@@ -37,12 +58,14 @@ int main(int argc, char **argv) {
   while (ros::ok()) {
     ros::spinOnce();
 
-    std::tuple<int, float> guess = imagePipeline.getTemplateID(boxes, false);
-    ROS_INFO("Guess: %s", getFileName(std::get<0>(guess)).c_str());
+    if (updateSync) {
+      std::tuple<int, float> guess = imagePipeline.getTemplateID(boxes, false);
+      ROS_INFO("Guess: %s", getFileName(std::get<0>(guess)).c_str());
 
-    ack.key = getFileName(std::get<0>(guess)).c_str();
-    ack.value = std::to_string(std::get<1>(guess));
-    ack_pub.publish(ack);
+      ack.key = getFileName(std::get<0>(guess)).c_str();
+      ack.value = std::to_string(std::get<1>(guess));
+      ack_pub.publish(ack);
+    }
 
     loop_rate.sleep();
   }
