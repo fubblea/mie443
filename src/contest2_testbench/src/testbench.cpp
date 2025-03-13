@@ -10,17 +10,18 @@ class ImageAck {
 public:
   std::string guess;
   double matchPer;
-  std::string actual;
+  std::string actualId;
   bool goodMatch;
 
 public:
   ImageAck(std::string guess, double matchPer, std::string actual,
            bool goodMatch)
-      : guess(guess), matchPer(matchPer), actual(actual),
+      : guess(guess), matchPer(matchPer), actualId(actual),
         goodMatch(goodMatch) {};
   std::string print() {
     return "guess: " + guess + ", matchPer: " + std::to_string(matchPer) +
-           ", actual: " + actual + ", goodMatch?: " + std::to_string(goodMatch);
+           ", actualId: " + actualId +
+           ", goodMatch?: " + std::to_string(goodMatch);
   };
 };
 std::vector<ImageAck> ack_vector;
@@ -40,7 +41,7 @@ void ackCallback(const diagnostic_msgs::KeyValue::ConstPtr &msg) {
   double val = std::stod(msg->value);
   ROS_INFO_STREAM("Received tuple ack: (" << msg->key << ", " << val << ")");
   ack_vector.push_back(
-      ImageAck(msg->key, val, currImageClass, currImageClass == msg->key));
+      ImageAck(msg->key, val, currImageId, currImageClass == msg->key));
   ack_received = true;
 }
 
