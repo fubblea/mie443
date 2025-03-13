@@ -22,10 +22,23 @@ enum State {
   END,
 };
 
+class BoxMatch {
+public:
+  int templateID;
+  float matchPer;
+
+public:
+  BoxMatch(int templateID, float matchPer)
+      : templateID(templateID), matchPer(matchPer) {};
+
+  BoxMatch(std::tuple<int, float> guess)
+      : templateID(std::get<0>(guess)), matchPer(std::get<1>(guess)) {};
+};
+
 class RobotGoal {
 public:
   int boxIdx;
-  std::vector<int> boxIdGuesses;
+  std::vector<BoxMatch> boxIdGuesses;
   RobotPose pose;
 
 public:

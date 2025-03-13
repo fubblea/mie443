@@ -154,16 +154,41 @@ std::string getFileName(int boxGuess) {
   }
 }
 
+int findBestGuess(std::vector<BoxMatch> guesses) {
+  std::unordered_map<int, int> count;
+  std::unordered_map<int, float> sumPer;
+
+  // Populate hashmaps
+  for (BoxMatch guess : guesses) {
+    count[guess.templateID]++;
+    sumPer[guess.templateID] += guess.matchPer;
+  }
+
+  float bestScore = 0;
+  int bestGuess = -1;
+  for (int i = 0; i < guesses.size(); i++) {
+    int id = guesses[i].templateID;
+    float score = sumPer[id] * (sumPer[id] / count[id]);
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestGuess = id;
+    }
+  }
+
+  return bestGuess;
+}
+
 void RobotState::saveTagsToFile() {
   system("mkdir -p detected_tags");
   std::ofstream myfile("detected_tags/box_guesses.txt");
 
   // Create hashmap of box guesses
-  std::unordered_map<int, std::vector<int>> boxGuesses;
+  std::unordered_map<int, std::vector<BoxMatch>> boxGuesses;
 
   for (RobotGoal goal : this->goalList) {
     if (goal.boxIdGuesses.size() > 0) {
-      for (int guess : goal.boxIdGuesses) {
+      for (BoxMatch guess : goal.boxIdGuesses) {
         boxGuesses[goal.boxIdx].push_back(guess);
       }
     }
@@ -176,13 +201,14 @@ void RobotState::saveTagsToFile() {
            << boxes.coords[boxIdx][1] << ", " << boxes.coords[boxIdx][2] << ")";
 
     // Find best guess
-    int bestGuess = findMode(boxGuesses[boxIdx]);
+    int bestGuess = findBestGuess(boxGuesses[boxIdx]);
     myfile << " - Best guess: " << getFileName(bestGuess);
 
     // List all guesses
     myfile << " - All guesses: (";
-    for (const int &value : boxGuesses[boxIdx]) {
-      myfile << getFileName(value) << ", ";
+    for (const BoxMatch &value : boxGuesses[boxIdx]) {
+      myfile << getFileName(value.templateID) << " (" << value.matchPer << ")"
+             << ", ";
     }
     myfile << ")";
 
