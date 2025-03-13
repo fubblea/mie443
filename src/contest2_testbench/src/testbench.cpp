@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
     return -1;
   }
 
-  ros::Rate loop_rate(1); // publishing rate
+  ros::Rate loop_rate(10); // publishing rate
 
   size_t idx = 0;
   int totalImages = image_files.size();
