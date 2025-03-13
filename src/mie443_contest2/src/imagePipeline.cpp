@@ -173,8 +173,8 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
 
     double good_matches = 0;
     for (const auto &m : matches) {
-      if (m.distance <
-          MATCH_COMPARE_THRESH * matches.back().distance) { // lowe's ratio test
+      if (m.distance < MATCH_COMPARE_THRESH *
+                           matches.front().distance) { // lowe's ratio test
         good_matches++;
       }
     }
