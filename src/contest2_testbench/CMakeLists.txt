@@ -27,7 +27,9 @@ target_link_libraries(testbench
 
 # Testrunner Executable
 add_executable(testrunner
-    src/testrunner.cpp)
+    src/testrunner.cpp
+    ../mie443_contest2/src/imagePipeline.cpp
+    ../mie443_contest2/src/boxes.cpp)
 target_link_libraries(testrunner
     ${catkin_LIBRARIES}  
     ${OpenCV_LIBRARIES})

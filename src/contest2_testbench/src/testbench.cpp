@@ -2,6 +2,16 @@
 
 namespace fs = boost::filesystem;
 
+bool ack_received = false;
+
+// Callback for acknowledgment messages
+void ackCallback(const std_msgs::Bool::ConstPtr &msg) {
+  if (msg->data) {
+    ack_received = true;
+    ROS_INFO("Received acknowledgment from subscriber.");
+  }
+}
+
 int main(int argc, char **argv) {
   ros::init(argc, argv, "testbench_node");
   ros::NodeHandle nh;
@@ -9,6 +19,9 @@ int main(int argc, char **argv) {
   // Use image_transport for publishing images
   image_transport::ImageTransport it(nh);
   image_transport::Publisher pub = it.advertise("camera/rgb/image_raw", 1);
+
+  // Subscribe to the ack topic
+  ros::Subscriber ack_sub = nh.subscribe("image_ack", 1, ackCallback);
 
   // Get list of image files from the folder (assumes common image extensions)
   std::vector<std::string> image_files;
@@ -32,7 +45,8 @@ int main(int argc, char **argv) {
     return -1;
   }
 
-  ros::Rate loop_rate(1); // 1 Hz publishing rate
+  ros::Rate loop_rate(10); // publishing rate
+
   size_t idx = 0;
   int totalImages = image_files.size();
   while (ros::ok()) {
@@ -54,8 +68,13 @@ int main(int argc, char **argv) {
                image_files[idx].c_str());
     }
 
-    // Move to next image, loop back at the end
-    idx = (idx + 1) % totalImages;
+    if (ack_received) {
+      // Move to next image, loop back at the end
+      idx = (idx + 1) % totalImages;
+      ack_received = false;
+    } else {
+      ROS_INFO("Waiting for acknowledgment from subscriber");
+    }
 
     ros::spinOnce();
     loop_rate.sleep();
