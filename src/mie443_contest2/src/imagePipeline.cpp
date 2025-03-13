@@ -101,9 +101,6 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
   int template_id = -1;
   float best_match_per = 0;
 
-  ROS_INFO("Cropping Image...");
-  img = extractROI(img);
-
   if (!isValid) {
     ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
@@ -113,6 +110,9 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
     std::cout << "img.rows:" << img.rows << std::endl;
     std::cout << "img.cols:" << img.cols << std::endl;
   } else {
+
+    ROS_INFO("Cropping Image...");
+    img = extractROI(img);
 
     // Find keypoints in scene (img) and compare to keypoint in templates
     std::vector<cv::KeyPoint> scannedKeypoints;

@@ -1,4 +1,0 @@
-<launch>
-  <node name="testbench_node" pkg="testbench" type="testbench_node" output="screen"/>
-  <node name="testrunner_node" pkg="testrunner" type="testrunner_node" output="screen"/>
-</launch>

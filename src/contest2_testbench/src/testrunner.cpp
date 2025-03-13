@@ -9,6 +9,7 @@ int main(int argc, char **argv) {
   ros::NodeHandle nh;
 
   ImagePipeline imagePipeline(nh);
+  imagePipeline.memorizeTemplates();
 
   // Set up publisher for acknowledgment on "image_ack" topic
   ros::Publisher ack_pub;
@@ -27,7 +28,7 @@ int main(int argc, char **argv) {
               << std::endl;
   }
 
-  ros::Rate loop_rate(10); // subscribing rate
+  ros::Rate loop_rate(1); // subscribing rate
 
   std_msgs::Bool ack;
   while (ros::ok()) {

@@ -4,6 +4,11 @@ namespace fs = boost::filesystem;
 
 bool ack_received = false;
 
+// Definitions to ensure the published image matches the expected subscriber
+// format.
+#define IMAGE_TYPE sensor_msgs::image_encodings::BGR8
+#define IMAGE_TOPIC "camera/rgb/image_raw"
+
 // Callback for acknowledgment messages
 void ackCallback(const std_msgs::Bool::ConstPtr &msg) {
   if (msg->data) {
@@ -18,7 +23,7 @@ int main(int argc, char **argv) {
 
   // Use image_transport for publishing images
   image_transport::ImageTransport it(nh);
-  image_transport::Publisher pub = it.advertise("camera/rgb/image_raw", 1);
+  image_transport::Publisher pub = it.advertise(IMAGE_TOPIC, 1);
 
   // Subscribe to the ack topic
   ros::Subscriber ack_sub = nh.subscribe("image_ack", 1, ackCallback);
@@ -45,7 +50,7 @@ int main(int argc, char **argv) {
     return -1;
   }
 
-  ros::Rate loop_rate(10); // publishing rate
+  ros::Rate loop_rate(1); // publishing rate
 
   size_t idx = 0;
   int totalImages = image_files.size();
@@ -60,7 +65,7 @@ int main(int argc, char **argv) {
       header.stamp = ros::Time::now();
       header.frame_id = "camera_frame";
       sensor_msgs::ImageConstPtr msg =
-          cv_bridge::CvImage(header, "bgr8", img).toImageMsg();
+          cv_bridge::CvImage(header, IMAGE_TYPE, img).toImageMsg();
 
       // Publish the image message
       pub.publish(msg);
