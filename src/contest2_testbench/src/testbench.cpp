@@ -1,7 +1,11 @@
+#include "ros/console.h"
 #include <contest2_testbench/testbench.h>
+#include <diagnostic_msgs/KeyValue.h>
 
 namespace fs = boost::filesystem;
 
+// Global vector to store the tuple acknowledgments
+std::vector<std::tuple<std::string, double>> ack_vector;
 bool ack_received = false;
 
 // Definitions to ensure the published image matches the expected subscriber
@@ -9,11 +13,19 @@ bool ack_received = false;
 #define IMAGE_TYPE sensor_msgs::image_encodings::BGR8
 #define IMAGE_TOPIC "camera/rgb/image_raw"
 
-// Callback for acknowledgment messages
-void ackCallback(const std_msgs::Bool::ConstPtr &msg) {
-  if (msg->data) {
+// Updated callback to use diagnostic_msgs::KeyValue
+void ackCallback(const diagnostic_msgs::KeyValue::ConstPtr &msg) {
+  // Convert the value (sent as string) back to a float/double
+  double val = std::stod(msg->value);
+  ROS_INFO_STREAM("Received tuple ack: (" << msg->key << ", " << val << ")");
+
+  if (val != -1) {
+    ROS_INFO("Valid read, saving");
+    ack_vector.push_back(std::make_tuple(msg->key, val));
     ack_received = true;
-    ROS_INFO("Received acknowledgment from subscriber.");
+  } else {
+    ROS_WARN("Invalid read, not saving");
+    ack_received = false;
   }
 }
 
@@ -55,6 +67,10 @@ int main(int argc, char **argv) {
   size_t idx = 0;
   int totalImages = image_files.size();
   while (ros::ok()) {
+    if (idx >= totalImages) {
+      break;
+    }
+
     // Load image using OpenCV
     cv::Mat img = cv::imread(image_files[idx], cv::IMREAD_COLOR);
     if (img.empty()) {
@@ -74,8 +90,7 @@ int main(int argc, char **argv) {
     }
 
     if (ack_received) {
-      // Move to next image, loop back at the end
-      idx = (idx + 1) % totalImages;
+      idx++;
       ack_received = false;
     } else {
       ROS_INFO("Waiting for acknowledgment from subscriber");
@@ -83,6 +98,12 @@ int main(int argc, char **argv) {
 
     ros::spinOnce();
     loop_rate.sleep();
+  }
+
+  ROS_INFO("Listing all reads:");
+  for (const auto &entry : ack_vector) {
+    ROS_INFO_STREAM("Key: " << std::get<0>(entry)
+                            << ", Value: " << std::get<1>(entry));
   }
 
   return 0;

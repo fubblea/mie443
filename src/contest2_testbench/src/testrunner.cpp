@@ -1,9 +1,11 @@
+#include "diagnostic_msgs/KeyValue.h"
 #include "ros/console.h"
 #include "ros/init.h"
 #include <contest2/boxes.h>
 #include <contest2/imagePipeline.h>
 #include <contest2/utils.h>
 #include <contest2_testbench/testrunner.h>
+#include <string>
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "testrunner_node");
@@ -14,7 +16,7 @@ int main(int argc, char **argv) {
 
   // Set up publisher for acknowledgment on "image_ack" topic
   ros::Publisher ack_pub;
-  ack_pub = nh.advertise<std_msgs::Bool>("image_ack", 1);
+  ack_pub = nh.advertise<diagnostic_msgs::KeyValue>("image_ack", 1);
 
   // Initialize box coordinates and templates
   Boxes boxes;
@@ -31,14 +33,15 @@ int main(int argc, char **argv) {
 
   ros::Rate loop_rate(1); // subscribing rate
 
-  std_msgs::Bool ack;
+  diagnostic_msgs::KeyValue ack;
   while (ros::ok()) {
     ros::spinOnce();
 
     std::tuple<int, float> guess = imagePipeline.getTemplateID(boxes, false);
     ROS_INFO("Guess: %s", getFileName(std::get<0>(guess)).c_str());
 
-    ack.data = true;
+    ack.key = getFileName(std::get<0>(guess)).c_str();
+    ack.value = std::to_string(std::get<1>(guess));
     ack_pub.publish(ack);
 
     loop_rate.sleep();

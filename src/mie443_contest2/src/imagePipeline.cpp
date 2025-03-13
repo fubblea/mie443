@@ -99,7 +99,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
                                                     bool showView) {
   int template_id = -1;
-  float best_match_per = 0;
+  float best_match_per = -1;
 
   if (!isValid) {
     ROS_INFO("image not valid");
