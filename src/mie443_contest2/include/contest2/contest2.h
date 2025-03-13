@@ -39,7 +39,7 @@ const std::tuple<float, float> ANGLE_CONE =
 
 const int NUM_BUMPERS = 3; // Number of bumpers
 
-const float BOX_FACING_OFFSET = 0.55;
+const float BOX_FACING_OFFSET = 0.6;
 const float BOX_ANGLE_OFFSET = 10;
 
 const int MAX_LOST_COUNT = 1;
