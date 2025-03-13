@@ -4,3 +4,5 @@ install/
 logs/
 
 src/CMakeLists.txt
+
+detected_tags/
