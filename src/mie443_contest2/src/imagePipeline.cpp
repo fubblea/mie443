@@ -62,8 +62,8 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
   cv::Mat gray, blurred, thresh;
 
   cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
-  cv::GaussianBlur(gray, blurred, cv::Size(5, 5), 0);
-  cv::threshold(blurred, thresh, 200, 255, cv::THRESH_BINARY);
+  cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
+  cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
 
   // find contours
   std::vector<std::vector<cv::Point>> contours;
