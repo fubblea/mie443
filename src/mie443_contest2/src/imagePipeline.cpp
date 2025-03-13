@@ -57,7 +57,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
   cv::Mat croppedImg = inputImg(roi).clone();
 
-  ROS_INFO("cropped to bottom middle");
+  ROS_INFO("Cropped to bottom middle");
 
   cv::Mat gray, blurred, thresh;
 
@@ -88,42 +88,6 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
     if (!bestContour.empty()) {
       cv::Rect box = cv::boundingRect(bestContour);
       return croppedImg(box).clone();
-      /* cv::Point2f srcPoints[4];
-
-      std::vector<cv::Point> approx;
-      cv::approxPolyDP(bestContour, approx,
-                       0.02 * cv::arcLength(bestContour, true), true);
-
-      if (approx.size() == 4) {
-        std::sort(
-            approx.begin(), approx.end(),
-            [](const cv::Point &a, const cv::Point &b) { return a.y < b.y; });
-
-        srcPoints[0] = approx[0];
-        srcPoints[1] = approx[1];
-        srcPoints[2] = approx[3];
-        srcPoints[3] = approx[2];
-
-        float widthA = cv::norm(srcPoints[1] - srcPoints[2]);
-        ROS_INFO("width A: %f", widthA);
-        float widthB = cv::norm(srcPoints[0] - srcPoints[3]);
-        ROS_INFO("width B: %f", widthB);
-        float heightA = cv::norm(srcPoints[0] - srcPoints[1]);
-        ROS_INFO("height A: %f", heightA);
-        float heightB = cv::norm(srcPoints[2] - srcPoints[3]);
-        ROS_INFO("height B: %f", heightB);
-        float maxWidth = std::max(widthA, widthB);
-        float maxHeight = std::max(heightA, heightB);
-
-        cv::Point2f dstPoints[4] = {
-            {0, 0}, {maxWidth, 0}, {maxWidth, maxHeight}, {0, maxHeight}};
-
-        cv::Mat matrix = cv::getPerspectiveTransform(srcPoints, dstPoints);
-        cv::Mat output;
-        cv::warpPerspective(
-            croppedImg, output, matrix,
-            cv::Size(static_cast<int>(maxWidth), static_cast<int>(maxHeight)));
-    */
     }
   }
   return cv::Mat();
@@ -133,8 +97,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
 int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
-  ROS_INFO("Cropping Image...");
-  img = extractROI(img);
+
   if (!isValid) {
     ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
@@ -144,6 +107,9 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     std::cout << "img.rows:" << img.rows << std::endl;
     std::cout << "img.cols:" << img.cols << std::endl;
   } else {
+
+    ROS_INFO("Cropping Image...");
+    img = extractROI(img);
 
     // Find keypoints in scene (img) and compare to keypoint in templates
     std::vector<cv::KeyPoint> scannedKeypoints;
@@ -207,8 +173,8 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
 
     double good_matches = 0;
     for (const auto &m : matches) {
-      if (m.distance <
-          MATCH_COMPARE_THRESH * matches.back().distance) { // lowe's ratio test
+      if (m.distance < MATCH_COMPARE_THRESH *
+                           matches.front().distance) { // lowe's ratio test
         good_matches++;
       }
     }
