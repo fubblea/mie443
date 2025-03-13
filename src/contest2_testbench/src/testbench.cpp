@@ -1,12 +1,33 @@
 #include "ros/console.h"
+#include <boost/filesystem/operations.hpp>
 #include <contest2_testbench/testbench.h>
 #include <diagnostic_msgs/KeyValue.h>
 
 namespace fs = boost::filesystem;
 
 // Global vector to store the tuple acknowledgments
-std::vector<std::tuple<std::string, double>> ack_vector;
+class ImageAck {
+public:
+  std::string guess;
+  double matchPer;
+  std::string actual;
+  bool goodMatch;
+
+public:
+  ImageAck(std::string guess, double matchPer, std::string actual,
+           bool goodMatch)
+      : guess(guess), matchPer(matchPer), actual(actual),
+        goodMatch(goodMatch) {};
+  std::string print() {
+    return "guess: " + guess + ", matchPer: " + std::to_string(matchPer) +
+           ", actual: " + actual + ", goodMatch?: " + std::to_string(goodMatch);
+  };
+};
+std::vector<ImageAck> ack_vector;
 bool ack_received = false;
+
+std::string currImageClass;
+std::string currImageId;
 
 // Definitions to ensure the published image matches the expected subscriber
 // format.
@@ -21,7 +42,8 @@ void ackCallback(const diagnostic_msgs::KeyValue::ConstPtr &msg) {
 
   if (val != -1) {
     ROS_INFO("Valid read, saving");
-    ack_vector.push_back(std::make_tuple(msg->key, val));
+    ack_vector.push_back(
+        ImageAck(msg->key, val, currImageClass, currImageClass == msg->key));
     ack_received = true;
   } else {
     ROS_WARN("Invalid read, not saving");
@@ -44,7 +66,7 @@ int main(int argc, char **argv) {
   std::vector<std::string> image_files;
   if (fs::exists(IMAGE_DATABASE_PATH) &&
       fs::is_directory(IMAGE_DATABASE_PATH)) {
-    for (auto &entry : fs::directory_iterator(IMAGE_DATABASE_PATH)) {
+    for (auto &entry : fs::recursive_directory_iterator(IMAGE_DATABASE_PATH)) {
       std::string ext = fs::extension(entry.path());
       if (ext == ".jpg" || ext == ".png" || ext == ".bmp") {
         image_files.push_back(entry.path().string());
@@ -73,13 +95,18 @@ int main(int argc, char **argv) {
 
     // Load image using OpenCV
     cv::Mat img = cv::imread(image_files[idx], cv::IMREAD_COLOR);
+
+    fs::path p(image_files[idx]);
+    currImageClass = p.parent_path().filename().string();
+    currImageId = currImageClass + p.stem().string();
+
     if (img.empty()) {
       ROS_WARN_STREAM("Could not load image: " << image_files[idx]);
     } else {
       // Convert the image to a ROS image message (using cv_bridge)
       std_msgs::Header header;
       header.stamp = ros::Time::now();
-      header.frame_id = image_files[idx];
+      header.frame_id = currImageId;
       sensor_msgs::ImageConstPtr msg =
           cv_bridge::CvImage(header, IMAGE_TYPE, img).toImageMsg();
 
@@ -100,11 +127,16 @@ int main(int argc, char **argv) {
     loop_rate.sleep();
   }
 
+  int correct = 0;
   ROS_INFO("Listing all reads:");
-  for (const auto &entry : ack_vector) {
-    ROS_INFO_STREAM("Key: " << std::get<0>(entry)
-                            << ", Value: " << std::get<1>(entry));
+  for (ImageAck entry : ack_vector) {
+    ROS_INFO("%s", entry.print().c_str());
+    if (entry.goodMatch) {
+      correct++;
+    }
   }
+
+  ROS_INFO("Total Accuracy: %zu", (correct / ack_vector.size()) * 100);
 
   return 0;
 }
