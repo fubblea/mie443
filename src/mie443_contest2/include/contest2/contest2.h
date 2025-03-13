@@ -34,16 +34,13 @@ const std::tuple<float, float> ANGLE_CONE =
 
 const int NUM_BUMPERS = 3; // Number of bumpers
 
-const float BOX_FACING_OFFSET = 0.7;
-const float BOX_ANGLE_OFFSET = 30;
+const float BOX_FACING_OFFSET = 0.55;
+const float BOX_ANGLE_OFFSET = 10;
 
-const int MAX_LOST_COUNT = 3;
+const int MAX_LOST_COUNT = 1;
 
-// const std::vector<std::string> TEMPLATE_FILES = {
-//     "mie443/src/mie443_contest2/boxes_database/template1.jpg",
-//   "mie443/src/mie443_contest2/boxes_database/template2.jpg",
-//"mie443/src/mie443_contest2/boxes_database/template3.jpg"}; // load template
-//  files
+const int MIN_HESSIAN = 800;
+const float MATCH_COMPARE_THRESH = 0.65;
 
 // Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {

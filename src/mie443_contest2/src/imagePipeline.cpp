@@ -30,9 +30,8 @@ void ImagePipeline::imageCallback(const sensor_msgs::ImageConstPtr &msg) {
 
 std::tuple<std::vector<cv::KeyPoint>, Mat>
 ImagePipeline::getFeatures(cv::Mat image) {
-  int minHessian = 400; // try changing it and see what it does?
   Ptr<cv::xfeatures2d::SURF> detector =
-      cv::xfeatures2d::SURF::create(minHessian);
+      cv::xfeatures2d::SURF::create(MIN_HESSIAN);
   ROS_INFO("Detecting features");
   std::vector<KeyPoint> keypoints_image;
   ROS_INFO("Initializing keypoints");
@@ -45,8 +44,62 @@ ImagePipeline::getFeatures(cv::Mat image) {
   return std::make_tuple(keypoints_image, descriptors_image);
 }
 
+cv::Mat extractROI(const cv::Mat &inputImg) {
+  cv::Mat gray, blurred, thresh;
+  cv::cvtColor(inputImg, gray, cv::COLOR_BGR2GRAY);
+  cv::GaussianBlur(gray, blurred, cv::Size(5, 5), 0);
+  cv::threshold(blurred, thresh, 200, 255, cv::THRESH_BINARY);
+
+  // find contours
+  std::vector<std::vector<cv::Point>> contours;
+  std::vector<cv::Vec4i> hierarchy;
+  cv::findContours(thresh, contours, hierarchy, cv::RETR_EXTERNAL,
+                   cv::CHAIN_APPROX_SIMPLE);
+
+  cv::Mat output;
+  if (!contours.empty()) {
+    double maxArea = 0;
+    std::vector<cv::Point> bestContour;
+
+    // find largest contour
+    for (const auto &contour : contours) {
+      double area = cv::contourArea(contour);
+      if (area > maxArea) {
+        maxArea = area;
+        bestContour = contour;
+      }
+    }
+
+    if (!bestContour.empty()) {
+      std::vector<cv::Point> approx;
+      cv::approxPolyDP(bestContour, approx,
+                       0.02 * cv::arcLength(bestContour, true), true);
+
+      if (approx.size() == 4) {
+        std::sort(approx.begin(), approx.end(),
+                  [](const cv::Point &a, const cv::Point &b) {
+                    return a.x + a.y < b.x + b.y;
+                  });
+
+        cv::Point2f srcPoints[4] = {approx[2], approx[3], approx[1], approx[0]};
+
+        float width = 2480, height = 3508;
+        cv::Point2f dstPoints[4] = {
+            {0, 0}, {width, 0}, {width, height}, {0, height}};
+
+        cv::Mat matrix = cv::getPerspectiveTransform(srcPoints, dstPoints);
+        cv::warpPerspective(inputImg, output, matrix, cv::Size(width, height));
+      }
+    }
+  }
+
+  return output;
+}
+
 int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
+  /*ROS_INFO("Cropping Image...");
+  img = extractROI(img);*/
   if (!isValid) {
     ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
@@ -67,11 +120,11 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     // initialize image match parameters
     double best_match_per = 0.0;
     bool match_found;
-
-    std::tie(template_id, best_match_per, match_found) =
-        ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
-                                  best_match_per);
-
+    if (scannedDescriptors.rows > 100) {
+      std::tie(template_id, best_match_per, match_found) =
+          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
+                                    best_match_per);
+    }
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
              template_id, best_match_per, match_found);
 
@@ -114,7 +167,8 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
 
     double good_matches = 0;
     for (const auto &m : matches) {
-      if (m.distance < 0.65 * matches.back().distance) { // lowe's ratio test
+      if (m.distance <
+          MATCH_COMPARE_THRESH * matches.back().distance) { // lowe's ratio test
         good_matches++;
       }
     }
