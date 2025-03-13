@@ -133,7 +133,8 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
 int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
   int template_id = -1;
-
+  ROS_INFO("Cropping Image...");
+  img = extractROI(img);
   if (!isValid) {
     ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
@@ -143,9 +144,6 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     std::cout << "img.rows:" << img.rows << std::endl;
     std::cout << "img.cols:" << img.cols << std::endl;
   } else {
-
-    ROS_INFO("Cropping Image...");
-    img = extractROI(img);
 
     // Find keypoints in scene (img) and compare to keypoint in templates
     std::vector<cv::KeyPoint> scannedKeypoints;
