@@ -2,6 +2,7 @@
 #include "ros/init.h"
 #include <contest2/boxes.h>
 #include <contest2/imagePipeline.h>
+#include <contest2/utils.h>
 #include <contest2_testbench/testrunner.h>
 
 int main(int argc, char **argv) {
@@ -35,7 +36,7 @@ int main(int argc, char **argv) {
     ros::spinOnce();
 
     std::tuple<int, float> guess = imagePipeline.getTemplateID(boxes, false);
-    ROS_INFO("Guess: %i", std::get<0>(guess));
+    ROS_INFO("Guess: %s", getFileName(std::get<0>(guess)).c_str());
 
     ack.data = true;
     ack_pub.publish(ack);

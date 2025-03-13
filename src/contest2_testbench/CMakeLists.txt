@@ -29,6 +29,7 @@ target_link_libraries(testbench
 add_executable(testrunner
     src/testrunner.cpp
     ../mie443_contest2/src/imagePipeline.cpp
+    ../mie443_contest2/src/utils.cpp
     ../mie443_contest2/src/boxes.cpp)
 target_link_libraries(testrunner
     ${catkin_LIBRARIES}  
