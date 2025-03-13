@@ -18,6 +18,8 @@
 // TODO: Check if this is valid
 const bool CONTEST_MODE = false; // false for test, true for contest
 
+const float GO_HOME_TIME = 230;
+
 const float MAX_LIN_VEL = 0.25; // Maximum linear velocity in [m/s]
 const float SLOW_LIN_VEL = 0.1; // Slow linear velocity in [m/s]
 
@@ -39,17 +41,17 @@ const float BOX_ANGLE_OFFSET = 10;
 
 const int MAX_LOST_COUNT = 1;
 
-const int MIN_HESSIAN = 800;
-const float MATCH_COMPARE_THRESH = 0.65;
+const int MIN_HESSIAN = 1000;
+const float MATCH_COMPARE_THRESH = 0.75;
 
 // Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {
     ros::package::getPath("mie443_contest2") +
-        std::string("/boxes_database/template1.jpg"),
+        std::string("/boxes_database/cinnamon_toast_crunch.jpg"),
     ros::package::getPath("mie443_contest2") +
-        std::string("/boxes_database/template2.jpg"),
+        std::string("/boxes_database/raisin_bran.jpg"),
     ros::package::getPath("mie443_contest2") +
-        std::string("/boxes_database/template3.jpg")};
+        std::string("/boxes_database/rice_krispies.jpg")};
 
 // INTERAL HEADER FILES
 

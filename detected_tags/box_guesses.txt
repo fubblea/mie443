@@ -1,15 +1,5 @@
-Box at (0.433978, 0.99005, 3.13259) - Guesses: (1, ) Best guess: 1
-Box at (-0.107012, -0.954999, 1.57259) - Guesses: (-1, ) Best guess: -1
-Box at (2.45672, -0.858919, 3.93259) - Guesses: (2, ) Best guess: 2
-Box at (1.88669, 1.493, 1.56659) - Guesses: (0, ) Best guess: 0
-Box at (-0.929406, 1.56699, 2.71013) - Guesses: (2, ) Best guess: 2
-Box at (0.426482, 1.08563, 3.30713) - Guesses: (1, ) Best guess: 1
-Box at (-0.0115207, -0.946472, 1.74713) - Guesses: (-1, ) Best guess: -1
-Box at (2.38294, -0.797706, 4.10713) - Guesses: (1, ) Best guess: 1
-Box at (1.98223, 1.50096, 1.74113) - Guesses: (0, ) Best guess: 0
-Box at (-1.0382, 1.40999, 2.36106) - Guesses: (2, ) Best guess: 2
-Box at (0.424763, 0.894623, 2.95806) - Guesses: (2, ) Best guess: 2
-Box at (-0.202533, -0.946815, 1.39806) - Guesses: (-1, ) Best guess: -1
-Box at (2.51876, -0.932014, 3.75806) - Guesses: (0, ) Best guess: 0
-Box at (1.79122, 1.50176, 1.39206) - Guesses: (0, ) Best guess: 0
-Box at (-0.976937, 1.48373, 2.53559) - Guesses: (1, 1, ) Best guess: 1
+Box at (-1.429, 1.797, -0.606) - Best guess: rice_krispies - All guesses: (rice_krispies, cinnamon_toast_crunch, rice_krispies, )
+Box at (-0.116, 0.995, -0.009) - Best guess: cinnamon_toast_crunch - All guesses: (cinnamon_toast_crunch, cinnamon_toast_crunch, cinnamon_toast_crunch, )
+Box at (-0.108, -0.405, -1.569) - Best guess: Blank - All guesses: (Blank, Blank, Blank, )
+Box at (2.07, -1.25, 0.791) - Best guess: rice_krispies - All guesses: (rice_krispies, rice_krispies, rice_krispies, )
+Box at (1.889, 2.043, -1.575) - Best guess: raisin_bran - All guesses: (raisin_bran, cinnamon_toast_crunch, raisin_bran, )

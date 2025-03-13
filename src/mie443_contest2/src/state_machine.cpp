@@ -2,6 +2,7 @@
 #include "contest2/imagePipeline.h"
 #include "contest2/navigation.h"
 #include "ros/console.h"
+#include "ros/init.h"
 #include <algorithm>
 #include <contest2/state.h>
 #include <vector>
@@ -17,7 +18,14 @@ void sendGoalToBack(std::vector<RobotGoal> *goalList, int goalIdx) {
               goalList->end());
 }
 
-void RobotState::updateState(bool showView) {
+void RobotState::updateState(bool showView, float secondsElapsed) {
+  if (secondsElapsed > GO_HOME_TIME) {
+    ROS_WARN("Time to go home!! Setting state to GO_HOME");
+    setState(State::GO_HOME);
+  } else {
+    ROS_INFO("We still have time: %f", secondsElapsed);
+  }
+
   switch (this->currState) {
 
   case State::START: {
@@ -39,6 +47,9 @@ void RobotState::updateState(bool showView) {
     ROS_INFO("You spin me right round baby right round like a record baby "
              "right round right round");
     if (doTurn(MAX_SPIN_ANGLE, poseHist.back().phi, false)) {
+      ROS_INFO("Remembering home pose");
+      this->homePose = currPose;
+
       ROS_INFO("finding my first goal");
       setState(State::GOTO_GOAL);
     }
@@ -104,6 +115,21 @@ void RobotState::updateState(bool showView) {
       setState(State::GOTO_GOAL);
       this->lostCount = 0;
     }
+
+    break;
+  }
+
+  case State::GO_HOME: {
+    Navigation::moveToGoal(this->homePose.x, this->homePose.y,
+                           this->homePose.phi);
+
+    setState(State::END);
+    break;
+  }
+
+  case State::END: {
+    ROS_INFO("Graceful exit");
+    ros::shutdown();
 
     break;
   }

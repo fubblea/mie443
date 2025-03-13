@@ -2,8 +2,12 @@
 #include "contest2/contest2.h"
 #include "contest2/robot_pose.h"
 #include "ros/console.h"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
 #include <fstream>
 #include <ostream>
+#include <string>
+#include <unordered_map>
 #include <vector>
 
 RobotPose getBoxNavGoal(float xBox, float yBox, float phiBox,
@@ -141,27 +145,50 @@ int findMode(const std::vector<int> &nums) {
   return mode;
 }
 
+std::string getFileName(int boxGuess) {
+  if (boxGuess == -1) {
+    return "Blank";
+  } else {
+    boost::filesystem::path p(TEMPLATE_FILES[boxGuess]);
+    return p.stem().string();
+  }
+}
+
 void RobotState::saveTagsToFile() {
   system("mkdir -p detected_tags");
   std::ofstream myfile("detected_tags/box_guesses.txt");
 
+  // Create hashmap of box guesses
+  std::unordered_map<int, std::vector<int>> boxGuesses;
+
   for (RobotGoal goal : this->goalList) {
-
     if (goal.boxIdGuesses.size() > 0) {
-      myfile << "Box at (" << goal.pose.x << ", " << goal.pose.y << ", "
-             << goal.pose.phi << ") - Guesses: (";
-
-      for (const int &value : goal.boxIdGuesses) {
-        myfile << value << ", ";
+      for (int guess : goal.boxIdGuesses) {
+        boxGuesses[goal.boxIdx].push_back(guess);
       }
-
-      int bestGuess = findMode(goal.boxIdGuesses);
-      myfile << ") Best guess: " << bestGuess;
-
-      // TODO: Get the template name
-      myfile << std::endl;
     }
+  }
+
+  // Write to file
+  for (int boxIdx = 0; boxIdx < this->boxes.coords.size(); boxIdx++) {
+    // Print box location
+    myfile << "Box at (" << boxes.coords[boxIdx][0] << ", "
+           << boxes.coords[boxIdx][1] << ", " << boxes.coords[boxIdx][2] << ")";
+
+    // Find best guess
+    int bestGuess = findMode(boxGuesses[boxIdx]);
+    myfile << " - Best guess: " << getFileName(bestGuess);
+
+    // List all guesses
+    myfile << " - All guesses: (";
+    for (const int &value : boxGuesses[boxIdx]) {
+      myfile << getFileName(value) << ", ";
     }
+    myfile << ")";
+
+    // End line
+    myfile << std::endl;
+  }
 
   myfile.close();
 }

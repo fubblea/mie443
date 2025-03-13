@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 300) {
     ros::spinOnce();
 
-    robotState.updateState(showView);
+    robotState.updateState(showView, secondsElapsed);
 
     if (robotState.velCmd.cmdActive) {
       vel.angular.z = DEG2RAD(robotState.velCmd.angVel);
@@ -67,6 +67,11 @@ int main(int argc, char **argv) {
     }
 
     robotState.saveTagsToFile();
+
+    // The last thing to do is to update the timer.
+    secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(
+                         std::chrono::system_clock::now() - start)
+                         .count();
 
     loop_rate.sleep();
   }
