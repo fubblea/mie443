@@ -25,7 +25,17 @@ void syncCallback(const sensor_msgs::ImageConstPtr &msg) {
   }
 }
 
+bool cmdOptionExists(char **begin, char **end, const std::string &option) {
+  return std::find(begin, end, option) != end;
+}
+
 int main(int argc, char **argv) {
+  // Parse args
+  bool showView = true;
+  if (cmdOptionExists(argv, argv + argc, "-hideView")) {
+    showView = false;
+  }
+
   ros::init(argc, argv, "testrunner_node");
   ros::NodeHandle nh;
 
@@ -59,7 +69,8 @@ int main(int argc, char **argv) {
     ros::spinOnce();
 
     if (updateSync) {
-      std::tuple<int, float> guess = imagePipeline.getTemplateID(boxes, false);
+      std::tuple<int, float> guess =
+          imagePipeline.getTemplateID(boxes, showView);
       ROS_INFO("Guess: %s", getFileName(std::get<0>(guess)).c_str());
 
       ack.key = getFileName(std::get<0>(guess)).c_str();

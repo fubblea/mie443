@@ -127,7 +127,7 @@ int main(int argc, char **argv) {
     loop_rate.sleep();
   }
 
-  int correct = 0;
+  float correct = 0;
   ROS_INFO("Listing all reads:");
   for (ImageAck entry : ack_vector) {
     ROS_INFO("%s", entry.print().c_str());
@@ -136,7 +136,7 @@ int main(int argc, char **argv) {
     }
   }
 
-  ROS_INFO("Total Accuracy: %zu", (correct / ack_vector.size()) * 100);
+  ROS_INFO("Total Accuracy: %f", (correct / ack_vector.size()) * 100);
 
   return 0;
 }
