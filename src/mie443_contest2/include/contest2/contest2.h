@@ -48,7 +48,11 @@ const int MIN_HESSIAN = 1000;
 const float MATCH_COMPARE_THRESH = 0.65;
 const int MIN_ROWS_BLANK = 50; // treshold to determine blank
 
-const bool CROP_IMG = false;
+const bool MANUAL_CROP = false;
+const int MANUAL_CROPX = 8;
+const int MANUAL_CROPY = 3;
+
+const bool GAUSSIAN_CROP = true;
 const cv::Size CROP_SIZE = cv::Size(5, 5);
 const float MIN_CROP_THRESH = 150;
 
