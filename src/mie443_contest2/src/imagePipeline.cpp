@@ -120,7 +120,7 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     // initialize image match parameters
     double best_match_per = 0.0;
     bool match_found;
-    if (scannedDescriptors.rows > 100) {
+    if (scannedDescriptors.rows > MIN_ROWS_BLANK) {
       std::tie(template_id, best_match_per, match_found) =
           ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
                                     best_match_per);
@@ -164,6 +164,11 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
     std::vector<cv::DMatch> matches;
     flann.match(this->memorizedTemplates[i].template_descriptors,
                 image_descriptors, matches);
+
+    std::sort(matches.begin(), matches.end(),
+              [](const cv::DMatch &a, const cv::DMatch &b) {
+                return a.distance < b.distance;
+              }); // sort matches from best match to worst match
 
     double good_matches = 0;
     for (const auto &m : matches) {

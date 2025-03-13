@@ -42,7 +42,8 @@ const float BOX_ANGLE_OFFSET = 10;
 const int MAX_LOST_COUNT = 1;
 
 const int MIN_HESSIAN = 1000;
-const float MATCH_COMPARE_THRESH = 0.75;
+const float MATCH_COMPARE_THRESH = 0.65;
+const int MIN_ROWS_BLANK = 50; // treshold to determine blank
 
 // Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {
