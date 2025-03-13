@@ -62,8 +62,8 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
   cv::Mat gray, blurred, thresh;
 
   cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
-  cv::GaussianBlur(gray, blurred, cv::Size(5, 5), 0);
-  cv::threshold(blurred, thresh, 200, 255, cv::THRESH_BINARY);
+  cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
+  cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
 
   // find contours
   std::vector<std::vector<cv::Point>> contours;
@@ -119,7 +119,7 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     // initialize image match parameters
     double best_match_per = 0.0;
     bool match_found;
-    if (scannedDescriptors.rows > 100) {
+    if (scannedDescriptors.rows > MIN_ROWS_BLANK) {
       std::tie(template_id, best_match_per, match_found) =
           ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
                                     best_match_per);
@@ -164,10 +164,15 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
     flann.match(this->memorizedTemplates[i].template_descriptors,
                 image_descriptors, matches);
 
+    std::sort(matches.begin(), matches.end(),
+              [](const cv::DMatch &a, const cv::DMatch &b) {
+                return a.distance < b.distance;
+              }); // sort matches from best match to worst match
+
     double good_matches = 0;
     for (const auto &m : matches) {
-      if (m.distance <
-          MATCH_COMPARE_THRESH * matches.back().distance) { // lowe's ratio test
+      if (m.distance < MATCH_COMPARE_THRESH *
+                           matches.front().distance) { // lowe's ratio test
         good_matches++;
       }
     }

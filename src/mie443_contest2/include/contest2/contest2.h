@@ -12,11 +12,14 @@
 
 #include <chrono>
 
+#include <opencv/cv.h>
 #include <ros/package.h>
+
+using namespace cv;
 
 // CONSTANTS
 // TODO: Check if this is valid
-const bool CONTEST_MODE = false; // false for test, true for contest
+const bool CONTEST_MODE = true; // false for test, true for contest
 
 const float GO_HOME_TIME = 230;
 
@@ -42,7 +45,11 @@ const float BOX_ANGLE_OFFSET = 10;
 const int MAX_LOST_COUNT = 1;
 
 const int MIN_HESSIAN = 1000;
-const float MATCH_COMPARE_THRESH = 0.75;
+const float MATCH_COMPARE_THRESH = 0.65;
+const int MIN_ROWS_BLANK = 50; // treshold to determine blank
+
+const cv::Size CROP_SIZE = cv::Size(5, 5);
+const float MIN_CROP_THRESH = 180;
 
 // Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {
