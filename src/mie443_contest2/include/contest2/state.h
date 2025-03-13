@@ -18,6 +18,7 @@ enum State {
   GOTO_GOAL,
   TAG_BOX,
   IM_LOST,
+  GO_HOME,
   END,
 };
 
@@ -84,6 +85,7 @@ public:
   LidarScan lidarScan;
   std::unordered_map<int, std::vector<float>>
       identifiedTags; // initialize hashmap to store detected images
+  RobotPose homePose;
 
 private:
   std::vector<RobotPose> poseHist;
@@ -96,7 +98,8 @@ public:
   }
 
   // Constructors
-  RobotState(ros::NodeHandle n) : currPose(0, 0, 0), imagePipeline(n) {};
+  RobotState(ros::NodeHandle n)
+      : currPose(0, 0, 0), imagePipeline(n), homePose(0, 0, 0) {};
 
   // Movement Functions
   bool doTurn(float relativeTarget, float reference, bool quick);
@@ -108,5 +111,5 @@ public:
   void saveTagsToFile();
 
   // State Machine
-  void updateState(bool showView);
+  void updateState(bool showView, float secondsElapsed);
 };
