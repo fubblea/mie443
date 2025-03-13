@@ -6,3 +6,5 @@
 2. Build packages: `catkin_make`
 3. Start testbench node: `rosrun contest2_testbench testbench`
 4. Start testrunner node: `rosrun contest2_testbench testrunner`
+
+Add additional images to `image_database`. Follow the same naming convention.
