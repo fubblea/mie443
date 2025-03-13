@@ -39,9 +39,6 @@ void RobotState::updateState(bool showView, float secondsElapsed) {
     ROS_INFO("template 1: %s", TEMPLATE_FILES[0].c_str());
     this->imagePipeline.memorizeTemplates();
 
-    ROS_INFO("Remembering home pose");
-    this->homePose = currPose;
-
     setState(State::SPIN);
     break;
   }
@@ -50,6 +47,9 @@ void RobotState::updateState(bool showView, float secondsElapsed) {
     ROS_INFO("You spin me right round baby right round like a record baby "
              "right round right round");
     if (doTurn(MAX_SPIN_ANGLE, poseHist.back().phi, false)) {
+      ROS_INFO("Remembering home pose");
+      this->homePose = currPose;
+
       ROS_INFO("finding my first goal");
       setState(State::GOTO_GOAL);
     }
