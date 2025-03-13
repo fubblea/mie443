@@ -12,6 +12,10 @@ int main(int argc, char **argv) {
   if (cmdOptionExists(argv, argv + argc, "-hideView")) {
     showView = false;
   }
+  bool showMatches = true;
+  if (cmdOptionExists(argv, argv + argc, "-showMatches")) {
+    showMatches = false;
+  }
 
   // Setup ROS.
   ros::init(argc, argv, "contest2");
@@ -58,7 +62,7 @@ int main(int argc, char **argv) {
   while (ros::ok() && secondsElapsed <= 300) {
     ros::spinOnce();
 
-    robotState.updateState(showView, secondsElapsed);
+    robotState.updateState(showView, showMatches, secondsElapsed);
 
     if (robotState.velCmd.cmdActive) {
       vel.angular.z = DEG2RAD(robotState.velCmd.angVel);

@@ -96,8 +96,8 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
 // return output;
 
-std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
-                                                    bool showView) {
+std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes, bool showView,
+                                                    bool showMatches) {
   int template_id = -1;
   float best_match_per = 0;
 
@@ -125,7 +125,8 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
     bool match_found;
     if (scannedDescriptors.rows > MIN_ROWS_BLANK) {
       std::tie(template_id, best_match_per, match_found) =
-          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors);
+          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
+                                    showMatches);
     }
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
              template_id, best_match_per, match_found);
@@ -140,7 +141,7 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
 
 std::tuple<int, double, bool>
 ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
-                          cv::Mat &image_descriptors) {
+                          cv::Mat &image_descriptors, bool showMatches) {
 
   int matched_id = -1;
   float best_match_percentage = 0.0;
@@ -179,7 +180,6 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
       }
     }
     ROS_INFO("%f good matches found", good_matches);
-
     double percentMatch =
         (good_matches / this->memorizedTemplates[i].template_descriptors.rows) *
         100;
@@ -188,7 +188,21 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
       best_match_percentage = percentMatch;
       matched_id = i;
     }
+    if (showMatches == true) {
+      cv::Mat img_matches;
+      cv::drawMatches(
+          cv::imread(TEMPLATE_FILES[i], cv::IMREAD_GRAYSCALE), // template image
+          this->memorizedTemplates[i].template_keypoints, // template keypoints
+          img,                                            // scanned image
+          image_keypoints, // Scanned image keypoints
+          matches, img_matches, cv::Scalar::all(-1), cv::Scalar::all(-1),
+          std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+      // Show the match visualization
+      cv::imshow("Matches", img_matches);
+      cv::waitKey(10); // Display the matched image
+    }
   }
+
   return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
 }
 

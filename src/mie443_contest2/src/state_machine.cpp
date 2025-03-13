@@ -18,7 +18,8 @@ void sendGoalToBack(std::vector<RobotGoal> *goalList, int goalIdx) {
               goalList->end());
 }
 
-void RobotState::updateState(bool showView, float secondsElapsed) {
+void RobotState::updateState(bool showView, bool showMatches,
+                             float secondsElapsed) {
   if (secondsElapsed > GO_HOME_TIME) {
     ROS_WARN("Time to go home!! Setting state to GO_HOME");
     setState(State::GO_HOME);
@@ -81,7 +82,7 @@ void RobotState::updateState(bool showView, float secondsElapsed) {
   case State::TAG_BOX: {
 
     BoxMatch currGuess =
-        this->imagePipeline.getTemplateID(this->boxes, showView);
+        this->imagePipeline.getTemplateID(this->boxes, showView, showMatches);
 
     this->goalList[0].boxIdGuesses.push_back(currGuess);
 

@@ -124,5 +124,5 @@ public:
   void saveTagsToFile();
 
   // State Machine
-  void updateState(bool showView, float secondsElapsed);
+  void updateState(bool showView, bool showMatches, float secondsElapsed);
 };
