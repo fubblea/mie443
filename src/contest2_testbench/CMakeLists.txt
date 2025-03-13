@@ -5,14 +5,11 @@ set(CMAKE_CXX_FLAGS "-std=c++11")
 
 find_package(OpenCV 3 REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
-    actionlib
-    move_base_msgs
     roscpp
     cv_bridge
     image_transport
-    gazebo_ros
+    sensor_msgs
 )
-find_package(orocos_kdl REQUIRED)
 
 catkin_package()
 
@@ -21,10 +18,16 @@ include_directories(include
     ${catkin_INCLUDE_DIRS}  
     ${OpenCV_INCLUDE_DIRS})
 
-# Contest 2 Executable
+# Testbench Executable
 add_executable(testbench 
     src/testbench.cpp)
 target_link_libraries(testbench
     ${catkin_LIBRARIES}  
-    ${OpenCV_LIBRARIES}  
-    orocos-kdl)
+    ${OpenCV_LIBRARIES})
+
+# Testrunner Executable
+add_executable(testrunner
+    src/testrunner.cpp)
+target_link_libraries(testrunner
+    ${catkin_LIBRARIES}  
+    ${OpenCV_LIBRARIES})
