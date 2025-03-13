@@ -159,11 +159,11 @@ void RobotState::saveTagsToFile() {
   std::ofstream myfile("detected_tags/box_guesses.txt");
 
   // Create hashmap of box guesses
-  std::unordered_map<int, std::vector<int>> boxGuesses;
+  std::unordered_map<int, std::vector<BoxMatch>> boxGuesses;
 
   for (RobotGoal goal : this->goalList) {
     if (goal.boxIdGuesses.size() > 0) {
-      for (int guess : goal.boxIdGuesses) {
+      for (BoxMatch guess : goal.boxIdGuesses) {
         boxGuesses[goal.boxIdx].push_back(guess);
       }
     }

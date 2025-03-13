@@ -3,6 +3,7 @@
 #include "ros/console.h"
 #include <contest2/imagePipeline.h>
 #include <ctime>
+#include <tuple>
 
 #define IMAGE_TYPE sensor_msgs::image_encodings::BGR8
 #define IMAGE_TOPIC                                                            \
@@ -95,10 +96,14 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
 // return output;
 
-int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
+std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
+                                                    bool showView) {
   int template_id = -1;
+  float best_match_per = 0;
+
   ROS_INFO("Cropping Image...");
   img = extractROI(img);
+
   if (!isValid) {
     ROS_INFO("image not valid");
     std::cout << "ERROR: INVALID IMAGE!" << std::endl;
@@ -117,12 +122,10 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
         ImagePipeline::getFeatures(img); // feature extraction on scanned image
 
     // initialize image match parameters
-    double best_match_per = 0.0;
     bool match_found;
     if (scannedDescriptors.rows > MIN_ROWS_BLANK) {
       std::tie(template_id, best_match_per, match_found) =
-          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
-                                    best_match_per);
+          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors);
     }
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
              template_id, best_match_per, match_found);
@@ -132,16 +135,15 @@ int ImagePipeline::getTemplateID(Boxes &boxes, bool showView) {
     }
     cv::waitKey(10);
   }
-  return template_id;
+  return std::make_tuple(template_id, best_match_per);
 }
 
 std::tuple<int, double, bool>
 ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
-                          cv::Mat &image_descriptors,
-                          double &best_match_percentage) {
+                          cv::Mat &image_descriptors) {
 
   int matched_id = -1;
-  best_match_percentage = 0.0;
+  float best_match_percentage = 0.0;
   ROS_INFO("%i descriptor rows in scanned image", image_descriptors.rows);
 
   if (image_descriptors.empty()) {

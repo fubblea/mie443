@@ -80,15 +80,16 @@ void RobotState::updateState(bool showView, float secondsElapsed) {
 
   case State::TAG_BOX: {
 
-    int currGuess = this->imagePipeline.getTemplateID(this->boxes, showView);
+    BoxMatch currGuess =
+        this->imagePipeline.getTemplateID(this->boxes, showView);
 
     this->goalList[0].boxIdGuesses.push_back(currGuess);
 
     ROS_INFO("Guess for box at (%f, %f, %f) is %i. Match found?: %i",
              this->boxes.coords[this->goalList[0].boxIdx][0],
              this->boxes.coords[this->goalList[0].boxIdx][1],
-             this->boxes.coords[this->goalList[0].boxIdx][2], currGuess,
-             currGuess != -1);
+             this->boxes.coords[this->goalList[0].boxIdx][2],
+             currGuess.templateID, currGuess.templateID != -1);
 
     sendGoalToBack(&this->goalList, 0);
 

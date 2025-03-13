@@ -47,9 +47,9 @@ public:
   ImagePipeline(ros::NodeHandle &n);
   void imageCallback(const sensor_msgs::ImageConstPtr &msg);
   std::tuple<std::vector<cv::KeyPoint>, Mat> getFeatures(cv::Mat image);
-  int getTemplateID(Boxes &boxes, bool showView);
+  std::tuple<int, float> getTemplateID(Boxes &boxes, bool showView);
   std::tuple<int, double, bool>
   imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
-             cv::Mat &image_descriptors, double &best_match_percentage);
+             cv::Mat &image_descriptors);
   void memorizeTemplates();
 };
