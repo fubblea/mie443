@@ -89,19 +89,16 @@ void RobotState::updateState(bool showView) {
   case State::IM_LOST: {
     ROS_WARN("IM LOSTTTTTTT AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
 
-    setState(State::GOTO_GOAL);
-    break;
-
     if (this->lostCount <= MAX_LOST_COUNT) {
       ROS_WARN("Still lost, trying to get unlost. Lost count: %i",
                this->lostCount);
 
-      if (doTurn(90, this->poseHist.back().phi, true)) {
-        if (moveToWall(MIN_WALL_DIST + 0.1, MAX_LIN_VEL)) {
-          setState(State::GOTO_GOAL);
-        }
-      }
-    } else {
+      //   if (doTurn(90, this->poseHist.back().phi, true)) {
+      //     if (moveToWall(MIN_WALL_DIST + 0.1, MAX_LIN_VEL)) {
+      //       setState(State::GOTO_GOAL);
+      //     }
+      //   }
+      // } else {
       ROS_ERROR("Can't get unlost, skipping goal");
       sendGoalToBack(&this->goalList, 0);
       setState(State::GOTO_GOAL);

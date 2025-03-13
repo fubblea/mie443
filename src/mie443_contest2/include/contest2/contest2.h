@@ -37,7 +37,7 @@ const int NUM_BUMPERS = 3; // Number of bumpers
 const float BOX_FACING_OFFSET = 0.7;
 const float BOX_ANGLE_OFFSET = 30;
 
-const int MAX_LOST_COUNT = 3;
+const int MAX_LOST_COUNT = 1;
 
 const int MIN_HESSIAN = 800;
 const float MATCH_COMPARE_TRESH = 0.65;
