@@ -18,6 +18,8 @@
 // TODO: Check if this is valid
 const bool CONTEST_MODE = false; // false for test, true for contest
 
+const float GO_HOME_TIME = 230;
+
 const float MAX_LIN_VEL = 0.25; // Maximum linear velocity in [m/s]
 const float SLOW_LIN_VEL = 0.1; // Slow linear velocity in [m/s]
 

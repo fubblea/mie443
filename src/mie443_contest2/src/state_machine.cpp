@@ -19,7 +19,7 @@ void sendGoalToBack(std::vector<RobotGoal> *goalList, int goalIdx) {
 }
 
 void RobotState::updateState(bool showView, float secondsElapsed) {
-  if (secondsElapsed > 230) {
+  if (secondsElapsed > GO_HOME_TIME) {
     ROS_WARN("Time to go home!! Setting state to GO_HOME");
     setState(State::GO_HOME);
   } else {
