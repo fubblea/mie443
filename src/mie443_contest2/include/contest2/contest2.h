@@ -50,7 +50,7 @@ const int MIN_ROWS_BLANK = 50; // treshold to determine blank
 
 const bool MANUAL_CROP = true;
 const int MANUAL_CROP_X = 8;
-const int MANUAL_CROP_Y = 3;
+const int MANUAL_CROP_Y = 4;
 
 const bool GAUSSIAN_CROP = true;
 const cv::Size CROP_SIZE = cv::Size(5, 5);

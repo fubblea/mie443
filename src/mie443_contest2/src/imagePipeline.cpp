@@ -47,42 +47,26 @@ ImagePipeline::getFeatures(cv::Mat image) {
 
 cv::Mat extractROI(const cv::Mat &inputImg) {
   int height = inputImg.rows;
-  ROS_INFO("Image height is: %i", height);
   int width = inputImg.cols;
+  ROS_INFO("Image height is: %i", height);
 
-  cv::Mat croppedImg;
-  if (height > 400 && MANUAL_CROP) {
-    ROS_INFO("Big enough to crop");
-    int cropX = width / MANUAL_CROP_X;
-    int cropY = width / MANUAL_CROP_Y;
-    int cropWidth = width / 2;
-    int cropHeight = height - cropY;
-
-    cv::Rect roi(cropX, cropY, cropWidth, cropHeight);
-
-    croppedImg = inputImg(roi).clone();
-    ROS_INFO("Cropped to manually");
-  } else {
-    ROS_INFO("Too short to manual crop, needs only gauss");
-    croppedImg = inputImg;
-  }
+  cv::Mat croppedImg = inputImg;
 
   if (GAUSSIAN_CROP) {
     cv::Mat gray, blurred, thresh;
 
     cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
-    // cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
-    cv::adaptiveThreshold(gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
+
+    cv::adaptiveThreshold(blurred, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
                           cv::THRESH_BINARY, ADAPT_BLOCK, ADAPT_CONST);
 
-    // find contours
+    // Find contours
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(thresh, contours, hierarchy, cv::RETR_EXTERNAL,
                      cv::CHAIN_APPROX_SIMPLE);
 
-    cv::Mat output;
     if (!contours.empty()) {
       double maxArea = 0;
       std::vector<cv::Point> bestContour;
@@ -104,7 +88,19 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
     }
   }
 
-  return inputImg;
+  if (height > 400 && MANUAL_CROP) {
+    ROS_INFO("Gaussian failed, applying manual crop");
+    int cropX = width / MANUAL_CROP_X;
+    int cropY = width / MANUAL_CROP_Y;
+    int cropWidth = width / 2;
+    int cropHeight = height - cropY;
+
+    cv::Rect roi(cropX, cropY, cropWidth, cropHeight);
+    croppedImg = inputImg(roi).clone();
+    ROS_INFO("Cropped manually");
+  }
+
+  return croppedImg;
 }
 
 // return output;
