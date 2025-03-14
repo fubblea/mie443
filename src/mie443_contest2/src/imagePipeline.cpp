@@ -47,12 +47,14 @@ ImagePipeline::getFeatures(cv::Mat image) {
 
 cv::Mat extractROI(const cv::Mat &inputImg) {
   int height = inputImg.rows;
+  ROS_INFO("Image height is: %i", height);
   int width = inputImg.cols;
 
   cv::Mat croppedImg;
-  if (MANUAL_CROP) {
-    int cropX = width / 8;
-    int cropY = width / 3;
+  if (height > 400 && MANUAL_CROP) {
+    ROS_INFO("Big enough to crop");
+    int cropX = width / MANUAL_CROP_X;
+    int cropY = width / MANUAL_CROP_Y;
     int cropWidth = width / 2;
     int cropHeight = height - cropY;
 
@@ -61,6 +63,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
     croppedImg = inputImg(roi).clone();
     ROS_INFO("Cropped to manually");
   } else {
+    ROS_INFO("Too short to manual crop, needs only gauss");
     croppedImg = inputImg;
   }
 
@@ -69,7 +72,9 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
     cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
-    cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
+    // cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
+    cv::adaptiveThreshold(gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
+                          cv::THRESH_BINARY, ADAPT_BLOCK, ADAPT_CONST);
 
     // find contours
     std::vector<std::vector<cv::Point>> contours;
