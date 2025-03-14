@@ -55,8 +55,8 @@ const int MANUAL_CROP_Y = 3;
 const bool GAUSSIAN_CROP = true;
 const cv::Size CROP_SIZE = cv::Size(5, 5);
 const float MIN_CROP_THRESH = 150;
-const int ADAPT_BLOCK = 9;
-const int ADAPT_CONST = 3;
+const int ADAPT_BLOCK = 11;
+const int ADAPT_CONST = 5;
 
 // Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {
