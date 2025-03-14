@@ -49,49 +49,57 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
   int height = inputImg.rows;
   int width = inputImg.cols;
 
-  int cropX = width / 8;
-  int cropY = width / 3;
-  int cropWidth = width / 2;
-  int cropHeight = height - cropY;
+  cv::Mat croppedImg;
+  if (MANUAL_CROP) {
+    int cropX = width / 8;
+    int cropY = width / 3;
+    int cropWidth = width / 2;
+    int cropHeight = height - cropY;
 
-  cv::Rect roi(cropX, cropY, cropWidth, cropHeight);
+    cv::Rect roi(cropX, cropY, cropWidth, cropHeight);
 
-  cv::Mat croppedImg = inputImg(roi).clone();
+    croppedImg = inputImg(roi).clone();
+    ROS_INFO("Cropped to manually");
+  } else {
+    croppedImg = inputImg;
+  }
 
-  ROS_INFO("Cropped to bottom middle");
+  if (GAUSSIAN_CROP) {
+    cv::Mat gray, blurred, thresh;
 
-  cv::Mat gray, blurred, thresh;
+    cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
+    cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
+    cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
 
-  cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
-  cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
-  cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
+    // find contours
+    std::vector<std::vector<cv::Point>> contours;
+    std::vector<cv::Vec4i> hierarchy;
+    cv::findContours(thresh, contours, hierarchy, cv::RETR_EXTERNAL,
+                     cv::CHAIN_APPROX_SIMPLE);
 
-  // find contours
-  std::vector<std::vector<cv::Point>> contours;
-  std::vector<cv::Vec4i> hierarchy;
-  cv::findContours(thresh, contours, hierarchy, cv::RETR_EXTERNAL,
-                   cv::CHAIN_APPROX_SIMPLE);
+    cv::Mat output;
+    if (!contours.empty()) {
+      double maxArea = 0;
+      std::vector<cv::Point> bestContour;
 
-  cv::Mat output;
-  if (!contours.empty()) {
-    double maxArea = 0;
-    std::vector<cv::Point> bestContour;
+      // find largest contour
+      for (const auto &contour : contours) {
+        double area = cv::contourArea(contour);
+        if (area > maxArea) {
+          maxArea = area;
+          bestContour = contour;
+        }
+      }
 
-    // find largest contour
-    for (const auto &contour : contours) {
-      double area = cv::contourArea(contour);
-      if (area > maxArea) {
-        maxArea = area;
-        bestContour = contour;
+      if (!bestContour.empty()) {
+        cv::Rect box = cv::boundingRect(bestContour);
+        ROS_INFO("Cropped using Gaussian filter");
+        return croppedImg(box).clone();
       }
     }
-
-    if (!bestContour.empty()) {
-      cv::Rect box = cv::boundingRect(bestContour);
-      return croppedImg(box).clone();
-    }
   }
-  return cv::Mat();
+
+  return inputImg;
 }
 
 // return output;
@@ -99,10 +107,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
                                                     bool showView) {
   int template_id = -1;
-  float best_match_per = 0;
-
-  ROS_INFO("Cropping Image...");
-  img = extractROI(img);
+  float best_match_per = -1;
 
   if (!isValid) {
     ROS_INFO("image not valid");
@@ -113,6 +118,9 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
     std::cout << "img.rows:" << img.rows << std::endl;
     std::cout << "img.cols:" << img.cols << std::endl;
   } else {
+
+    ROS_INFO("Cropping Image...");
+    img = extractROI(img);
 
     // Find keypoints in scene (img) and compare to keypoint in templates
     std::vector<cv::KeyPoint> scannedKeypoints;
