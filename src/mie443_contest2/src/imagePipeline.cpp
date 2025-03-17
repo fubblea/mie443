@@ -228,7 +228,7 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
     if (showView) {
       cv::imshow("Matches", img_matches);
     }
-    cv::waitKey(0);
+    cv::waitKey(1);
   }
   if (best_match_percentage > MIN_CONF_THRESH) {
     return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
