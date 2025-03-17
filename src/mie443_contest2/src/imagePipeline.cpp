@@ -1,5 +1,6 @@
 #include "contest2/imagePipeline.h"
 #include "contest2/contest2.h"
+#include "contest2/utils.h"
 #include "ros/console.h"
 #include <contest2/imagePipeline.h>
 #include <ctime>
@@ -201,12 +202,14 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
         good_matches++;
       }
     }
-    ROS_INFO("%f good matches found", good_matches);
+    ROS_INFO("Template %s, %f good matches found", getFileName(i).c_str(),
+             good_matches);
 
     double percentMatch =
         (good_matches / this->memorizedTemplates[i].template_descriptors.rows) *
         100;
-    ROS_INFO("%f percent matched", percentMatch);
+    ROS_INFO("Template %s, %f percent matched", getFileName(i).c_str(),
+             percentMatch);
     if (percentMatch > best_match_percentage) {
       best_match_percentage = percentMatch;
       matched_id = i;
