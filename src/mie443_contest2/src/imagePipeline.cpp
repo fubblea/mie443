@@ -79,10 +79,15 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
     cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
     // cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
-    cv::adaptiveThreshold(gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
-                          cv::THRESH_BINARY_INV, ADAPT_BLOCK, ADAPT_CONST);
+    cv::adaptiveThreshold(
+        gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
+        cv::THRESH_BINARY_INV, ADAPT_BLOCK,
+        ADAPT_CONST); // adaptive thresholding to account for lighting
 
-    cv::threshold(gray, thresh, 0, 255, cv::THRESH_BINARY + cv::THRESH_OTSU);
+    cv::threshold(
+        gray, thresh, 0, 255,
+        cv::THRESH_BINARY +
+            cv::THRESH_OTSU); // OTSU tresholding to smooth out image noise
 
     // cv::imshow("Thresholded Image", thresh);
     //  find contours
