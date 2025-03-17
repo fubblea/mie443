@@ -207,21 +207,22 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
       best_match_percentage = percentMatch;
       matched_id = i;
     }
-
-    // Show the match visualization
-    if (showView) {
-      cv::Mat img_matches;
-      cv::drawMatches(
-          cv::imread(TEMPLATE_FILES[i], cv::IMREAD_GRAYSCALE), // template image
-          this->memorizedTemplates[i].template_keypoints, // template keypoints
-          img,                                            // scanned image
-          image_keypoints, // Scanned image keypoints
-          matches, img_matches, cv::Scalar::all(-1), cv::Scalar::all(-1),
-          std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
-      cv::imshow("Matches", img_matches);
-    }
-    cv::waitKey(10);
   }
+  cv::Mat img_matches;
+  cv::drawMatches(cv::imread(TEMPLATE_FILES[matched_id],
+                             cv::IMREAD_GRAYSCALE), // template image
+                  this->memorizedTemplates[matched_id]
+                      .template_keypoints, // template keypoints
+                  img,                     // scanned image
+                  image_keypoints,         // Scanned image keypoints
+                  std::vector<cv::DMatch>(), img_matches, cv::Scalar::all(-1),
+                  cv::Scalar::all(-1), std::vector<char>(),
+                  cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+  // Show the match visualization
+  if (showView) {
+    cv::imshow("Matches", img_matches);
+  }
+  cv::waitKey(0);
   if (best_match_percentage > MIN_CONF_THRESH) {
     return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
   } else {
