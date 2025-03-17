@@ -38,6 +38,7 @@ ImagePipeline::getFeatures(cv::Mat image) {
   ROS_INFO("Initializing keypoints");
   Mat descriptors_image;
   ROS_INFO("Initializing descriptors");
+  cv::resize(image, image, cv::Size(300, 300));
   detector->detectAndCompute(image, noArray(), keypoints_image,
                              descriptors_image);
   ROS_INFO("Detected keypoints and descriptors");
@@ -47,31 +48,54 @@ ImagePipeline::getFeatures(cv::Mat image) {
 
 cv::Mat extractROI(const cv::Mat &inputImg) {
   int height = inputImg.rows;
-  int width = inputImg.cols;
   ROS_INFO("Image height is: %i", height);
+  int width = inputImg.cols;
 
-  cv::Mat croppedImg = inputImg;
+  cv::Mat croppedImg;
+  if (width > 640 || height > 480) {
+    cv::resize(inputImg, croppedImg, cv::Size(640, 480));
+    ROS_INFO("Resized to desired resolution");
+  }
+
+  if (height > 400 && MANUAL_CROP) {
+    ROS_INFO("Big enough to crop");
+    int cropX = width / MANUAL_CROP_X;
+    int cropY = width / MANUAL_CROP_Y;
+    int cropWidth = width / 2;
+    int cropHeight = height - cropY;
+
+    cv::Rect roi(cropX, cropY, cropWidth, cropHeight);
+
+    croppedImg = inputImg(roi).clone();
+    ROS_INFO("Cropped to manually");
+  } else {
+    ROS_INFO("Too short to manual crop, needs only gauss");
+    croppedImg = inputImg;
+  }
 
   if (GAUSSIAN_CROP) {
     cv::Mat gray, blurred, thresh;
 
     cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
+    // cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
+    cv::adaptiveThreshold(gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
+                          cv::THRESH_BINARY_INV, ADAPT_BLOCK, ADAPT_CONST);
 
-    cv::adaptiveThreshold(blurred, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
-                          cv::THRESH_BINARY, ADAPT_BLOCK, ADAPT_CONST);
+    cv::threshold(gray, thresh, 0, 255, cv::THRESH_BINARY + cv::THRESH_OTSU);
 
-    // Find contours
+    // cv::imshow("Thresholded Image", thresh);
+    //  find contours
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(thresh, contours, hierarchy, cv::RETR_EXTERNAL,
                      cv::CHAIN_APPROX_SIMPLE);
 
+    cv::Mat output;
     if (!contours.empty()) {
-      double maxArea = 0;
       std::vector<cv::Point> bestContour;
+      double maxArea = 0;
 
-      // find largest contour
       for (const auto &contour : contours) {
         double area = cv::contourArea(contour);
         if (area > maxArea) {
@@ -79,25 +103,12 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
           bestContour = contour;
         }
       }
-
       if (!bestContour.empty()) {
         cv::Rect box = cv::boundingRect(bestContour);
         ROS_INFO("Cropped using Gaussian filter");
         return croppedImg(box).clone();
       }
     }
-  }
-
-  if (height > 400 && MANUAL_CROP) {
-    ROS_INFO("Gaussian failed, applying manual crop");
-    int cropX = width / MANUAL_CROP_X;
-    int cropY = width / MANUAL_CROP_Y;
-    int cropWidth = width / 2;
-    int cropHeight = height - cropY;
-
-    cv::Rect roi(cropX, cropY, cropWidth, cropHeight);
-    croppedImg = inputImg(roi).clone();
-    ROS_INFO("Cropped manually");
   }
 
   return croppedImg;
