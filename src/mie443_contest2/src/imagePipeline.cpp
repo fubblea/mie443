@@ -181,8 +181,9 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
   ROS_INFO("Memorized templates size: %zu", this->memorizedTemplates.size());
 
   for (size_t i = 0; i < this->memorizedTemplates.size(); i++) {
-    ROS_INFO("%i descriptor rows in template image",
-             this->memorizedTemplates[i].template_descriptors.rows);
+    ROS_INFO("%i descriptor rows in template image: %s",
+             this->memorizedTemplates[i].template_descriptors.rows,
+             getFileName(i).c_str());
     if (this->memorizedTemplates[i].template_descriptors.empty()) {
       ROS_WARN("Template descriptors are empty, skipping...");
       continue;

@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
               << std::endl;
   }
 
-  ros::Rate loop_rate(1); // subscribing rate
+  ros::Rate loop_rate(10); // subscribing rate
 
   diagnostic_msgs::KeyValue ack;
   while (ros::ok()) {
