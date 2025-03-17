@@ -145,6 +145,9 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
           ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
                                     showView);
     }
+    if (best_match_per < 15) {
+      template_id = -1;
+    }
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
              template_id, best_match_per, match_found);
 

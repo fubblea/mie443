@@ -44,7 +44,7 @@ const float BOX_ANGLE_OFFSET = 10;
 
 const int MAX_LOST_COUNT = 1;
 
-const int MIN_HESSIAN = 400;
+const int MIN_HESSIAN = 1000;
 const float MATCH_COMPARE_THRESH = 0.5;
 const int MIN_ROWS_BLANK = 50; // treshold to determine blank
 const float MIN_CONF_THRESH = 0;
@@ -56,8 +56,8 @@ const int MANUAL_CROP_Y = 4;
 const bool GAUSSIAN_CROP = true;
 const cv::Size CROP_SIZE = cv::Size(5, 5);
 const float MIN_CROP_THRESH = 130;
-const int ADAPT_BLOCK = 15;
-const int ADAPT_CONST = 5;
+const int ADAPT_BLOCK = 11;
+const int ADAPT_CONST = 3;
 
 // Paths to the template files
 const std::vector<std::string> TEMPLATE_FILES = {
