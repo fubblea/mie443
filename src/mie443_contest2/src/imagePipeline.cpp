@@ -31,19 +31,25 @@ void ImagePipeline::imageCallback(const sensor_msgs::ImageConstPtr &msg) {
 
 std::tuple<std::vector<cv::KeyPoint>, Mat>
 ImagePipeline::getFeatures(cv::Mat image) {
-  Ptr<cv::xfeatures2d::SURF> detector =
-      cv::xfeatures2d::SURF::create(MIN_HESSIAN);
-  ROS_INFO("Detecting features");
-  std::vector<KeyPoint> keypoints_image;
-  ROS_INFO("Initializing keypoints");
-  Mat descriptors_image;
-  ROS_INFO("Initializing descriptors");
-  cv::resize(image, image, cv::Size(300, 300));
-  detector->detectAndCompute(image, noArray(), keypoints_image,
-                             descriptors_image);
-  ROS_INFO("Detected keypoints and descriptors");
 
-  return std::make_tuple(keypoints_image, descriptors_image);
+  if (SURF_MATCH == true) {
+    Ptr<cv::xfeatures2d::SURF> detector =
+        cv::xfeatures2d::SURF::create(MIN_HESSIAN);
+    ROS_INFO("Detecting features");
+    std::vector<KeyPoint> keypoints_image;
+    ROS_INFO("Initializing keypoints");
+    Mat descriptors_image;
+    ROS_INFO("Initializing descriptors");
+    cv::resize(image, image, cv::Size(300, 300));
+    detector->detectAndCompute(image, noArray(), keypoints_image,
+                               descriptors_image);
+    ROS_INFO("Detected keypoints and descriptors");
+
+    return std::make_tuple(keypoints_image, descriptors_image);
+  }
+
+  if (SIFT_MATCH == true) {
+  }
 }
 
 cv::Mat extractROI(const cv::Mat &inputImg) {

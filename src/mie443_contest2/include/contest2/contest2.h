@@ -44,6 +44,9 @@ const float BOX_ANGLE_OFFSET = 10;
 
 const int MAX_LOST_COUNT = 1;
 
+bool showView = false;
+bool SIFT_MATCH = false;
+bool SURF_MATCH = true;
 const int MIN_HESSIAN = 400;
 const float MATCH_COMPARE_THRESH = 0.6;
 const int MIN_ROWS_BLANK = 50; // treshold to determine blank
