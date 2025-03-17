@@ -50,6 +50,6 @@ public:
   std::tuple<int, float> getTemplateID(Boxes &boxes, bool showView);
   std::tuple<int, double, bool>
   imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
-             cv::Mat &image_descriptors);
+             cv::Mat &image_descriptors, bool showView);
   void memorizeTemplates();
 };

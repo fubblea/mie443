@@ -151,22 +151,23 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
     bool match_found;
     if (scannedDescriptors.rows > MIN_ROWS_BLANK) {
       std::tie(template_id, best_match_per, match_found) =
-          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors);
+          ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
+                                    showView);
     }
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
              template_id, best_match_per, match_found);
 
-    if (showView) {
+    /*if (showView) {
       cv::imshow("view", img);
     }
-    cv::waitKey(10);
+    cv::waitKey(10);*/
   }
   return std::make_tuple(template_id, best_match_per);
 }
 
 std::tuple<int, double, bool>
 ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
-                          cv::Mat &image_descriptors) {
+                          cv::Mat &image_descriptors, bool showView) {
 
   int matched_id = -1;
   float best_match_percentage = 0.0;
@@ -215,6 +216,19 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
       best_match_percentage = percentMatch;
       matched_id = i;
     }
+    cv::Mat img_matches;
+    cv::drawMatches(
+        cv::imread(TEMPLATE_FILES[i], cv::IMREAD_GRAYSCALE), // template image
+        this->memorizedTemplates[i].template_keypoints, // template keypoints
+        img,                                            // scanned image
+        image_keypoints, // Scanned image keypoints
+        matches, img_matches, cv::Scalar::all(-1), cv::Scalar::all(-1),
+        std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+    // Show the match visualization
+    if (showView) {
+      cv::imshow("Matches", img_matches);
+    }
+    cv::waitKey(0);
   }
   if (best_match_percentage > MIN_CONF_THRESH) {
     return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
