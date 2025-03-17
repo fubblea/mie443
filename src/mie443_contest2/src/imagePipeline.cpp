@@ -36,13 +36,10 @@ ImagePipeline::getFeatures(cv::Mat image) {
       cv::xfeatures2d::SURF::create(MIN_HESSIAN);
   ROS_INFO("Detecting features");
   std::vector<KeyPoint> keypoints_image;
-  ROS_INFO("Initializing keypoints");
   Mat descriptors_image;
-  ROS_INFO("Initializing descriptors");
   cv::resize(image, image, cv::Size(300, 300));
   detector->detectAndCompute(image, noArray(), keypoints_image,
                              descriptors_image);
-  ROS_INFO("Detected keypoints and descriptors");
 
   return std::make_tuple(keypoints_image, descriptors_image);
 }
@@ -53,10 +50,6 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
   int width = inputImg.cols;
 
   cv::Mat croppedImg;
-  if (width > 640 || height > 480) {
-    cv::resize(inputImg, croppedImg, cv::Size(640, 480));
-    ROS_INFO("Resized to desired resolution");
-  }
 
   if (height > 400 && MANUAL_CROP) {
     ROS_INFO("Big enough to crop");
@@ -119,8 +112,6 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
   return croppedImg;
 }
-
-// return output;
 
 std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
                                                     bool showView) {
@@ -216,19 +207,20 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
       best_match_percentage = percentMatch;
       matched_id = i;
     }
-    cv::Mat img_matches;
-    cv::drawMatches(
-        cv::imread(TEMPLATE_FILES[i], cv::IMREAD_GRAYSCALE), // template image
-        this->memorizedTemplates[i].template_keypoints, // template keypoints
-        img,                                            // scanned image
-        image_keypoints, // Scanned image keypoints
-        matches, img_matches, cv::Scalar::all(-1), cv::Scalar::all(-1),
-        std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+
     // Show the match visualization
     if (showView) {
+      cv::Mat img_matches;
+      cv::drawMatches(
+          cv::imread(TEMPLATE_FILES[i], cv::IMREAD_GRAYSCALE), // template image
+          this->memorizedTemplates[i].template_keypoints, // template keypoints
+          img,                                            // scanned image
+          image_keypoints, // Scanned image keypoints
+          matches, img_matches, cv::Scalar::all(-1), cv::Scalar::all(-1),
+          std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
       cv::imshow("Matches", img_matches);
     }
-    cv::waitKey(1);
+    cv::waitKey(10);
   }
   if (best_match_percentage > MIN_CONF_THRESH) {
     return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
