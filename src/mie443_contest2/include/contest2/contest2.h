@@ -47,6 +47,7 @@ const int MAX_LOST_COUNT = 1;
 const int MIN_HESSIAN = 400;
 const float MATCH_COMPARE_THRESH = 0.6;
 const int MIN_ROWS_BLANK = 50; // treshold to determine blank
+const float MIN_CONF_THRESH = 50;
 
 const bool MANUAL_CROP = false;
 const int MANUAL_CROP_X = 4;

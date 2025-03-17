@@ -191,10 +191,8 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
     flann.match(this->memorizedTemplates[i].template_descriptors,
                 image_descriptors, matches);
 
-    std::sort(matches.begin(), matches.end(),
-              [](const cv::DMatch &a, const cv::DMatch &b) {
-                return a.distance < b.distance;
-              }); // sort matches from best match to worst match
+    std::sort(matches.begin(),
+              matches.end()); // sort matches from best match to worst match
 
     double good_matches = 0;
     for (const auto &m : matches) {
@@ -214,7 +212,13 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
       matched_id = i;
     }
   }
-  return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
+  if (best_match_percentage > MIN_CONF_THRESH) {
+    return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
+  } else {
+    ROS_INFO("Did not meet MIN_CONF_THRESH: %f vs %f", best_match_percentage,
+             MIN_CONF_THRESH);
+    return std::make_tuple(-1, best_match_percentage, matched_id != -1);
+  }
 }
 
 void ImagePipeline::memorizeTemplates() {
