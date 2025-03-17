@@ -38,6 +38,7 @@ ImagePipeline::getFeatures(cv::Mat image) {
   ROS_INFO("Initializing keypoints");
   Mat descriptors_image;
   ROS_INFO("Initializing descriptors");
+  cv::resize(image, image, cv::Size(300, 300));
   detector->detectAndCompute(image, noArray(), keypoints_image,
                              descriptors_image);
   ROS_INFO("Detected keypoints and descriptors");
@@ -51,6 +52,11 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
   int width = inputImg.cols;
 
   cv::Mat croppedImg;
+  if (width > 640 || height > 480) {
+    cv::resize(inputImg, croppedImg, cv::Size(640, 480));
+    ROS_INFO("Resized to desired resolution");
+  }
+
   if (height > 400 && MANUAL_CROP) {
     ROS_INFO("Big enough to crop");
     int cropX = width / MANUAL_CROP_X;
@@ -73,10 +79,18 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
     cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
     // cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
-    cv::adaptiveThreshold(gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
-                          cv::THRESH_BINARY, ADAPT_BLOCK, ADAPT_CONST);
+    cv::adaptiveThreshold(
+        gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
+        cv::THRESH_BINARY_INV, ADAPT_BLOCK,
+        ADAPT_CONST); // adaptive thresholding to account for lighting
 
-    // find contours
+    cv::threshold(
+        gray, thresh, 0, 255,
+        cv::THRESH_BINARY +
+            cv::THRESH_OTSU); // OTSU tresholding to smooth out image noise
+
+    // cv::imshow("Thresholded Image", thresh);
+    //  find contours
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(thresh, contours, hierarchy, cv::RETR_EXTERNAL,
@@ -84,10 +98,9 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
     cv::Mat output;
     if (!contours.empty()) {
-      double maxArea = 0;
       std::vector<cv::Point> bestContour;
+      double maxArea = 0;
 
-      // find largest contour
       for (const auto &contour : contours) {
         double area = cv::contourArea(contour);
         if (area > maxArea) {
@@ -95,7 +108,6 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
           bestContour = contour;
         }
       }
-
       if (!bestContour.empty()) {
         cv::Rect box = cv::boundingRect(bestContour);
         ROS_INFO("Cropped using Gaussian filter");
@@ -104,7 +116,7 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
     }
   }
 
-  return inputImg;
+  return croppedImg;
 }
 
 // return output;

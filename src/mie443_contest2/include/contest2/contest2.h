@@ -44,18 +44,18 @@ const float BOX_ANGLE_OFFSET = 10;
 
 const int MAX_LOST_COUNT = 1;
 
-const int MIN_HESSIAN = 1000;
-const float MATCH_COMPARE_THRESH = 0.65;
+const int MIN_HESSIAN = 400;
+const float MATCH_COMPARE_THRESH = 0.6;
 const int MIN_ROWS_BLANK = 50; // treshold to determine blank
 
-const bool MANUAL_CROP = true;
-const int MANUAL_CROP_X = 8;
-const int MANUAL_CROP_Y = 3;
+const bool MANUAL_CROP = false;
+const int MANUAL_CROP_X = 4;
+const int MANUAL_CROP_Y = 2;
 
 const bool GAUSSIAN_CROP = true;
 const cv::Size CROP_SIZE = cv::Size(5, 5);
 const float MIN_CROP_THRESH = 150;
-const int ADAPT_BLOCK = 11;
+const int ADAPT_BLOCK = 15;
 const int ADAPT_CONST = 5;
 
 // Paths to the template files

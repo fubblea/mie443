@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
       fs::is_directory(IMAGE_DATABASE_PATH)) {
     for (auto &entry : fs::recursive_directory_iterator(IMAGE_DATABASE_PATH)) {
       std::string ext = fs::extension(entry.path());
-      if (ext == ".jpg" || ext == ".png" || ext == ".bmp") {
+      if (ext == ".jpg" || ext == ".png" || ext == ".bmp" || ext == ".JPG") {
         image_files.push_back(entry.path().string());
       }
     }
