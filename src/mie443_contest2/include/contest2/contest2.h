@@ -49,11 +49,11 @@ const float MATCH_COMPARE_THRESH = 0.5;
 const int MIN_ROWS_BLANK = 50; // treshold to determine blank
 const float MIN_CONF_THRESH = 0;
 
-const bool MANUAL_CROP = false;
+const bool MANUAL_CROP = true;
 const int MANUAL_CROP_X = 4;
-const int MANUAL_CROP_Y = 2;
+const int MANUAL_CROP_Y = 4;
 
-const bool GAUSSIAN_CROP = false;
+const bool GAUSSIAN_CROP = true;
 const cv::Size CROP_SIZE = cv::Size(5, 5);
 const float MIN_CROP_THRESH = 130;
 const int ADAPT_BLOCK = 15;
