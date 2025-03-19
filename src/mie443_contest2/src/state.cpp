@@ -145,6 +145,9 @@ int findBestGuess(std::vector<BoxMatch> guesses) {
   return bestGuess;
 }
 
+const std::string DUPLICATE_MARKER = "[duplicate]";
+std::vector<int> pastBestGuesses;
+
 void RobotState::saveTagsToFile() {
   system("mkdir -p detected_tags");
   std::ofstream myfile("detected_tags/box_guesses.txt");
@@ -161,14 +164,26 @@ void RobotState::saveTagsToFile() {
   }
 
   // Write to file
+  std::string dupeLabel = "";
+  pastBestGuesses = {};
   for (int boxIdx = 0; boxIdx < this->boxes.coords.size(); boxIdx++) {
     // Print box location
     myfile << "Box at (" << boxes.coords[boxIdx][0] << ", "
            << boxes.coords[boxIdx][1] << ", " << boxes.coords[boxIdx][2] << ")";
 
-    // Find best guess
+    // Find best guess, note if duplicate
     int bestGuess = findBestGuess(boxGuesses[boxIdx]);
-    myfile << " - Best guess: " << getFileName(bestGuess);
+
+    if ((bestGuess != -1) &&
+        (std::find(pastBestGuesses.begin(), pastBestGuesses.end(), bestGuess) !=
+         pastBestGuesses.end())) {
+      dupeLabel = DUPLICATE_MARKER;
+    } else {
+      dupeLabel = "";
+      pastBestGuesses.push_back(bestGuess);
+    }
+
+    myfile << " - Best guess: " << getFileName(bestGuess) << " " << dupeLabel;
 
     // List all guesses
     myfile << " - All guesses: (";
