@@ -140,9 +140,6 @@ int findBestGuess(std::vector<BoxMatch> guesses) {
       bestScore = score;
       bestGuess = id;
     }
-    if (bestScore < 45) {
-      bestGuess = -1;
-    }
   }
 
   return bestGuess;
