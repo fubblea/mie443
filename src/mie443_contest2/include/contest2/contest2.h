@@ -45,7 +45,7 @@ const float BOX_ANGLE_OFFSET = 10;
 const int MAX_LOST_COUNT = 1;
 
 const int MIN_HESSIAN = 1000;
-const float MATCH_COMPARE_THRESH = 0.5;
+const float MATCH_COMPARE_THRESH = 0.3;
 const int MIN_ROWS_BLANK = 50; // treshold to determine blank
 const float MIN_CONF_THRESH = 0;
 
