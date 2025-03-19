@@ -34,6 +34,8 @@ std::tuple<std::vector<cv::KeyPoint>, Mat>
 ImagePipeline::getFeatures(cv::Mat image) {
   Ptr<cv::xfeatures2d::SURF> detector =
       cv::xfeatures2d::SURF::create(MIN_HESSIAN);
+
+  // Ptr<cv::xfeatures2d::SIFT> detector = cv::xfeatures2d::SIFT::create();
   ROS_INFO("Detecting features");
   std::vector<KeyPoint> keypoints_image;
   Mat descriptors_image;
@@ -72,7 +74,6 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
 
     cv::cvtColor(croppedImg, gray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray, blurred, CROP_SIZE, 0);
-    // cv::threshold(blurred, thresh, MIN_CROP_THRESH, 255, cv::THRESH_BINARY);
     cv::adaptiveThreshold(
         gray, thresh, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
         cv::THRESH_BINARY_INV, ADAPT_BLOCK,
@@ -82,9 +83,6 @@ cv::Mat extractROI(const cv::Mat &inputImg) {
         gray, thresh, 0, 255,
         cv::THRESH_BINARY +
             cv::THRESH_OTSU); // OTSU tresholding to smooth out image noise
-
-    // cv::imshow("Thresholded Image", thresh);
-    //  find contours
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(thresh, contours, hierarchy, cv::RETR_EXTERNAL,
@@ -145,7 +143,7 @@ std::tuple<int, float> ImagePipeline::getTemplateID(Boxes &boxes,
           ImagePipeline::imageMatch(scannedKeypoints, scannedDescriptors,
                                     showView);
     }
-    if (best_match_per < 15) {
+    if (best_match_per < 0.221) {
       template_id = -1;
     }
     ROS_INFO("Image match results: id: %i, best_match_per: %f, match_found: %i",
@@ -225,7 +223,7 @@ ImagePipeline::imageMatch(std::vector<cv::KeyPoint> &image_keypoints,
   if (showView) {
     cv::imshow("Matches", img_matches);
   }
-  cv::waitKey(0);
+  cv::waitKey(10);
   if (best_match_percentage > MIN_CONF_THRESH) {
     return std::make_tuple(matched_id, best_match_percentage, matched_id != -1);
   } else {
