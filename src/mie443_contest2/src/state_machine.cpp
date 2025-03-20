@@ -31,9 +31,9 @@ void RobotState::updateState(bool showView, float secondsElapsed) {
   case State::START: {
     ROS_INFO("Initialization. Generating navigation goals");
 
+    genNavGoals(-BOX_ANGLE_OFFSET);
     genNavGoals(0);
     genNavGoals(BOX_ANGLE_OFFSET);
-    genNavGoals(-BOX_ANGLE_OFFSET);
 
     ROS_INFO("Gonna memorize the templates now");
     ROS_INFO("template 1: %s", TEMPLATE_FILES[0].c_str());
@@ -46,13 +46,19 @@ void RobotState::updateState(bool showView, float secondsElapsed) {
   case State::SPIN: {
     ROS_INFO("You spin me right round baby right round like a record baby "
              "right round right round");
-    if (doTurn(MAX_SPIN_ANGLE, poseHist.back().phi, false)) {
-      ROS_INFO("Remembering home pose");
-      this->homePose = currPose;
+    // if (doTurn(MAX_SPIN_ANGLE, poseHist.back().phi, false)) {
+    //   ROS_INFO("Remembering home pose");
+    //   this->homePose = currPose;
 
-      ROS_INFO("finding my first goal");
-      setState(State::GOTO_GOAL);
-    }
+    //   ROS_INFO("finding my first goal");
+    //   setState(State::GOTO_GOAL);
+    // }
+
+    ROS_INFO("Remembering home pose");
+    this->homePose = currPose;
+
+    ROS_INFO("finding my first goal");
+    setState(State::GOTO_GOAL);
 
     break;
   }
