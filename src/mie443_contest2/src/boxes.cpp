@@ -5,6 +5,7 @@
 bool Boxes::load_coords() {
   std::string filePath;
   if (CONTEST_MODE) {
+    ROS_WARN("RUNNING IN CONTEST MODE!!!!!");
     filePath = ros::package::getPath("mie443_contest2") +
                std::string("/boxes_database/myhal_scene.xml");
   } else {

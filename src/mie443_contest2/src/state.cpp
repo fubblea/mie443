@@ -150,7 +150,7 @@ std::vector<int> pastBestGuesses;
 
 void RobotState::saveTagsToFile() {
   system("mkdir -p detected_tags");
-  std::ofstream myfile("detected_tags/box_guesses.txt");
+  std::ofstream myfile("detected_tags/thursday_group7_trial1.txt");
 
   // Create hashmap of box guesses
   std::unordered_map<int, std::vector<BoxMatch>> boxGuesses;
@@ -186,12 +186,15 @@ void RobotState::saveTagsToFile() {
     myfile << " - Best guess: " << getFileName(bestGuess) << " " << dupeLabel;
 
     // List all guesses
-    myfile << " - All guesses: (";
+    // myfile << " - All guesses: (";
     for (const BoxMatch &value : boxGuesses[boxIdx]) {
-      myfile << getFileName(value.templateID) << " (" << value.matchPer << ")"
-             << ", ";
+      // myfile << getFileName(value.templateID) << " (" << value.matchPer <<
+      // ")"
+      //        << ", ";
+      ROS_INFO("Template Guess: %s, Per: %f",
+               getFileName(value.templateID).c_str(), value.matchPer);
     }
-    myfile << ")";
+    // myfile << ")";
 
     // End line
     myfile << std::endl;

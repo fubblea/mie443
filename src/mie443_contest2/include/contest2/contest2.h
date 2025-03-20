@@ -19,7 +19,7 @@ using namespace cv;
 
 // CONSTANTS
 // TODO: Check if this is valid
-const bool CONTEST_MODE = false; // false for test, true for contest
+const bool CONTEST_MODE = true; // false for test, true for contest
 
 const float GO_HOME_TIME = 230;
 
