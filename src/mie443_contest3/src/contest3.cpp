@@ -1,37 +1,28 @@
+#include "contest3/contest3.h"
+#include "contest3/state.h"
 #include <chrono>
 #include <contest3/header.h>
 #include <contest3/imageTransporter.hpp>
 #include <ros/package.h>
 
-using namespace std;
-
-geometry_msgs::Twist follow_cmd;
-int world_state;
-
-void followerCB(const geometry_msgs::Twist msg) { follow_cmd = msg; }
-
-void bumperCB(const geometry_msgs::Twist msg) {
-  // Fill with code
-}
-
-//-------------------------------------------------------------
-
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "image_listener");
+  ros::init(argc, argv, "contest3");
   ros::NodeHandle nh;
   sound_play::SoundClient sc;
-  string path_to_sounds = ros::package::getPath("mie443_contest3") + "/sounds/";
   teleController eStop;
+
+  RobotState robotState(sc);
 
   // publishers
   ros::Publisher vel_pub =
       nh.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/teleop", 1);
 
   // subscribers
-  ros::Subscriber follower = nh.subscribe(
-      "follower_velocity_smoother/smooth_cmd_vel", 10, &followerCB);
-  ros::Subscriber bumper =
-      nh.subscribe("mobile_base/events/bumper", 10, &bumperCB);
+  ros::Subscriber follower =
+      nh.subscribe("follower_velocity_smoother/smooth_cmd_vel", 10,
+                   &RobotState::followerCB, &robotState);
+  ros::Subscriber bumper = nh.subscribe("mobile_base/events/bumper", 10,
+                                        &RobotState::bumperCB, &robotState);
 
   // contest count down timer
   ros::Rate loop_rate(10);
@@ -46,32 +37,12 @@ int main(int argc, char **argv) {
   imageTransporter depthTransport("camera/depth_registered/image_raw",
                                   sensor_msgs::image_encodings::TYPE_32FC1);
 
-  int world_state = 0;
-
-  double angular = 0.2;
-  double linear = 0.0;
-
-  geometry_msgs::Twist vel;
-  vel.angular.z = angular;
-  vel.linear.x = linear;
-
-  sc.playWave(path_to_sounds + "sound.wav");
-  ros::Duration(0.5).sleep();
-
   while (ros::ok() && secondsElapsed <= 480) {
     ros::spinOnce();
 
-    if (world_state == 0) {
-      // fill with your code
-      // vel_pub.publish(vel);
-      vel_pub.publish(follow_cmd);
+    robotState.updateState(secondsElapsed, CONTEST_MODE);
+    vel_pub.publish(robotState.getVelCmd());
 
-    } else if (world_state == 1) {
-      /*
-      ...
-      ...
-      */
-    }
     secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(
                          std::chrono::system_clock::now() - start)
                          .count();
