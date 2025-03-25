@@ -1,3 +1,4 @@
+#include "ros/console.h"
 #include "ros/init.h"
 #include <contest3/state.h>
 
@@ -15,7 +16,6 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkBumper() == BumperHit::NOTHING) {
       setVelCmd(this->follow_cmd);
     } else {
-      setVelCmd(0, 0);
       setState(State::IM_HIT);
     }
 
@@ -23,7 +23,9 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
   }
 
   case State::IM_HIT: {
-    // TODO:
+    ROS_INFO("Im hit!");
+    setVelCmd(0, 0);
+
     break;
   }
 
