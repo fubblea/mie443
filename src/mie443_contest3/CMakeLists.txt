@@ -17,7 +17,7 @@ add_executable(publisher src/my_publisher_video.cpp)
 target_link_libraries(publisher ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 # add the subscriber example
-add_executable(contest3 src/contest3.cpp
+add_executable(contest3 src/contest3.cpp src/state.cpp src/state_machine.cpp
 			src/imageTransporter.cpp)
 target_link_libraries(contest3 ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
