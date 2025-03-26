@@ -9,11 +9,11 @@
 
 enum State {
   START,
-  FOLLOW_AHEAD, 
-  FOLLOW_BACK,  // Disgust
-  IM_HIT,       // Angry
-  LOST,         // Sad
-  PICKED_UP,    // Happy
+  FOLLOW_AHEAD,
+  FOLLOW_BACK, // Disgust
+  IM_HIT,      // Angry
+  LOST,        // Sad
+  PICKED_UP,   // Happy
   END,
 };
 
@@ -40,7 +40,10 @@ public:
   RobotState(sound_play::SoundClient &sc) : sc(sc) {};
 
   // Setters
-  void setState(State newState) { this->currState = newState; }
+  void setState(State newState) {
+    sc.stopAll();
+    this->currState = newState;
+  }
   void setVelCmd(geometry_msgs::Twist velCmd) { this->velCmd = velCmd; }
   void setVelCmd(double linear, double angular) {
     this->velCmd.angular.z = angular;

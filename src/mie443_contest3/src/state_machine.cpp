@@ -23,6 +23,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     ros::Duration(0.5).sleep();
 
     setState(findFollowState(this->follow_cmd));
+
     break;
   }
 
@@ -90,7 +91,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
   }
 
   case State::IM_HIT: {
-    if (this->checkEvents() != EventStatus::BUMPER_HIT) {
+    if (this->checkEvents() == EventStatus::BUMPER_HIT) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
       sc.playWave(SOUND_PATHS + "PAIN.wav");
@@ -103,7 +104,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
   }
 
   case State::PICKED_UP: {
-    if (this->checkEvents() != EventStatus::CLIFF_HIT) {
+    if (this->checkEvents() == EventStatus::CLIFF_HIT) {
       ROS_INFO("PUT ME DOWN MF!");
       setVelCmd(0, 0);
       sc.playWave(SOUND_PATHS + "Happy.wav");
