@@ -3,6 +3,7 @@
 #include "ros/init.h"
 #include <contest3/contest3.h>
 #include <contest3/state.h>
+#include <future>
 
 State findFollowState(geometry_msgs::Twist follow_cmd) {
   if (follow_cmd.linear.x > 0) {
@@ -57,8 +58,8 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Following backward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_BACK) {
-        sc.playWave(SOUND_PATHS + "Disgust.wav");
-        ros::Duration(3.0).sleep();
+        std::async(std::launch::async,
+                   [&]() -> void { sc.playWave(SOUND_PATHS + "Disgust.wav"); });
         setVelCmd(this->follow_cmd);
       } else {
         setState(findFollowState(this->follow_cmd));
