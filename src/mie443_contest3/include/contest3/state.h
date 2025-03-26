@@ -3,6 +3,7 @@
 #include "contest3/contest3.h"
 #include "geometry_msgs/Twist.h"
 #include "kobuki_msgs/BumperEvent.h"
+#include "kobuki_msgs/CliffEvent.h"
 #include "sound_play/sound_play.h"
 #include "visualization_msgs/Marker.h"
 
@@ -12,8 +13,11 @@ enum State {
   FOLLOW_BACK,  // Disgust
   IM_HIT,       // Angry
   LOST,         // Sad
+  PICKED_UP,
   END,
 };
+
+enum EventStatus { BUMPER_HIT, CLIFF_HIT, ALL_GOOD };
 
 enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
 
@@ -22,6 +26,7 @@ protected:
   State currState = State::START;
   geometry_msgs::Twist velCmd;
   BumperHit bumperHit;
+  kobuki_msgs::CliffEvent cliffEvent;
 
   sound_play::SoundClient &sc;
 
@@ -51,8 +56,10 @@ public:
   // Callbacks
   void followerCB(const geometry_msgs::Twist::ConstPtr &msg);
   void bumperCB(const kobuki_msgs::BumperEvent::ConstPtr &msg);
+  void cliffCB(const kobuki_msgs::CliffEvent::ConstPtr &msg);
   void followerMarkerCB(const visualization_msgs::Marker::ConstPtr &msg);
 
   bool backAway();
   BumperHit checkBumper();
+  EventStatus checkEvents();
 };

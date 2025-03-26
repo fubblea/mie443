@@ -26,3 +26,13 @@ BumperHit RobotState::checkBumper() {
 
   return this->bumperHit;
 }
+
+EventStatus RobotState::checkEvents() {
+  if (this->checkBumper() != NOTHING) {
+    return EventStatus::BUMPER_HIT;
+  } else if (this->cliffEvent.state == 1) {
+    return EventStatus::CLIFF_HIT;
+  } else {
+    return EventStatus::ALL_GOOD;
+  }
+}

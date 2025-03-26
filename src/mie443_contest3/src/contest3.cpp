@@ -26,6 +26,8 @@ int main(int argc, char **argv) {
                    &RobotState::followerMarkerCB, &robotState);
   ros::Subscriber bumper = nh.subscribe("mobile_base/events/bumper", 10,
                                         &RobotState::bumperCB, &robotState);
+  ros::Subscriber cliff = nh.subscribe("mobile_base/events/cliff", 10,
+                                       &RobotState::cliffCB, &robotState);
 
   // contest count down timer
   ros::Rate loop_rate(10);
