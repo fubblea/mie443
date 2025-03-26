@@ -17,7 +17,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
   case State::FOLLOWING: {
     if (this->checkBumper() == BumperHit::NOTHING) {
-      ROS_INFO("Bumper is clean, following you!")
+      ROS_INFO("Bumper is clean, following you!");
       setVelCmd(this->follow_cmd);
     } else {
       ROS_INFO("Seems like a bumper is hit. Switching State");
