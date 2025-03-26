@@ -8,10 +8,10 @@
 
 enum State {
   START,
-  FOLLOWING, // If moving backwards, disgust
-  STOPPED,   //  Happy
-  IM_HIT,    // Angry
-  LOST,      // Sad
+  FOLLOW_AHEAD, // Happy
+  FOLLOW_BACK,  // Disgust
+  IM_HIT,       // Angry
+  LOST,         // Sad
   END,
 };
 
