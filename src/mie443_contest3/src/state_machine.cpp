@@ -59,7 +59,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Following backward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_BACK) {
         sc.playWave(SOUND_PATHS + "Disgust.wav");
-        ros::Duration(3.0).sleep();
+        ros::Duration(0.5).sleep();
         setVelCmd(this->follow_cmd);
       } else {
         setState(findFollowState(this->follow_cmd));
@@ -81,6 +81,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
         sc.playWave(SOUND_PATHS + "Sadness.wav");
+        ros::Duration(0.5).sleep();
         setVelCmd(this->follow_cmd);
       } else {
         setState(findFollowState(this->follow_cmd));
@@ -95,6 +96,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
       sc.playWave(SOUND_PATHS + "PAIN.wav");
+      ros::Duration(0.5).sleep();
     } else {
       ROS_INFO("Does not hurt, going back to following");
       setState(findFollowState(this->follow_cmd));
@@ -108,6 +110,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("PUT ME DOWN MF!");
       setVelCmd(0, 0);
       sc.playWave(SOUND_PATHS + "Happy.wav");
+      ros::Duration(0.5).sleep();
     } else {
       ROS_INFO("Back down, going back to following");
       setState(findFollowState(this->follow_cmd));
