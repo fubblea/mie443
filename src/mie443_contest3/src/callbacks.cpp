@@ -15,3 +15,9 @@ void RobotState::followerMarkerCB(
     const visualization_msgs::Marker::ConstPtr &msg) {
   this->follow_marker = *msg;
 }
+
+void RobotState::cliffCB(const kobuki_msgs::CliffEvent::ConstPtr &msg) {
+  // Get the state of the bumper that is pressed
+  // access using bumper[kobuki_msgs::BumperEvent::{}] LEFT, CENTER, or RIGHT
+  this->cliffEvent = *msg;
+}
