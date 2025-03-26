@@ -58,6 +58,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Following backward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_BACK) {
         sc.playWave(SOUND_PATHS + "Disgust.wav");
+        ros::Duration(3.0).sleep();
         setVelCmd(this->follow_cmd);
       } else {
         setState(findFollowState(this->follow_cmd));
