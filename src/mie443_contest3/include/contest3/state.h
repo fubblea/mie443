@@ -7,8 +7,10 @@
 
 enum State {
   START,
-  FOLLOWING,
-  IM_HIT,
+  FOLLOWING, // If moving backwards, disgust
+  STOPPED,   //  Happy
+  IM_HIT,    // Angry
+  LOST,      // Sad
   END,
 };
 
@@ -16,7 +18,7 @@ enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
 
 class RobotState {
 protected:
-  State currState;
+  State currState = State::START;
   geometry_msgs::Twist velCmd;
   BumperHit bumperHit;
 
