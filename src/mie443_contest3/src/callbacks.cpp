@@ -15,5 +15,5 @@ void RobotState::bumperCB(const kobuki_msgs::BumperEvent::ConstPtr &msg) {
 void RobotState::followerMarkerCB(
     const visualization_msgs::Marker::ConstPtr &msg) {
   this->follow_marker = *msg;
-  ROS_INFO("Marker points: %zu", follow_marker.points.size());
+  ROS_INFO("Marker points: %zu", this->follow_marker.points.size());
 }
