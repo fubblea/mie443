@@ -9,11 +9,11 @@
 
 enum State {
   START,
-  FOLLOW_AHEAD, // Happy
+  FOLLOW_AHEAD, 
   FOLLOW_BACK,  // Disgust
   IM_HIT,       // Angry
   LOST,         // Sad
-  PICKED_UP,
+  PICKED_UP,    // Happy
   END,
 };
 
