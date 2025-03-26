@@ -1,6 +1,6 @@
 #include "ros/console.h"
 #include "ros/init.h"
-#include <contest3/constest3.h>
+#include <contest3/contest3.h>
 #include <contest3/state.h>
 
 void RobotState::updateState(float secondsElapsed, bool contestMode) {
