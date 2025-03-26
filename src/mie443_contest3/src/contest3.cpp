@@ -21,6 +21,9 @@ int main(int argc, char **argv) {
   ros::Subscriber follower =
       nh.subscribe("follower_velocity_smoother/smooth_cmd_vel", 10,
                    &RobotState::followerCB, &robotState);
+  ros::Subscriber follower_marker =
+      nh.subscribe("turtlebot_follower/marker", 10,
+                   &RobotState::followerMarkerCB, &robotState);
   ros::Subscriber bumper = nh.subscribe("mobile_base/events/bumper", 10,
                                         &RobotState::bumperCB, &robotState);
 

@@ -4,6 +4,7 @@
 #include "geometry_msgs/Twist.h"
 #include "kobuki_msgs/BumperEvent.h"
 #include "sound_play/sound_play.h"
+#include "visualization_msgs/Marker.h"
 
 enum State {
   START,
@@ -25,6 +26,7 @@ protected:
   sound_play::SoundClient &sc;
 
   geometry_msgs::Twist follow_cmd;
+  visualization_msgs::Marker follow_marker;
   uint8_t bumper[NUM_BUMPERS];
   int world_state = 0;
 
@@ -49,6 +51,7 @@ public:
   // Callbacks
   void followerCB(const geometry_msgs::Twist::ConstPtr &msg);
   void bumperCB(const kobuki_msgs::BumperEvent::ConstPtr &msg);
+  void followerMarkerCB(const visualization_msgs::Marker::ConstPtr &msg);
 
   bool backAway();
   BumperHit checkBumper();
