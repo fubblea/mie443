@@ -33,6 +33,9 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
       sc.playWave(SOUND_PATHS + "PAIN.wav");
+    } else {
+      ROS_INFO("Does not hurt, going back to following");
+      setState(State::FOLLOWING);
     }
 
     break;
