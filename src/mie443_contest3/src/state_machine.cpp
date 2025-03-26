@@ -25,6 +25,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
   case State::IM_HIT: {
     ROS_INFO("Im hit!");
     setVelCmd(0, 0);
+    sc.playWave(std::string("src/mie443_contest3/sounds") + "PAIN.wav");
 
     break;
   }
