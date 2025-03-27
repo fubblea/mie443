@@ -1,6 +1,7 @@
 #include "geometry_msgs/Twist.h"
 #include "ros/console.h"
 #include "ros/init.h"
+#include <atomic>
 #include <contest3/contest3.h>
 #include <contest3/state.h>
 #include <thread>
@@ -15,19 +16,28 @@ State findFollowState(geometry_msgs::Twist follow_cmd) {
   }
 }
 
+std::atomic<bool> soundDone(true);
+
+void callAsyncSound(RobotState &state, std::string filePath) {
+  if (soundDone.load()) {
+    ROS_INFO("Sound is done");
+
+    soundDone.store(false);
+    std::thread th_sound(&RobotState::playSound, state, filePath, &soundDone);
+    th_sound.detach();
+  } else {
+    ROS_INFO("Waiting for soundDone");
+  }
+}
+
 void RobotState::updateState(float secondsElapsed, bool contestMode) {
   switch (this->currState) {
   case State::START: {
     ROS_INFO("IT BEGINS");
-    // this->sc.playWave(SOUND_PATHS + "sound.wav");
-    // ROS_INFO("Did the sound play");
-    // ros::Duration(0.5).sleep();
 
-    std::thread th1(&RobotState::playSound, *this, SOUND_PATHS + "sound.wav");
+    callAsyncSound(*this, SOUND_PATHS + "sound.wav");
 
-    th1.join();
-
-    // setState(findFollowState(this->follow_cmd));
+    setState(findFollowState(this->follow_cmd));
 
     break;
   }

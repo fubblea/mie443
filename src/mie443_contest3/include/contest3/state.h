@@ -36,6 +36,9 @@ protected:
   int world_state = 0;
 
 public:
+  std::string lastSoundPlayed;
+
+public:
   // Constructors
   RobotState(sound_play::SoundClient &sc) : sc(sc) {};
 
@@ -65,5 +68,5 @@ public:
   bool backAway();
   BumperHit checkBumper();
   EventStatus checkEvents();
-  void playSound(std::string filePath);
+  void playSound(std::string filePath, std::atomic<bool> *soundDone);
 };
