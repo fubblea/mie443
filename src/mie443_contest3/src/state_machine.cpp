@@ -19,8 +19,8 @@ State findFollowState(geometry_msgs::Twist follow_cmd) {
 
 std::atomic<bool> soundDone(true);
 
-void callAsyncSound(RobotState &state, std::string filePath,
-                    std::string imgPath, int soundLength = 3000) {
+void callAsyncThread(RobotState &state, std::string filePath,
+                     std::string imgPath, int soundLength = 3000) {
   if (soundDone.load()) {
     ROS_INFO("Sound is done");
     soundDone.store(false);
@@ -77,8 +77,8 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Following backward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_BACK) {
-        callAsyncSound(*this, SOUND_PATHS + "Disgust.wav",
-                       IMG_PATHS + "Disgust.jpeg", 4000);
+        callAsyncThread(*this, SOUND_PATHS + "Disgust.wav",
+                        IMG_PATHS + "Disgust.jpeg", 4000);
         setVelCmd(this->follow_cmd);
       } else {
         cv::destroyAllWindows();
@@ -100,8 +100,8 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
-        callAsyncSound(*this, SOUND_PATHS + "Sadness.wav",
-                       IMG_PATHS + "Sadness.jpg", 2000);
+        callAsyncThread(*this, SOUND_PATHS + "Sadness.wav",
+                        IMG_PATHS + "Sadness.jpg", 2000);
         setVelCmd(this->follow_cmd);
       } else {
         cv::destroyAllWindows();
@@ -116,8 +116,8 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::BUMPER_HIT) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "Anger.wav", IMG_PATHS + "Anger.jpeg",
-                     3000);
+      callAsyncThread(*this, SOUND_PATHS + "Anger.wav",
+                      IMG_PATHS + "Anger.jpeg", 3000);
     } else {
       ROS_INFO("Does not hurt, going back to following");
       cv::destroyAllWindows();
@@ -131,8 +131,8 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::CLIFF_HIT) {
       ROS_INFO("PUT ME DOWN MF!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "Fear.wav", IMG_PATHS + "Fear.jpeg",
-                     500);
+      callAsyncThread(*this, SOUND_PATHS + "Fear.wav", IMG_PATHS + "Fear.jpeg",
+                      500);
     } else {
       ROS_INFO("Back down, going back to following");
       cv::destroyAllWindows();
