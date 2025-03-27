@@ -19,7 +19,7 @@ State findFollowState(geometry_msgs::Twist follow_cmd) {
 std::atomic<bool> soundDone(true);
 
 void callAsyncSound(RobotState &state, std::string filePath,
-                    int soundLength = 2000) {
+                    int soundLength = 3000) {
   if (soundDone.load()) {
     ROS_INFO("Sound is done");
     soundDone.store(false);
@@ -93,7 +93,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
-        callAsyncSound(*this, SOUND_PATHS + "Sadness.wav", 1000);
+        callAsyncSound(*this, SOUND_PATHS + "Sadness.wav", 2000);
         setVelCmd(this->follow_cmd);
       } else {
         setState(findFollowState(this->follow_cmd));
