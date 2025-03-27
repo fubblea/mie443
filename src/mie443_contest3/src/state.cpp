@@ -57,11 +57,11 @@ bool RobotState::doTurn(float relativeTarget, float reference, bool quick) {
 
   // Current angle is relative to the start of the state
   float targetBearing = normalizeAngle(reference + relativeTarget);
-  float error = normalizeAngle(stateVars.yaw - targetBearing);
+  float error = normalizeAngle(currPose.yaw - targetBearing);
 
   if (std::fabs(error) > ANGLE_TOL) {
     ROS_INFO("Turning to %f deg. Delta: %f (%f) deg", targetBearing, error,
-             stateVars.yaw);
+             currPose.yaw);
 
     float turn_speed = MAX_ANGLE_VEL;
     // Slow down turning if we are close to the target

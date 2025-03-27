@@ -3,7 +3,7 @@
 #include "visualization_msgs/Marker.h"
 #include <contest3/state.h>
 
-StateVars::StateVars() {
+RobotPose::RobotPose() {
   posX = 0.0;
   posY = 0.0;
   yaw = 0.0;
@@ -30,7 +30,7 @@ void RobotState::cliffCB(const kobuki_msgs::CliffEvent::ConstPtr &msg) {
   this->cliffEvent = *msg;
 }
 
-void StateVars::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
+void RobotPose::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
   posX = msg->pose.pose.position.x;
   posY = msg->pose.pose.position.y;
   yaw = RAD2DEG(tf::getYaw(msg->pose.pose.orientation));

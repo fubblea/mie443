@@ -43,8 +43,8 @@ public:
   std::string lastSoundPlayed;
 
 public:
-  StateVars stateVars = StateVars(); // Current state variables
-  std::vector<StateVars> stateHist;  // State reference point
+  RobotPose currPose = RobotPose(); // Current state variables
+  std::vector<RobotPose> stateHist; // State reference point
 
   // Constructors
   RobotState(sound_play::SoundClient &sc) : sc(sc) {};
@@ -52,10 +52,10 @@ public:
   // Setters
   void setState(State newState) {
     sc.stopAll();
-    StateVars stateRef = StateVars();
-    stateRef.posX = stateVars.posX;
-    stateRef.posY = stateVars.posY;
-    stateRef.yaw = stateVars.yaw;
+    RobotPose stateRef = RobotPose();
+    stateRef.posX = currPose.posX;
+    stateRef.posY = currPose.posY;
+    stateRef.yaw = currPose.yaw;
     stateHist.push_back(stateRef);
     this->currState = newState;
   }
