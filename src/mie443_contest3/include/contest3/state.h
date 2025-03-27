@@ -10,10 +10,10 @@
 enum State {
   START,
   FOLLOW_AHEAD,
-  FOLLOW_BACK, // Disgust
+  FOLLOW_BACK, // Disgust (Primary)
   IM_HIT,      // Angry
   LOST,        // Sad
-  PICKED_UP,   // Happy
+  PICKED_UP,   // Fear (Primary)
   END,
 };
 
@@ -65,4 +65,5 @@ public:
   bool backAway();
   BumperHit checkBumper();
   EventStatus checkEvents();
+  void playSound(std::string filePath);
 };

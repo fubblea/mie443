@@ -3,6 +3,7 @@
 #include "ros/init.h"
 #include <contest3/contest3.h>
 #include <contest3/state.h>
+#include <thread>
 
 State findFollowState(geometry_msgs::Twist follow_cmd) {
   if (follow_cmd.linear.x > 0) {
@@ -18,11 +19,15 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
   switch (this->currState) {
   case State::START: {
     ROS_INFO("IT BEGINS");
-    this->sc.playWave(SOUND_PATHS + "sound.wav");
-    ROS_INFO("Did the sound play");
-    ros::Duration(0.5).sleep();
+    // this->sc.playWave(SOUND_PATHS + "sound.wav");
+    // ROS_INFO("Did the sound play");
+    // ros::Duration(0.5).sleep();
 
-    setState(findFollowState(this->follow_cmd));
+    std::thread th1(&RobotState::playSound, *this, SOUND_PATHS + "sound.wav");
+
+    th1.join();
+
+    // setState(findFollowState(this->follow_cmd));
 
     break;
   }

@@ -1,4 +1,7 @@
 #include "contest3/state.h"
+#include "ros/console.h"
+#include <chrono>
+#include <thread>
 
 BumperHit RobotState::checkBumper() {
   bool bumperPressed = false;
@@ -35,4 +38,11 @@ EventStatus RobotState::checkEvents() {
   } else {
     return EventStatus::ALL_GOOD;
   }
+}
+
+void RobotState::playSound(std::string filePath) {
+  ROS_INFO("Async Play Sound: %s", filePath.c_str());
+  this->sc.playWave(filePath);
+  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+  ROS_INFO("Thread is done sleeping");
 }
