@@ -95,8 +95,11 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
         if (doTurn(45, stateHist.back().yaw, true)) {
+          ROS_INFO("Turning one way");
           if (doTurn(-90, stateHist.back().yaw, true)) {
+            ROS_INFO("Turning the other way");
             if (doTurn(45, stateHist.back().yaw, true)) {
+              ROS_INFO("Looking straight");
               setState(findFollowState(this->follow_cmd));
             }
           }
