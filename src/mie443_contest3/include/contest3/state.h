@@ -10,10 +10,10 @@
 enum State {
   START,
   FOLLOW_AHEAD,
-  FOLLOW_BACK, // Disgust
+  FOLLOW_BACK, // Disgust (Primary)
   IM_HIT,      // Angry
   LOST,        // Sad
-  PICKED_UP,   // Happy
+  PICKED_UP,   // Fear (Primary)
   END,
 };
 
@@ -34,6 +34,9 @@ protected:
   visualization_msgs::Marker follow_marker;
   uint8_t bumper[NUM_BUMPERS];
   int world_state = 0;
+
+public:
+  std::string lastSoundPlayed;
 
 public:
   // Constructors
@@ -65,4 +68,5 @@ public:
   bool backAway();
   BumperHit checkBumper();
   EventStatus checkEvents();
+  void playSound(std::string filePath, std::atomic<bool> *soundDone);
 };
