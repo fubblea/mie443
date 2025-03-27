@@ -68,5 +68,6 @@ public:
   bool backAway();
   BumperHit checkBumper();
   EventStatus checkEvents();
-  void playSound(std::string filePath, std::atomic<bool> *soundDone);
+  void playSound(std::string filePath, int soundLength,
+                 std::atomic<bool> *soundDone);
 };

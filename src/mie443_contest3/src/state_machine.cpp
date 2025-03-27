@@ -18,11 +18,13 @@ State findFollowState(geometry_msgs::Twist follow_cmd) {
 
 std::atomic<bool> soundDone(true);
 
-void callAsyncSound(RobotState &state, std::string filePath) {
+void callAsyncSound(RobotState &state, std::string filePath,
+                    int soundLength = 2000) {
   if (soundDone.load()) {
     ROS_INFO("Sound is done");
     soundDone.store(false);
-    std::thread th_sound(&RobotState::playSound, state, filePath, &soundDone);
+    std::thread th_sound(&RobotState::playSound, state, filePath, soundLength,
+                         &soundDone);
     th_sound.detach();
   } else {
     ROS_INFO("Waiting for soundDone");
@@ -33,8 +35,6 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
   switch (this->currState) {
   case State::START: {
     ROS_INFO("IT BEGINS");
-
-    callAsyncSound(*this, SOUND_PATHS + "sound.wav");
 
     setState(findFollowState(this->follow_cmd));
 
@@ -93,7 +93,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
-        callAsyncSound(*this, SOUND_PATHS + "Sadness.wav");
+        callAsyncSound(*this, SOUND_PATHS + "Sadness.wav", 1000);
         setVelCmd(this->follow_cmd);
       } else {
         setState(findFollowState(this->follow_cmd));
@@ -107,7 +107,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::BUMPER_HIT) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "PAIN.wav");
+      callAsyncSound(*this, SOUND_PATHS + "PAIN.wav", 1000);
     } else {
       ROS_INFO("Does not hurt, going back to following");
       setState(findFollowState(this->follow_cmd));
@@ -120,7 +120,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::CLIFF_HIT) {
       ROS_INFO("PUT ME DOWN MF!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "Fear.wav");
+      callAsyncSound(*this, SOUND_PATHS + "Fear.wav", 500);
     } else {
       ROS_INFO("Back down, going back to following");
       setState(findFollowState(this->follow_cmd));
