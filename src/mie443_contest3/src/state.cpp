@@ -43,6 +43,14 @@ EventStatus RobotState::checkEvents() {
   }
 }
 
+void RobotState::playSound(std::string filePath, int soundLength,
+                           std::atomic<bool> *soundDone) {
+  ROS_INFO("Async Play Sound: %s", filePath.c_str());
+  this->sc.stopAll();
+  this->sc.playWave(filePath);
+  std::this_thread::sleep_for(std::chrono::milliseconds(soundLength));
+}
+
 float normalizeAngle(float angle) {
   while (angle > 180)
     angle -= 360;

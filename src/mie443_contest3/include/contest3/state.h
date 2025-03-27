@@ -40,9 +40,6 @@ public:
   std::string lastSoundPlayed;
 
 public:
-  std::string lastSoundPlayed;
-
-public:
   RobotPose currPose = RobotPose(); // Current state variables
   std::vector<RobotPose> stateHist; // State reference point
 
@@ -52,11 +49,11 @@ public:
   // Setters
   void setState(State newState) {
     sc.stopAll();
-    RobotPose stateRef = RobotPose();
-    stateRef.posX = currPose.posX;
-    stateRef.posY = currPose.posY;
-    stateRef.yaw = currPose.yaw;
-    stateHist.push_back(stateRef);
+    RobotPose poseRef = RobotPose();
+    poseRef.posX = currPose.posX;
+    poseRef.posY = currPose.posY;
+    poseRef.yaw = currPose.yaw;
+    stateHist.push_back(poseRef);
     this->currState = newState;
   }
   void setVelCmd(geometry_msgs::Twist velCmd) { this->velCmd = velCmd; }
