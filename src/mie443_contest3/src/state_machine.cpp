@@ -72,7 +72,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Following backward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_BACK) {
-        callAsyncSound(*this, SOUND_PATHS + "Disgust.wav");
+        callAsyncSound(*this, SOUND_PATHS + "Disgust.wav", 4000);
         setVelCmd(this->follow_cmd);
       } else {
         setState(findFollowState(this->follow_cmd));
@@ -107,7 +107,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::BUMPER_HIT) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "Anger.wav", 1000);
+      callAsyncSound(*this, SOUND_PATHS + "Anger.wav", 3000);
     } else {
       ROS_INFO("Does not hurt, going back to following");
       setState(findFollowState(this->follow_cmd));
