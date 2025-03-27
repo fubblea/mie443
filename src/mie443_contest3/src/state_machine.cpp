@@ -21,7 +21,6 @@ std::atomic<bool> soundDone(true);
 void callAsyncSound(RobotState &state, std::string filePath) {
   if (soundDone.load()) {
     ROS_INFO("Sound is done");
-
     soundDone.store(false);
     std::thread th_sound(&RobotState::playSound, state, filePath, &soundDone);
     th_sound.detach();
