@@ -120,7 +120,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::CLIFF_HIT) {
       ROS_INFO("PUT ME DOWN MF!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "Happy.wav");
+      callAsyncSound(*this, SOUND_PATHS + "Fear.wav");
     } else {
       ROS_INFO("Back down, going back to following");
       setState(findFollowState(this->follow_cmd));
