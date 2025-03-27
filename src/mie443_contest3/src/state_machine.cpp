@@ -107,7 +107,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::BUMPER_HIT) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "PAIN.wav", 1000);
+      callAsyncSound(*this, SOUND_PATHS + "Anger.wav", 1000);
     } else {
       ROS_INFO("Does not hurt, going back to following");
       setState(findFollowState(this->follow_cmd));
