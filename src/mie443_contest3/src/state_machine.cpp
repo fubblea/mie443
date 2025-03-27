@@ -4,6 +4,7 @@
 #include <atomic>
 #include <contest3/contest3.h>
 #include <contest3/state.h>
+#include <opencv2/opencv.hpp>
 #include <thread>
 
 State findFollowState(geometry_msgs::Twist follow_cmd) {
@@ -18,14 +19,19 @@ State findFollowState(geometry_msgs::Twist follow_cmd) {
 
 std::atomic<bool> soundDone(true);
 
-void callAsyncSound(RobotState &state, std::string filePath,
-                    int soundLength = 3000) {
+void callAsyncThread(RobotState &state, std::string filePath,
+                     std::string imgPath, int soundLength = 3000) {
   if (soundDone.load()) {
     ROS_INFO("Sound is done");
     soundDone.store(false);
     std::thread th_sound(&RobotState::playSound, state, filePath, soundLength,
                          &soundDone);
     th_sound.detach();
+
+    cv::Mat img = cv::imread(imgPath);
+    imshow("displayed image", img);
+    cv::waitKey(50);
+
   } else {
     ROS_INFO("Waiting for soundDone");
   }
@@ -49,7 +55,6 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("I been picked up");
       setState(State::PICKED_UP);
     } else {
-
       ROS_INFO("Following forward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_AHEAD) {
         setVelCmd(this->follow_cmd);
@@ -72,9 +77,11 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Following backward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_BACK) {
-        callAsyncSound(*this, SOUND_PATHS + "Disgust.wav", 4000);
+        callAsyncThread(*this, SOUND_PATHS + "Disgust.wav",
+                        IMG_PATHS + "Disgust.jpeg", 4000);
         setVelCmd(this->follow_cmd);
       } else {
+        cv::destroyAllWindows();
         setState(findFollowState(this->follow_cmd));
       }
     }
@@ -93,9 +100,11 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
-        callAsyncSound(*this, SOUND_PATHS + "Sadness.wav", 2000);
+        callAsyncThread(*this, SOUND_PATHS + "Sadness.wav",
+                        IMG_PATHS + "Sadness.jpg", 2000);
         setVelCmd(this->follow_cmd);
       } else {
+        cv::destroyAllWindows();
         setState(findFollowState(this->follow_cmd));
       }
     }
@@ -107,9 +116,11 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::BUMPER_HIT) {
       ROS_INFO("Im hit!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "Anger.wav", 3000);
+      callAsyncThread(*this, SOUND_PATHS + "Anger.wav",
+                      IMG_PATHS + "Anger.jpeg", 3000);
     } else {
       ROS_INFO("Does not hurt, going back to following");
+      cv::destroyAllWindows();
       setState(findFollowState(this->follow_cmd));
     }
 
@@ -120,9 +131,11 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
     if (this->checkEvents() == EventStatus::CLIFF_HIT) {
       ROS_INFO("PUT ME DOWN MF!");
       setVelCmd(0, 0);
-      callAsyncSound(*this, SOUND_PATHS + "Fear.wav", 500);
+      callAsyncThread(*this, SOUND_PATHS + "Fear.wav", IMG_PATHS + "Fear.jpeg",
+                      500);
     } else {
       ROS_INFO("Back down, going back to following");
+      cv::destroyAllWindows();
       setState(findFollowState(this->follow_cmd));
     }
 
