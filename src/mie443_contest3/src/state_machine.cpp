@@ -1,6 +1,7 @@
 #include "geometry_msgs/Twist.h"
 #include "ros/console.h"
 #include "ros/init.h"
+#include <contest3/callbacks.h>
 #include <contest3/contest3.h>
 #include <contest3/state.h>
 
@@ -80,6 +81,13 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
+        if (doTurn(45, stateHist.back().yaw, true)) {
+          if (doTurn(-90, stateHist.back().yaw, true)) {
+            if (doTurn(45, stateHist.back().yaw, true)) {
+              setState(findFollowState(this->follow_cmd));
+            }
+          }
+        }
         sc.playWave(SOUND_PATHS + "Sadness.wav");
         ros::Duration(0.5).sleep();
         setVelCmd(this->follow_cmd);

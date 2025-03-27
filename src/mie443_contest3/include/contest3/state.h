@@ -1,5 +1,6 @@
 #pragma once
 
+#include "contest3/callbacks.h"
 #include "contest3/contest3.h"
 #include "geometry_msgs/Twist.h"
 #include "kobuki_msgs/BumperEvent.h"
@@ -36,12 +37,20 @@ protected:
   int world_state = 0;
 
 public:
+  StateVars stateVars = StateVars(); // Current state variables
+  std::vector<StateVars> stateHist;  // State reference point
+
   // Constructors
   RobotState(sound_play::SoundClient &sc) : sc(sc) {};
 
   // Setters
   void setState(State newState) {
     sc.stopAll();
+    StateVars stateRef = StateVars();
+    stateRef.posX = stateVars.posX;
+    stateRef.posY = stateVars.posY;
+    stateRef.yaw = stateVars.yaw;
+    stateHist.push_back(stateRef);
     this->currState = newState;
   }
   void setVelCmd(geometry_msgs::Twist velCmd) { this->velCmd = velCmd; }
@@ -63,6 +72,7 @@ public:
   void followerMarkerCB(const visualization_msgs::Marker::ConstPtr &msg);
 
   bool backAway();
+  bool doTurn(float target, float reference, bool quick);
   BumperHit checkBumper();
   EventStatus checkEvents();
 };

@@ -1,4 +1,6 @@
 #include "contest3/state.h"
+#include "contest3/callbacks.h"
+#include "contest3/contest3.h"
 
 BumperHit RobotState::checkBumper() {
   bool bumperPressed = false;
@@ -35,4 +37,44 @@ EventStatus RobotState::checkEvents() {
   } else {
     return EventStatus::ALL_GOOD;
   }
+}
+
+float normalizeAngle(float angle) {
+  while (angle > 180)
+    angle -= 360;
+  while (angle < -180)
+    angle += 360;
+
+  return angle;
+}
+
+bool RobotState::doTurn(float relativeTarget, float reference, bool quick) {
+  bool isComplete = false;
+
+  // Current angle is relative to the start of the state
+  float targetBearing = normalizeAngle(reference + relativeTarget);
+  float error = normalizeAngle(stateVars.yaw - targetBearing);
+
+  if (std::fabs(error) > ANGLE_TOL) {
+    ROS_INFO("Turning to %f deg. Delta: %f (%f) deg", targetBearing, error,
+             stateVars.yaw);
+
+    float turn_speed = MAX_ANGLE_VEL;
+    // Slow down turning if we are close to the target
+    if (std::fabs(error) <= (ANGLE_TOL * 2)) {
+      turn_speed = MIN_ANGLE_VEL;
+    }
+
+    float turn_vel;
+    if (quick) {
+      turn_vel = (error < 0) ? turn_speed : -turn_speed;
+    } else {
+      turn_vel = (relativeTarget > 0) ? turn_speed : -turn_speed;
+    }
+    setVelCmd(turn_vel, 0);
+  } else {
+    isComplete = true;
+  }
+
+  return isComplete;
 }
