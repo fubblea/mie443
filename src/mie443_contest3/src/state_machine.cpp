@@ -106,7 +106,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
           ROS_INFO("Looking for you");
           setState(findFollowState(this->follow_cmd));
         }
-        setVelCmd(this->follow_cmd);
+
       } else {
         cv::destroyAllWindows();
         setState(findFollowState(this->follow_cmd));
