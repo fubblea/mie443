@@ -83,7 +83,7 @@ bool RobotState::doTurn(float relativeTarget, float reference, bool quick) {
     } else {
       turn_vel = (relativeTarget > 0) ? turn_speed : -turn_speed;
     }
-    setVelCmd(turn_vel, 0);
+    setVelCmd(0, turn_vel);
   } else {
     isComplete = true;
   }

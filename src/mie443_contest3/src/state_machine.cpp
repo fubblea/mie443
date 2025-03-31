@@ -96,14 +96,17 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       if (findFollowState(this->follow_cmd) == State::LOST) {
         if (doTurn(45, stateHist.back().yaw, true)) {
           ROS_INFO("Turning one way");
-          if (doTurn(-90, stateHist.back().yaw, true)) {
-            ROS_INFO("Turning the other way");
-            if (doTurn(45, stateHist.back().yaw, true)) {
-              ROS_INFO("Looking straight");
-              setState(findFollowState(this->follow_cmd));
-            }
-          }
+          return;
         }
+        if (doTurn(-90, stateHist.back().yaw, true)) {
+          ROS_INFO("Turning the other way");
+          return;
+        }
+        if (doTurn(45, stateHist.back().yaw, true)) {
+          ROS_INFO("Looking straight");
+          return;
+        }
+
         callAsyncSound(*this, SOUND_PATHS + "Sadness.wav", 2000);
         setVelCmd(this->follow_cmd);
       } else {
