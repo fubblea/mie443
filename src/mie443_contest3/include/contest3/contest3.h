@@ -2,6 +2,7 @@
 
 #include "ros/package.h"
 #include <nav_msgs/Odometry.h>
+#include <opencv/cv.h>
 #include <string>
 #include <tf/transform_datatypes.h>
 
@@ -16,6 +17,9 @@ const float ANGLE_TOL = 1;
 
 const std::string SOUND_PATHS =
     ros::package::getPath("mie443_contest3") + "/sounds/";
+
+const std::string IMG_PATHS =
+    ros::package::getPath("mie443_contest3") + "/images/";
 
 // MACROS
 
