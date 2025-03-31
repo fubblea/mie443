@@ -2,7 +2,6 @@
 #include "ros/console.h"
 #include "ros/init.h"
 #include <atomic>
-#include <contest3/callbacks.h>
 #include <contest3/contest3.h>
 #include <contest3/state.h>
 #include <opencv2/opencv.hpp>
@@ -101,21 +100,12 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
 
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
-        if (doTurn(45, stateHist.back().yaw, true)) {
-          ROS_INFO("Turning one way");
-          return;
-        }
-        if (doTurn(-90, stateHist.back().yaw, true)) {
-          ROS_INFO("Turning the other way");
-          return;
-        }
-        if (doTurn(45, stateHist.back().yaw, true)) {
-          ROS_INFO("Looking straight");
-          return;
-        }
-
         callAsyncThread(*this, SOUND_PATHS + "Sadness.wav",
                         IMG_PATHS + "Sadness.jpeg", 2000);
+        if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, true)) {
+          ROS_INFO("Looking for you");
+          setState(findFollowState(this->follow_cmd));
+        }
         setVelCmd(this->follow_cmd);
       } else {
         cv::destroyAllWindows();

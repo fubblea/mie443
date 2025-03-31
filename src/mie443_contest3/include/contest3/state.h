@@ -1,6 +1,5 @@
 #pragma once
 
-#include "contest3/callbacks.h"
 #include "contest3/contest3.h"
 #include "geometry_msgs/Twist.h"
 #include "kobuki_msgs/BumperEvent.h"
@@ -21,6 +20,17 @@ enum State {
 enum EventStatus { BUMPER_HIT, CLIFF_HIT, ALL_GOOD };
 
 enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
+
+class RobotPose {
+public:
+  // Odometer variables
+  float posX; // X position relative to start [m]
+  float posY; // Y position relative to start [m]
+  float yaw;  // Yaw angle [deg]
+
+  RobotPose();
+  void odomCallback(const nav_msgs::Odometry::ConstPtr &msg);
+};
 
 class RobotState {
 protected:

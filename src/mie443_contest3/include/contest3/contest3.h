@@ -11,9 +11,10 @@ const bool CONTEST_MODE = true; // True for real life, false if not.
 const int GO_HOME_TIME = 480;
 const int NUM_BUMPERS = 3;
 
-const float MAX_ANGLE_VEL = 10;
+const float MAX_ANGLE_VEL = 25;
 const float MIN_ANGLE_VEL = 5;
-const float ANGLE_TOL = 1;
+const float ANGLE_TOL = 5;
+const float MAX_SPIN_ANGLE = 340;
 
 const std::string SOUND_PATHS =
     ros::package::getPath("mie443_contest3") + "/sounds/";

@@ -1,5 +1,3 @@
-#include "contest3/callbacks.h"
-#include "contest3/contest3.h"
 #include "visualization_msgs/Marker.h"
 #include <contest3/state.h>
 
