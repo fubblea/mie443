@@ -78,7 +78,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Following backward");
       if (findFollowState(this->follow_cmd) == State::FOLLOW_BACK) {
         callAsyncThread(*this, SOUND_PATHS + "Disgust.wav",
-                        IMG_PATHS + "Disgust.jpeg", 4000);
+                        IMG_PATHS + "Disgust1.jpeg", 4000);
         setVelCmd(this->follow_cmd);
       } else {
         cv::destroyAllWindows();
@@ -101,7 +101,7 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       ROS_INFO("Bumper is clean, but I'm lostttt!");
       if (findFollowState(this->follow_cmd) == State::LOST) {
         callAsyncThread(*this, SOUND_PATHS + "Sadness.wav",
-                        IMG_PATHS + "Sadness.jpg", 2000);
+                        IMG_PATHS + "Sadness.jpeg", 2000);
         setVelCmd(this->follow_cmd);
       } else {
         cv::destroyAllWindows();
