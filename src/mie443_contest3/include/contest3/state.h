@@ -21,6 +21,17 @@ enum EventStatus { BUMPER_HIT, CLIFF_HIT, ALL_GOOD };
 
 enum BumperHit { LEFT, CENTER, RIGHT, NOTHING };
 
+class RobotPose {
+public:
+  // Odometer variables
+  float posX; // X position relative to start [m]
+  float posY; // Y position relative to start [m]
+  float yaw;  // Yaw angle [deg]
+
+  RobotPose();
+  void odomCallback(const nav_msgs::Odometry::ConstPtr &msg);
+};
+
 class RobotState {
 protected:
   State currState = State::START;
@@ -39,12 +50,20 @@ public:
   std::string lastSoundPlayed;
 
 public:
+  RobotPose currPose = RobotPose(); // Current state variables
+  std::vector<RobotPose> stateHist; // State reference point
+
   // Constructors
   RobotState(sound_play::SoundClient &sc) : sc(sc) {};
 
   // Setters
   void setState(State newState) {
     sc.stopAll();
+    RobotPose poseRef = RobotPose();
+    poseRef.posX = currPose.posX;
+    poseRef.posY = currPose.posY;
+    poseRef.yaw = currPose.yaw;
+    stateHist.push_back(poseRef);
     this->currState = newState;
   }
   void setVelCmd(geometry_msgs::Twist velCmd) { this->velCmd = velCmd; }
@@ -66,6 +85,7 @@ public:
   void followerMarkerCB(const visualization_msgs::Marker::ConstPtr &msg);
 
   bool backAway();
+  bool doTurn(float target, float reference, bool quick);
   BumperHit checkBumper();
   EventStatus checkEvents();
   void playSound(std::string filePath, int soundLength,

@@ -22,12 +22,13 @@ std::atomic<bool> soundDone(true);
 void callAsyncThread(RobotState &state, std::string filePath,
                      std::string imgPath, int soundLength = 3000) {
   if (soundDone.load()) {
-    ROS_INFO("Sound is done");
+    ROS_INFO("Sound playing: %s", filePath.c_str());
     soundDone.store(false);
     std::thread th_sound(&RobotState::playSound, state, filePath, soundLength,
                          &soundDone);
     th_sound.detach();
 
+    ROS_INFO("image path is: %s", imgPath.c_str());
     cv::Mat img = cv::imread(imgPath);
     imshow("displayed image", img);
     cv::waitKey(50);
@@ -102,7 +103,11 @@ void RobotState::updateState(float secondsElapsed, bool contestMode) {
       if (findFollowState(this->follow_cmd) == State::LOST) {
         callAsyncThread(*this, SOUND_PATHS + "Sadness.wav",
                         IMG_PATHS + "Sadness.jpeg", 2000);
-        setVelCmd(this->follow_cmd);
+        if (doTurn(MAX_SPIN_ANGLE, stateHist.back().yaw, true)) {
+          ROS_INFO("Looking for you");
+          setState(findFollowState(this->follow_cmd));
+        }
+
       } else {
         cv::destroyAllWindows();
         setState(findFollowState(this->follow_cmd));
