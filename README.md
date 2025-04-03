@@ -1,5 +1,7 @@
 # MIE443
 
+This repo contains the code for all three contests for the MIE443 course at the University of Toronto
+
 ## Setting-up Dev Environment
 
 1. [Clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository#cloning-a-repository) the repo
